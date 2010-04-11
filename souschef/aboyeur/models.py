@@ -15,6 +15,8 @@ class Recipe(models.Model):
     title = models.CharField(max_length=30)
     body = models.TextField()
     date_posted = models.DateField(auto_now_add=True)
+    published = models.BooleanField(default=False)
+
     category = models.ForeignKey(Category)
     tags = TagField()
 
