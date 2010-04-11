@@ -1,6 +1,7 @@
 # Django settings for souschef project.
 
 import os.path
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -73,6 +74,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_PATH, 'templates'),
 )
 
 INSTALLED_APPS = (
@@ -81,6 +83,23 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    # Django modules used
     'tagging',
+    'userprofile',
+    # Application modules
     'aboyeur',
+    'demoprofile',
 )
+
+# START of django-profile specific options
+AUTH_PROFILE_MODULE = 'demoprofile.profile'
+
+I18N_URLS = False
+DEFAULT_AVATAR = os.path.join(MEDIA_ROOT, 'userprofile/generic.jpg')
+AVATAR_WEBSEARCH = False
+# 127.0.0.1:8000 Google Maps API Key
+GOOGLE_MAPS_API_KEY = "ABQIAAAAn7xaxKrYcZCx8cCWR6ZTfBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxTgN-5NZeq0BNNl0GOETNs2UCGSEw"
+# Haddock
+#GOOGLE_MAPS_API_KEY="ABQIAAAA06IJoYHDPFMx4u3hTtaghxS1mGAeXhF8eEwoOC3WUqD9xSVHbhT_wvgbriWemZzoPwFT5-HqnLJ9-A"
+REQUIRE_EMAIL_CONFIRMATION = False
+AVATAR_QUOTA = 8
