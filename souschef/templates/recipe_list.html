@@ -1,0 +1,11 @@
+{% if recipes %}
+  <ul class="recipes">
+    {% for recipe in recipes %}
+      <li>
+        <strong>{{recipe.title}}</strong>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No recipes were found that match your search term.</p>
+{% endif %}
