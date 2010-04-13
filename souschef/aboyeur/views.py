@@ -1,9 +1,11 @@
 from django.template import RequestContext
-from django.shortcuts import render_to_response
-
+from django.shortcuts import render_to_response, get_object_or_404
 from aboyeur.models import *
 from aboyeur.forms import *
 from tagging.views import tagged_object_list
+from pygments import highlight
+from pygments.lexers import PythonLexer
+from pygments.formatters import HtmlFormatter
 
 def recipes_page(request):
     form = SearchForm()
@@ -34,3 +36,15 @@ def tagged_recipes(request, tag):
     queryset = Recipe.objects.all()
     return tagged_object_list(request, queryset, tag, paginate_by=25,
         allow_empty=True, template_object_name='recipe')
+
+def recipes(request, id):
+    recipe = get_object_or_404(Recipe, id=id)
+    
+    # Apply the syntax highligter
+    html_formater = HtmlFormatter(linenos=True, style='native')
+    recipe.body = highlight(recipe.body, PythonLexer(), html_formater)
+    
+    return render_to_response('aboyeur/recipe.html', {
+        'extracss': html_formater.get_style_defs('.highlight'),
+        'recipe': recipe,
+    }, context_instance=RequestContext(request))

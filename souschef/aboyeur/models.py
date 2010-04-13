@@ -23,7 +23,7 @@ class Recipe(models.Model):
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)
 
-    def get_tags(self, tags):
+    def get_tags(self):
         return Tag.objects.get_for_object(self)
 
     def __unicode__(self):
