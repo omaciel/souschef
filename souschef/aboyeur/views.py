@@ -39,11 +39,11 @@ def tagged_recipes(request, tag):
 
 def recipes(request, id):
     recipe = get_object_or_404(Recipe, id=id)
-    
+
     # Apply the syntax highligter
     html_formater = HtmlFormatter(linenos=True, style='native')
     recipe.body = highlight(recipe.body, PythonLexer(), html_formater)
-    
+
     return render_to_response('aboyeur/recipe.html', {
         'extracss': html_formater.get_style_defs('.highlight'),
         'recipe': recipe,
