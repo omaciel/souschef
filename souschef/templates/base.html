@@ -34,7 +34,10 @@
                     <li><a href="{% url profile_overview %}">{% trans "Login" %}</a></li>
                     <li><a href="{% url signup %}">{% trans "Register" %}</a></li>
                 {% endif %}
-                    <li><a href="/aboyeur">{% trans "Recipes" %}</a></li>
+                    {% if perms.aboyeur.add_recipe %}
+                        <li><a href="{% url add_recipe %}">{% trans "New Recipe" %}</a></li>
+                    {% endif %}
+                    <li><a href="{% url recipes %}">{% trans "Recipes" %}</a></li>
                 </ul>
             </div>
         </div>

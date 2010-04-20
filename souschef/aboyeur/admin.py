@@ -8,5 +8,9 @@ class CategoryAdmin(admin.ModelAdmin):
     inlines = [
         RecipeInline,
     ]
-
 admin.site.register(Category, CategoryAdmin)
+
+class RecipeAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(Recipe, RecipeAdmin)

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from tagging.fields import TagField
 from tagging.models import Tag
@@ -12,6 +13,7 @@ class Category(models.Model):
         verbose_name_plural = 'categories'
 
 class Recipe(models.Model):
+    author = models.ForeignKey(User)
     title = models.CharField(max_length=30)
     body = models.TextField()
     date_posted = models.DateField(auto_now_add=True)

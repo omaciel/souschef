@@ -2,7 +2,7 @@
   <ul class="recipes">
     {% for recipe in recipes %}
       <li>
-        <strong>{{recipe.title}}</strong>
+        <a href="{% url recipe recipe.id %}"><strong>{{recipe.title}}</strong></a>
       </li>
     {% endfor %}
   </ul>

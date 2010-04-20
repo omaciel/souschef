@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load tagging_tags %}
 
-{% block title %}Recipe for {{ recipe.title }}{% endblock %}
+{% block title %}{% trans "Recipe for" %} {{ recipe.title }}{% endblock %}
 
 {% block extracss %}
 <style type="text/css">
@@ -17,15 +18,15 @@
 {% endblock %}
 
 {% block content %}
-<h1>Recipe for {{ recipe.title }}:</h1>
-<h2>Author: </h2>
-<h3>Submitted on: {{ recipe.date_posted|date }}</h3>
+<h1>{% trans "Recipe for" %} {{ recipe.title }}:</h1>
+<h2>{% trans "Author" %}: <a href="{% url profile_public recipe.author %}">{% if recipe.author.get_profile.firstname  %}{{ recipe.author.get_profile.firstname }} {{ recipe.author.get_profile.surname }}{% else %}{{ recipe.author }}{% endif %}</a></h2>
+<h3>{% trans "Submitted on" %}: {{ recipe.date_posted|date }}</h3>
 
 {{ recipe.body|safe }}
 
 {% tags_for_object recipe as recipe_tags %}
 <p>
-    <strong>Tags:</strong>
+    <strong>{% trans "Tags" %}:</strong>
     {% for tag in recipe_tags %}
         {{ tag }}
     {% endfor %}

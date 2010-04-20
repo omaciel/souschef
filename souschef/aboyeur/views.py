@@ -2,6 +2,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from aboyeur.models import *
 from aboyeur.forms import *
+from django.http import HttpResponseRedirect
 from tagging.views import tagged_object_list
 from pygments import highlight
 from pygments.lexers import PythonLexer
@@ -47,4 +48,20 @@ def recipes(request, id):
     return render_to_response('aboyeur/recipe.html', {
         'extracss': html_formater.get_style_defs('.highlight'),
         'recipe': recipe,
+    }, context_instance=RequestContext(request))
+
+def add_recipe(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        print form.data
+        if form.is_valid():
+            recipe = form.save(commit=False)
+            recipe.author = request.user
+            recipe.save()
+            # TODO: redirect to the author's recipes
+            return HttpResponseRedirect('/recipes/')
+    else:
+        form = RecipeForm()
+    return render_to_response('aboyeur/add_recipe.html', {
+        'form': form
     }, context_instance=RequestContext(request))
