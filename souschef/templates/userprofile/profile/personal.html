@@ -5,7 +5,7 @@
 {% block robots %}noindex,nofollow{% endblock %}
 
 {% block extracss %}
-	<link rel="stylesheet" href="{{ MEDIA_URL }}userprofile/css/ui.datepicker.css" type="text/css" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}userprofile/css/ui.datepicker.css" type="text/css" />
 {% endblock %}
 
 {% block extrajs %}
@@ -18,13 +18,13 @@
 {% endblock %}
 
 {% block userprofile_content %}
-	<form class="personal" action="{{ request.path_info }}" method="post" enctype="multipart/form-data">
-	<fieldset>
-		<legend>{% trans "Edit your personal information" %}</legend>
-		{{ form.as_p }}	
-	</fieldset>
-	<input type="submit" value="{% trans 'Save' %}" />
-	</form>
+    <form class="personal" action="{{ request.path_info }}" method="post" enctype="multipart/form-data">
+    <fieldset>
+        <legend>{% trans "Edit your personal information" %}</legend>
+        {{ form.as_p }} 
+    </fieldset>
+    <input type="submit" value="{% trans 'Save' %}" />
+    </form>
 {% endblock %}
 
 {% block userprofile_content_related %}

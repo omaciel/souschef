@@ -2,6 +2,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from aboyeur.models import *
 from aboyeur.forms import *
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from tagging.views import tagged_object_list
 from pygments import highlight
@@ -50,7 +51,13 @@ def recipes(request, id):
         'recipe': recipe,
     }, context_instance=RequestContext(request))
 
+@login_required
 def add_recipe(request):
+    if not request.user.has_perm('aboyeur.add_recipe'):
+        response = render_to_response('403.html', context_instance=RequestContext(request))
+        response.status_code = 403
+        return response
+    
     if request.method == 'POST':
         form = RecipeForm(request.POST)
         print form.data

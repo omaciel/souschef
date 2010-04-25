@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ block.super }} &raquo; {% trans "Forbidden access" %}{% endblock %}
+
+{% block content %}
+<h2 class="pagetitle">{% trans "Forbidden access" %}</h2>
+
+<p>{% trans "Looks like you do not have the necessary permissions for the required action." %}</p>
+
+<p>{% blocktrans %}Here's a link to the <a href="/">homepage</a>. You know, just in case.{% endblocktrans %}</p>
+
+{% endblock %}
