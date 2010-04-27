@@ -84,6 +84,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     # Django modules used
+    'favorites',
     'tagging',
     'userprofile',
     # Application modules

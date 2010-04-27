@@ -24,6 +24,12 @@
 
 {{ recipe.body|safe }}
 
+{% if favorite_recipe %}
+	<a href="{% url toggle_favorite recipe.id %}">Remove favorite</a>
+{% else %}
+	<a href="{% url toggle_favorite recipe.id %}">Add to favorites</a>
+{% endif %}
+
 {% tags_for_object recipe as recipe_tags %}
 <p>
     <strong>{% trans "Tags" %}:</strong>

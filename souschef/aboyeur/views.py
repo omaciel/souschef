@@ -1,9 +1,11 @@
+from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from aboyeur.models import *
 from aboyeur.forms import *
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from favorites.models import Favorite
 from tagging.views import tagged_object_list
 from pygments import highlight
 from pygments.lexers import PythonLexer
@@ -45,9 +47,17 @@ def recipes(request, id):
     # Apply the syntax highligter
     html_formater = HtmlFormatter(linenos=True, style='native')
     recipe.body = highlight(recipe.body, PythonLexer(), html_formater)
+    
+    # Verify if its a favorite recipe for the current user
+    try:
+        Favorite.objects.favorite_for_user(recipe, user=request.user)
+        favorite_recipe = True
+    except Favorite.DoesNotExist:
+        favorite_recipe = False
 
     return render_to_response('aboyeur/recipe.html', {
         'extracss': html_formater.get_style_defs('.highlight'),
+        'favorite_recipe': favorite_recipe,
         'recipe': recipe,
     }, context_instance=RequestContext(request))
 
@@ -72,3 +82,13 @@ def add_recipe(request):
     return render_to_response('aboyeur/add_recipe.html', {
         'form': form
     }, context_instance=RequestContext(request))
+
+@login_required
+def toggle_favorite(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    try:
+        favorite = Favorite.objects.favorite_for_user(recipe, user=request.user)
+        favorite.delete()
+    except Favorite.DoesNotExist:
+        Favorite.objects.create_favorite(recipe, request.user)
+    return HttpResponseRedirect(reverse('recipe', args=[recipe.id]))
