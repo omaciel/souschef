@@ -104,3 +104,9 @@ GOOGLE_MAPS_API_KEY = "ABQIAAAAn7xaxKrYcZCx8cCWR6ZTfBT2yXp_ZAY8_ufC3CFXhHIE1Nvwk
 #GOOGLE_MAPS_API_KEY="ABQIAAAA06IJoYHDPFMx4u3hTtaghxS1mGAeXhF8eEwoOC3WUqD9xSVHbhT_wvgbriWemZzoPwFT5-HqnLJ9-A"
 REQUIRE_EMAIL_CONFIRMATION = False
 AVATAR_QUOTA = 8
+
+# Import production settings if it exists
+try:
+    from production_settings import *
+except ImportError:
+    pass 
