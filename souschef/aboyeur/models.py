@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from djangoratings.fields import RatingField
 from tagging.fields import TagField
 from tagging.models import Tag
 
@@ -19,6 +20,7 @@ class Recipe(models.Model):
     date_posted = models.DateField(auto_now_add=True)
     published = models.BooleanField(default=False)
 
+    rating = RatingField(range=5)
     category = models.ForeignKey(Category)
     tags = TagField()
 

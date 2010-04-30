@@ -5,6 +5,7 @@ from aboyeur.models import *
 from aboyeur.forms import *
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from djangoratings.views import AddRatingFromModel
 from favorites.models import Favorite
 from tagging.views import tagged_object_list
 from pygments import highlight
@@ -92,3 +93,18 @@ def toggle_favorite(request, recipe_id):
     except Favorite.DoesNotExist:
         Favorite.objects.create_favorite(recipe, request.user)
     return HttpResponseRedirect(reverse('recipe', args=[recipe.id]))
+
+def add_rating(request, recipe_id, score):
+    params = {
+        'app_label': 'aboyeur',
+        'model': 'recipe',
+        'field_name': 'rating',
+        'object_id': recipe_id,
+        'score': score
+    }
+    
+    response = AddRatingFromModel()(request, **params)
+    
+    if response.status_code == 200:
+        return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
+    return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))

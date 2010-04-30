@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load tagging_tags %}
+{% load ratings %}
 
 {% block title %}{% trans "Recipe for" %} {{ recipe.title }}{% endblock %}
 
@@ -28,6 +29,13 @@
 	<a href="{% url toggle_favorite recipe.id %}">Remove favorite</a>
 {% else %}
 	<a href="{% url toggle_favorite recipe.id %}">Add to favorites</a>
+{% endif %}
+
+{% rating_by_user user on recipe.rating as vote %}
+{% if vote %}
+	<p>{% trans "Recipe score" %}: {{ recipe.rating.score }}</p>
+{% else %}
+	<p>{% trans "Vote" %}: <a href="{% url add_rating recipe.id 1 %}">*</a> <a href="{% url add_rating recipe.id 2 %}">*</a> <a href="{% url add_rating recipe.id 3 %}">*</a> <a href="{% url add_rating recipe.id 4 %}">*</a> <a href="{% url add_rating recipe.id 5 %}">*</a></p>
 {% endif %}
 
 {% tags_for_object recipe as recipe_tags %}

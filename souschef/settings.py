@@ -84,6 +84,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     # Django modules used
+    'djangoratings',
     'favorites',
     'tagging',
     'userprofile',
@@ -104,6 +105,9 @@ GOOGLE_MAPS_API_KEY = "ABQIAAAAn7xaxKrYcZCx8cCWR6ZTfBT2yXp_ZAY8_ufC3CFXhHIE1Nvwk
 #GOOGLE_MAPS_API_KEY="ABQIAAAA06IJoYHDPFMx4u3hTtaghxS1mGAeXhF8eEwoOC3WUqD9xSVHbhT_wvgbriWemZzoPwFT5-HqnLJ9-A"
 REQUIRE_EMAIL_CONFIRMATION = False
 AVATAR_QUOTA = 8
+
+# START of django-ratings specific options
+RATINGS_VOTES_PER_IP = 1
 
 # Import production settings if it exists
 try:
