@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Overview of your profile" %}{% endblock %}
+{% block robots %}noindex,nofollow{% endblock %}
+
+{% block extrajs %}
+{% if GOOGLE_MAPS_API_KEY and user.get_profile.location %}
+  <script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key={{ GOOGLE_MAPS_API_KEY }}" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(function() {
+      if (GBrowserIsCompatible()) {
+        this.map = new GMap2(document.getElementById("location"));
+        this.map.disableDragging();
+        this.map.setCenter(new GLatLng({{ user.get_profile.latitude|default:"30" }}, {{ user.get_profile.longitude|default:"0" }}), 2);
+        this.marker = new GMarker(new GLatLng({{ user.get_profile.latitude }}, {{ user.get_profile.longitude }}), {clickable: false, draggable: false});
+        this.map.addOverlay(this.marker);
+      }
+    });
+  </script>
+{% endif %}
+{% endblock %}
+
+{% block nav-main %}
+{% include "userprofile/menu.html" %}
+{% endblock %}
+
+{% block container_class %}container_user{% endblock %}
+
+{% block container %}
+    <h2>User Profile</h2>
+{% endblock %}
+
+{% block content_class %}user_profile{% endblock %}
+
+{% block content %}
+    <div id="user_favorite_recipes">
+        <h3>Favorite Recipes</h3>
+        <ul>
+            <li class="favorite_recipe">
+                <h4><a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4><a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4><a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4><a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4><a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4><a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4><a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4><a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4><a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4><a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+
+            </li><!--end favorite_recipe-->
+            
+        </ul>
+    </div><!--end user_favorite_recipes-->
+    
+    <div id="user_recipes">
+        <h3>My Recipes <a class="administrative_links" href="{% url add_recipe %}">Add New Recipe</a></h3>
+        <div id="add_new_recipe">
+            <!-- use jquery to hide this block -->
+            <form>
+                Recipe Name: <br />
+                <input type="text" /><br /><br />
+                Recipe Tags: <br />
+                <input type="text" /><br /><br />
+                Recipe Description <br />
+                <textarea name="recipe_description" rows="20" cols="40" wrap="wrap"></textarea><br /><br />
+                Recipe Code <br />
+                <textarea name="recipe_description" rows="20" cols="40" wrap="wrap"></textarea><br /><br />
+                <input type="submit" value="Send Recipe" />
+            </form>
+            
+        </div><!--end add_new_recipe-->
+        
+        <ul>
+            <li class="user_recipe">
+                <h4> <a class="administrative_links" href="#">Edit</a> <a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4> <a class="administrative_links" href="#">Edit</a> <a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4> <a class="administrative_links" href="#">Edit</a> <a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4> <a class="administrative_links" href="#">Edit</a> <a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4> <a class="administrative_links" href="#">Edit</a> <a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+                <h4> <a class="administrative_links" href="#">Edit</a> <a class="administrative_links" href="#">Delete</a> <a href="#">Nunc auctor bibendum eros.</a> </h4>
+
+            </li><!--end favorite_recipe-->
+            
+        </ul>
+    </div><!--end user_recipes-->
+{% endblock %}
+
+{% block sidebar %}
+    {% load avatars %}
+    <div id="sidebar" class="rc sidebar_user">
+        <h3>{{ user }}</h3>
+        
+        <div id="user_profile_info">
+        <a href="{% url profile_edit_avatar %}">
+            <img class="border" src="{% avatar 96 %}" />
+        </a>
+        <p>Name: Batman</p>
+        <p>
+            Email:
+            {% if not email %}
+                {% trans "Not set yet" %}
+            {% else %}
+                {{ email }}
+                {% if not validated %}
+                    {% trans " (Not validated)" %}
+                {% endif %}
+            {% endif %}
+        </p>
+        <p>Password: XXXXX</p>
+        <p><a class="administrative_links_sidebar" href="{% url profile_edit_personal %}">Edit user info</a><p>
+        <p><a class="administrative_links_sidebar" href="{{ request.path_info }}edit/avatar/">{% if user.get_profile.has_avatar %}{% trans "Change avatar" %}{% else %}{% trans "Add avatar" %}{% endif %}</a></p>
+        <p><a class="administrative_links_sidebar" href="/accounts/profile/edit/location/">Location</a></p>
+        <p><a class="administrative_links_sidebar" href="/accounts/profile/delete/">Remove profile</a></p>
+    </div><!--end user_profile_info-->
+
+    </div><!--end sidebar-->
+{% endblock %}
+
+{% block content-related %}
+    <div class="box">
+        <h3>{% trans "Management:" %}</h3>
+        <a href="{% url password_change %}">{% trans "Change password" %}</a>
+        <br />
+        <a href="{% url email_validation %}">{% if email %}{% trans "Change your e-mail address" %}{% else %}{% trans "Add your e-mail address" %}{% endif %}</a>
+        {% if not validated and email %}<br /><a href="{% url email_validation_reset %}">{% trans "Resend validation e-mail" %}</a>
+        {% endif %}
+        <br />
+        {% if not user.get_profile.location %}
+            <a href="{% url profile_edit_location %}">{% trans "Add location" %}</a>
+        {% else %}
+            <a href="{% url profile_edit_location %}">{% trans "Change location" %}</a>
+        {% endif %}
+    </div>
+{% endblock %}

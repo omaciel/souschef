@@ -25,9 +25,12 @@ def recipes_page(request):
             recipes = Recipe.objects.filter(
                 tags__icontains=query
                 )[:10]
-
+    if not query:
+        query = ""
+    
     variables = RequestContext(request, {
         'form': form,
+        'query': query,
         'recipes': recipes,
         'show_results': show_results,
         })

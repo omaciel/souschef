@@ -1,18 +1,25 @@
 {% extends "base.html" %}
-{% block external %}
-  <script type="text/javascript"
-      src="/site_media/search.js"></script>
+{% block extrajs %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}search.js"></script>
 {% endblock %}
 {% block title %}{{ block.super }} &raquo; Search Bookmarks{% endblock %}
-{% block head %}Search Bookmarks{% endblock %}
+
+{% block content_class %}search_results_container{% endblock %}
+
 {% block content %}
-<form id="search-form" method="get" action=".">
-  {{ form.as_p }}
-  <input type="submit" value="search" />
-</form>
-<div id="search-results">
-  {% if show_results %}
-    {% include "recipe_list.html" %}
-  {% endif %}
-</div>
+{# <form id="search-form" method="get" action="."> #}
+{#   {{ form.as_p }} #}
+{#   <input type="submit" value="search" /> #}
+{# </form> #}
+{% if show_results %}
+    <h2>Search Results for {{ query }}</h2>
+
+    <div id="sort_results">
+        <p>Sort results by: <a href="#">Language</a> or <a href="#">Stars</a></p>
+    </div><!--end sort_results-->
+
+    <div id="search-results">
+        {% include "recipe_list.html" %}
+    </div><!-- end search results-->
+{% endif %}
 {% endblock %}

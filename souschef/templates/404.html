@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content_class %}error_container{% endblock %}
+
+{% block content %}
+    <div id="error">
+        <h2>{% trans "Error 404!" %}</h2>
+        <p>{% trans "Sorry! There is nothing here. XOXO, Mom." %}</p>
+    </div><!--end error-->
+    
+    <div id="postit_error">
+        <p>{% trans "Do not forget<br /> to use the search!" %}<p>
+    </div><!--end postit_error-->
+{% endblock %}

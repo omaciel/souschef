@@ -4,3 +4,4 @@ syntax: glob
 *~
 *.db
 media/avatars*
+.DS_Store

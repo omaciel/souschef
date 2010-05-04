@@ -1,26 +1,14 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load avatars %}
 {% block title %}{{ block.super }} &raquo; {% trans "Front page" %}{% endblock %}
 
 {% block content %}
-<h2>{% trans "People who have already tried this demo" %}</h2>
-
-{% for profile in profiles %}
-<div class="vcard span-8 grid_8">
-  <div class="span-2 grid_2">
-    <a href="{{ profile.get_absolute_url }}">
-      <img class="border" src="{% avatar 64 profile.user %}" alt="{{ profile.user }}"/>
-    </a>
-  </div>
-  <div class="span-5 grid_5">
-    <ul>
-    <li class="fn username"><strong>{% trans "Username" %}:</strong> {{ profile.user }}</li>
-    <li><a href="{{ profile.get_absolute_url }}">{% trans "Public profile information" %}</a></li>
-    </ul>
-  </div>
-</div>
-{% endfor %}
-
 {% endblock %}
 
+{% block sidebar %}
+    <div id="sidebar" class="rc">
+        <h2 class="hide">About Sous Chef</h2>
+        <img src="{{ MEDIA_URL }}images/pie_224x111.png" alt="Pie" title="Pie" id="pie_image"/>
+        <p>Nunc auctor bibendum eros. Maecenas porta accumsan mauris. Etiam enim enim, elementum sed, bibendum quis, rhoncus non, metus. Fusce neque dolor, adipiscing sed, consectetuer et, lacinia sit amet, quam. Suspendisse wisi quam, consectetuer in, blandit sed, suscipit eu, eros. Etiam ligula enim, tempor ut, blandit nec, mollis eu, lectus. Nam cursus. Vivamus iaculis. Aenean risus purus, pharetra in, blandit quis, gravida a, turpis. Donec nisl. Aenean eget mi. Fusce mattis est id diam. Phasellus faucibus interdum sapien. Duis quis nunc. Sed enim.</p>
+    </div><!--end sidebar-->
+{% endblock %}

@@ -1,11 +1,17 @@
 {% if recipes %}
-  <ul class="recipes">
+  <ul>
     {% for recipe in recipes %}
-      <li>
-        <a href="{% url recipe recipe.id %}"><strong>{{recipe.title}}</strong></a>
-      </li>
+        <li class="result rc">
+            <h3>{{ recipe.title }}</h3>
+            
+            <ul>
+                <li class="language">Language: <a href="#">Python</a></li>
+                <li>View <a href="{% url recipe recipe.id %}">Code Sample</a></li>
+                <li>Stars: * * * * *</li>
+            </ul>
+        </li><!--end result-->
     {% endfor %}
-  </ul>
+  </ul><!--search results list-->
 {% else %}
   <p>No recipes were found that match your search term.</p>
 {% endif %}

@@ -1,13 +1,14 @@
 {% extends "base.html" %}
-{% load i18n %}
 
-{% block title %}{{ block.super }} &raquo; {% trans "Forbidden access" %}{% endblock %}
+{% block content_class %}error_container{% endblock %}
 
 {% block content %}
-<h2 class="pagetitle">{% trans "Forbidden access" %}</h2>
-
-<p>{% trans "Looks like you do not have the necessary permissions for the required action." %}</p>
-
-<p>{% blocktrans %}Here's a link to the <a href="/">homepage</a>. You know, just in case.{% endblocktrans %}</p>
-
+    <div id="error">
+        <h2>{% trans "Error 403!" %}</h2>
+        <p>{% trans "Looks like you do not have the necessary permissions for the required action." %} XOXO, Mom.</p>    
+    </div><!--end error-->
+    
+    <div id="postit_error">
+        <p>{% blocktrans %}Here's a link to the <a href="/">homepage</a>.<br /> You know, just in case.{% endblocktrans %}<p>
+    </div><!--end postit_error-->
 {% endblock %}

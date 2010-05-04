@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content_class %}login_container{% endblock %}
+
+{% block content %}
+    <div id="login">
+        <h2 class="hide">Login</h2>
+        <div id="login_form_container" class="rc">
+            <form id="login_form" action="{% url login %}" method="post">
+                {{ form.username.label }}:<br /> {{ form.username }}<br />{{ form.username.errors }}<br />
+                {{ form.password.label}}:<br /> {{ form.password }}<br />{{ form.password.errors }}<br />
+                <input value="Submit" type="submit">
+            </form>
+        </div><!-- end div login_form_container-->
+    </div>
+    
+    <div id="mom_postal">
+        <h2>{% trans "Do not forget<br /> to eat something!" %}</h2>
+        <p>XOXO, Mom</p>
+    </div><!--end mom_postal-->
+{% endblock %}

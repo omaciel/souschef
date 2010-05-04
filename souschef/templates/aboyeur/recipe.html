@@ -3,46 +3,55 @@
 {% load tagging_tags %}
 {% load ratings %}
 
-{% block title %}{% trans "Recipe for" %} {{ recipe.title }}{% endblock %}
+{% block title %}{{ block.super }} - {% trans "Recipe for" %} {{ recipe.title }}{% endblock %}
 
 {% block extracss %}
 <style type="text/css">
     {{ extracss }}
     .highlight {
+        padding:5px;
         overflow:auto;
         width:920px;
     }
     .linenos {
         background:#888;
+        padding:5px;
     }
 </style>
 {% endblock %}
 
+{% block content_class %}single_recipe_container{% endblock %}
+
 {% block content %}
-<h1>{% trans "Recipe for" %} {{ recipe.title }}:</h1>
-<h2>{% trans "Author" %}: <a href="{% url profile_public recipe.author %}">{% if recipe.author.get_profile.firstname  %}{{ recipe.author.get_profile.firstname }} {{ recipe.author.get_profile.surname }}{% else %}{{ recipe.author }}{% endif %}</a></h2>
-<h3>{% trans "Submitted on" %}: {{ recipe.date_posted|date }}</h3>
-
-{{ recipe.body|safe }}
-
-{% if favorite_recipe %}
-	<a href="{% url toggle_favorite recipe.id %}">Remove favorite</a>
-{% else %}
-	<a href="{% url toggle_favorite recipe.id %}">Add to favorites</a>
-{% endif %}
-
-{% rating_by_user user on recipe.rating as vote %}
-{% if vote %}
-	<p>{% trans "Recipe score" %}: {{ recipe.rating.score }}</p>
-{% else %}
-	<p>{% trans "Vote" %}: <a href="{% url add_rating recipe.id 1 %}">*</a> <a href="{% url add_rating recipe.id 2 %}">*</a> <a href="{% url add_rating recipe.id 3 %}">*</a> <a href="{% url add_rating recipe.id 4 %}">*</a> <a href="{% url add_rating recipe.id 5 %}">*</a></p>
-{% endif %}
-
-{% tags_for_object recipe as recipe_tags %}
-<p>
-    <strong>{% trans "Tags" %}:</strong>
-    {% for tag in recipe_tags %}
-        {{ tag }}
-    {% endfor %}
-</p>
+    <h2 class="hide">{% trans "Recipe" %}</h2>
+    <div id="single_recipe" class="rc">
+            <h3>{% trans "Recipe for" %}: <span>{{ recipe.title }}<span></h3>
+            <div id="single_recipe_code">
+                {{ recipe.body|safe }}
+            </div><!--end single_recipe_code-->
+            <p>
+                {% trans "Tags" %}:
+                {% tags_for_object recipe as recipe_tags %}
+                {% for tag in recipe_tags %}
+                    <a href="#">{{ tag }}</a>
+                {% endfor %}
+            <p>{% trans "Stars" %}: * * * * *</p>
+            {# {% rating_by_user user on recipe.rating as vote %} #}
+            {# {% if vote %} #}
+            {#  <p>{% trans "Recipe score" %}: {{ recipe.rating.score }}</p> #}
+            {# {% else %} #}
+            {#  <p>{% trans "Vote" %}: <a href="{% url add_rating recipe.id 1 %}">*</a> <a href="{% url add_rating recipe.id 2 %}">*</a> <a href="{% url add_rating recipe.id 3 %}">*</a> <a href="{% url add_rating recipe.id 4 %}">*</a> <a href="{% url add_rating recipe.id 5 %}">*</a></p> #}
+            {# {% endif %} #}
+            <p>{% trans "Submitted on" %}: {{ recipe.date_posted|date }}</p>
+            <p>{% trans "Author" %}: <a href="{% url profile_public recipe.author %}">{% if recipe.author.get_profile.firstname  %}{{ recipe.author.get_profile.firstname }} {{ recipe.author.get_profile.surname }}{% else %}{{ recipe.author }}{% endif %}</a></p>
+            {% if user.is_autenticated %}
+                <a href="{% url toggle_favorite recipe.id %}">
+                    {% if favorite_recipe %}
+                        {% trans "Remove favorite" %}
+                    {% else %}
+                        {% trans "Add to favorites" %}
+                    {% endif %}
+                </a>
+            {% endif %}
+    </div><!--end recipe-->
 {% endblock %}

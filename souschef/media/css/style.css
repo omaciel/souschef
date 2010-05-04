@@ -1,0 +1,702 @@
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dd,dl,dt,li,ol,ul,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;font-weight:normal;font-style:normal;text-align:left;font-family:inherit;}table{border-collapse:collapse;border-spacing:0;}ol,ul{list-style:none;}q:before,q:after,blockquote:before,blockquote:after{content:"";}
+
+
+a{
+	color:#aaac9d;
+	text-decoration:none;
+}
+
+a:hover{
+	color:#e08152;
+	text-decoration:underline;
+}
+
+body{
+	background: #c7cdad;
+	font-family:arial, sans-serif;
+}
+
+#container{
+	width:958px;
+	margin:auto;
+}
+
+.hide{
+	text-indent:-5000px;
+	overflow:hidden;
+}
+
+.rc{
+	border-radius: 5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+}
+
+h1 a{
+	display:block;
+	background: url(../images/sous_chef_logo_230x65.png) no-repeat;
+	width:230px;
+	height:65px;
+	margin:20px auto;
+}
+
+#menu_container{
+	background: black;
+	width:100%;
+	height:60px;
+}
+
+#top_menu{
+	width:958px;
+	margin:auto;
+	margin-top:21px;
+	position:relative;
+}
+
+#top_menu ul{
+	position:absolute;
+	top:20px;
+}
+
+#top_menu ul li{
+	display:inline;
+	margin-right:10px;
+}
+
+
+/*menus*/
+
+a.menu_item{
+/*	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;*/
+	display:block;
+/*	text-indent: -5000px;*/
+	 height:20px;
+	 float:left;
+	 margin-right:10px;
+}
+
+a#menu_home { width:49px;background-position: 0 0; }
+a#menu_home:hover { width:49px;background-position: 0 -19px; }
+
+a#menu_recipes { width:58px;background-position: -57px 0; }
+a#menu_recipes:hover { width:58px;background-position: -57px -19px; }
+
+a#menu_sous_chef { width:82px;background-position: -124px 0; }
+a#menu_sous_chef:hover { width:82px;background-position: -124px -19px; }
+
+
+a#menu_contact { width:63px;background-position: -211px 0; }
+a#menu_contact:hover { width:63px;background-position: -211px -19px; }
+
+a#menu_login { width:47px;background-position: -283px 0; }
+a#menu_login:hover { width:47px;background-position: -283px -19px; }
+
+/* Search */
+#search{
+	position:absolute;
+	right:0;
+	margin-top:20px;
+}
+
+#search form input[type=text]{
+	width:199px;
+}
+
+/*Featured Recipe*/
+
+#featured_recipe h2{
+	display:block;
+	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
+	width:179px;
+	height:28px;
+	background-position:0 -40px;
+	margin: 20px 0;
+}
+
+
+
+#featured_recipe_code{
+	height:201px;
+	width:431px;
+	background:black;
+}
+
+#featured_recipe_info,
+#featured_recipe_code{
+	float:left;
+}
+
+/*Featured Recipe*/
+
+#featured_recipe h2{
+	display:block;
+	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
+	width:179px;
+	height:28px;
+	background-position:0 -40px;
+	margin: 25px 0;
+}
+
+
+#featured_recipe_info{
+	background: url(../images/postit_206x224.png) no-repeat;
+	width:162px;
+	height:160px;
+	font-size:90%;
+	padding:20px;
+	margin-top:-4px;
+	margin-left:-5px;
+	margin-bottom:35px;
+	color: #313131;
+	font-family: "DanielRegular", Arial, sans-serif;
+	font-size:14px;
+	
+}
+
+#featured_recipe_code{
+	margin-left:32px;
+	height:196px;
+	width:428px;
+	background:black;
+}
+
+#featured_recipe_info,
+#featured_recipe_code{
+	float:left;
+}
+
+#other_info{
+	width:696px;
+}
+
+.box{
+	width:178px;
+	height:216px;
+	background:black;
+	float:left;
+	margin-right:32px;
+	padding:10px;
+	font-size:89%;
+}
+
+.box ul{
+	list-style:square;
+	padding-left:1em;
+	color:#fff;
+}
+
+.no_li ul{
+list-style:none;
+margin:0 0;
+padding: 0 0;
+}
+
+.no_li ul li,
+.no_li img{
+float:left;
+margin-right:10px;
+}
+
+.no_li img,
+.comment_info a img{
+	border:1px solid gray;
+}
+
+.no_li img:hover,
+.comment_info a img:hover{
+	border:1px solid #e08152;
+}
+
+
+li.sous_chef_info{
+	margin:5px 0;
+}
+
+#content{
+	float:left;
+	position:relative;
+}
+
+#sidebar{
+	margin-top:25px;
+	float:right;
+	width:220px;
+	height500px;
+	background:black;
+	color:#fff;
+	padding:20px;
+}
+
+#sidebar p{
+	font-size:14px;
+}
+
+#sidebar h2{
+	display:block;
+	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
+	width:179px;
+	height:20px;
+	background-position:0 -72px;
+	
+}
+
+.clear{
+	clear:both;
+}
+
+
+#latest_recipes h3{
+	display:block;
+	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
+	width:179px;
+	height:20px;
+	background-position:0 -120px;
+}
+
+#top_sous_chefs h3{
+	display:block;
+	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
+	width:125px;
+	height:20px;
+	background-position:0 -100px;
+}
+
+#top_recipes h3{
+	display:block;
+	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
+	width:179px;
+	height:20px;
+	background-position:0 -146px;
+}
+
+/* recipe_list */
+
+#recipe_list_container{
+	background:black;
+	color:#fff;
+	padding:10px;
+	width:638px;
+	margin-bottom:35px;
+	overflow:auto;
+
+}
+
+#recipe_list_container h3{
+	display:block;
+	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
+	width:179px;
+	height:20px;
+	background-position:-137px -100px;
+}
+
+
+ul.recipe_list{
+	float:left;
+	margin-right:50px;
+	font-size:89%
+	
+}
+
+/*footer*/
+#footer{
+	margin:20px 0;
+}
+
+#footer p{
+	color: #685a53;
+	font-size:80%;
+}
+
+
+
+/* fancy stuff */
+
+@font-face {
+	font-family: "Museo500";
+	src: url("../fonts/Museo500.otf");
+}
+
+
+/* to post-it */
+
+@font-face {
+	font-family: 'DanielRegular';
+	src: url('../fonts/daniel.eot');
+	src: local('☺'), url('../fonts/daniel.ttf') format('truetype'), url('../fonts/daniel.svg#webfont') format('svg');
+}
+
+@font-face {
+	font-family: 'DanielBold';
+	src: url('danielbd.eot');
+	src: local('☺'), url('../fonts/danielbd.ttf') format('truetype'), url('../fonts/danielbd.svg#webfont') format('svg');
+}
+
+@font-face {
+	font-family: 'DanielBlackRegular';
+	src: url('danielbk.eot');
+	src: local('☺'), url('../fonts/danielbk.ttf') format('../truetype'), url('../fonts/danielbk.svg#webfont') format('svg');
+}
+
+
+
+h2,h3,h4,h5,
+h2 a,h3 a,h4 a,h5 a{
+	font-family: Museo500, arial, sans-serif;
+}
+
+h2{
+	font-size:24px;
+	color:#fff;
+	text-shadow: 0px 1px 1px #000;
+}
+
+h3{
+	margin-bottom:10px;
+}
+
+img#pie_image{
+	margin:10px 0;
+}
+
+form input[type=text],
+form input[type=submit],
+form input[type=password],
+form textarea{
+	border:none;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+form input[type=text],
+form input[type=password],
+textarea{
+	background: #fff;
+	color:#e08152;
+}
+
+form input[type=text],
+form input[type=password]{
+	height:2em;
+}
+
+
+ form input[type=submit]{
+	background: #aaac9d;
+	height:2.1em;
+}
+ form input[type=submit]:hover{
+	background:#e08152;
+}
+
+
+
+/* login page */
+
+.login_container{
+	width:980px;
+	position:relative;
+	height:500px;
+}
+
+#login{
+	width:200px;
+	height:268px;
+	position:relative;
+}
+
+
+
+
+#login h2{
+	display:block;
+	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
+	width:63px;
+	height:28px;
+	background-position:-533px -40px;
+	margin: 25px 0;
+}
+
+
+#login_form_container{
+	margin-top:45%;
+	background:black;
+	color:#fff;
+	margin:0;
+	width:200px;
+	position:relative;
+	font-size:90%;
+}
+
+form#login_form{
+	padding:20px;
+}
+
+form#login_form input[type=text],
+form#login_form input[type=password]{
+	width:150px;
+}
+
+#mom_postal{
+	background: url(../images/mom_postal582x452.png) no-repeat;
+	width:582px;
+	height:452px;
+	top:40px;
+	right:80px;
+	float:right;
+	position:absolute;
+	
+}
+
+#mom_postal h2, 
+#mom_postal p{
+	font-family:"DanielRegular",Arial, sans-serif;
+	color:#313131;
+	text-shadow:none;
+	position:absolute;
+}
+
+#mom_postal h2{
+	top:95px;
+	right:247px;
+	font-size:2em;
+}
+
+#mom_postal p{
+	right:333px;
+	top:333px;
+	font-size:1.5em;
+}
+
+/* Single Recipe */
+.single_recipe_container h2{
+	display:block;
+	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
+	width:77px;
+	height:28px;
+	background-position:-98px -40px;
+	margin: 25px 0;
+}
+
+#single_recipe{
+	background:black;
+	margin-top:25px;
+	color:#fff;
+	width:940px;
+	padding:25px 10px;
+}
+
+#single_recipe h3{
+	font-size:20px;
+}
+
+#single_recipe_code{
+	min-height:300px;
+	margin:25px 0;
+}
+
+/*Comments*/
+
+#comments{
+	width:439px;
+	margin:25px 0;
+}
+
+li.comment{
+	margin:30px 0;
+}
+
+.comment_info{
+	margin-bottom:5px;
+	background:black;
+	color: #fff;
+	padding:10px;
+}
+
+.comment_info p{
+float:right;
+margin-top:31px;
+font-size:80%;
+}
+
+#comment_form_container{
+	width:399px;
+	padding:20px;
+	background:black;
+	color:#fff;
+}
+
+
+/* Search Results */
+
+#sort_results{
+	font-size:90%;
+	margin-top:-1.9em;
+	margin-bottom:35px;
+}
+
+#sort_results p a{
+	color:#343434;
+	text-decoration:underline;
+
+}
+
+#sort_results p a:hover{
+	color:#e08152;
+	text-decoration:underline;
+}
+
+.search_results_container{
+	width:1020px;
+}
+
+.search_results_container h2{
+	margin:25px 0;
+
+}
+
+li.result{
+	background:black;
+	color:#fff;
+	padding:20px;
+	width:256px;
+	float:left;
+	margin-right:35px;
+	margin-bottom:35px;
+}
+
+/*404*/
+
+.error_container{
+	width:980px;
+	
+}
+
+.error{
+	position:relative;
+	height:500px;
+	width:950px;
+}
+
+#error{
+	background: url(../images/mom_postal_404_619x487.png) no-repeat;
+	display:block;
+	width:619px;
+	height:487px;
+	position:relative;
+	top:25px;
+}
+
+
+#error h2,
+#error p,
+#postit_error p{
+	position:absolute;
+	font-family: "DanielRegular", Arial, sans-serif;
+	color:#fff;
+}
+
+#error h2{
+	top:70px;
+	right:80px;
+	font-size:4em;
+}
+
+#error p{
+	font-size:1.5em;
+	left:80px;
+	position:absolute;
+	top:300px;
+}
+
+#postit_error{
+	background:url("../images/postit_206x224.png") no-repeat;
+	width:180px;
+	height:200px;
+	padding:20px;
+	position:absolute;
+	top:25px;
+	right:63px;
+}
+
+#postit_error p{
+	color:#313131 !important;
+	font-size:1.8em;
+	line-height:1.2em;
+
+}
+
+/* sidebar_user */
+
+.sidebar_user{
+	float:left !important;
+}
+
+
+
+/* User Profile */
+.container_user h2{
+	margin-top:25px;
+}
+
+.user_profile{
+	float:right !important;
+	margin-top:23px;
+	width:665px;
+}
+
+#user_profile_info img{
+		margin-bottom:20px;
+}
+
+#user_profile_info p{
+	font-size:80% !important;
+
+}
+
+#user_favorite_recipes,
+#user_recipes{
+margin-bottom:25px;
+}
+
+#user_favorite_recipes h3,
+#user_recipes h3{
+	color:#fff;
+}
+
+#user_favorite_recipes h4 a,
+#user_recipes h4 a{
+	color:#313131;
+}
+
+
+a.administrative_links{
+	font-family:arial, sans-serif;
+	color:gray !important;
+	font-size:12px;
+}
+
+a.administrative_links:hover{
+	color:#E08152 !important;
+}
+
+a.administrative_links_sidebar{
+	color:gray !important;
+	font-size:90%;
+}
+
+a.administrative_links_sidebar:hover{
+	color:#E08152 !important;
+}
+
+
+
+
+
+/* add_new_recipe */
+
+#add_new_recipe{
+	margin-bottom:25px;
+	font-size:90%;
+}
