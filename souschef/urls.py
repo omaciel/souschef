@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 
     # Browsing
     url(r'^$', direct_to_template, {'template': 'front.html' }, name="frontpage"),
+    url(r'^accounts/', include('demoprofile.urls')),
     url(r'^accounts/', include('userprofile.urls')),
     url(r'^aboyeur/', include('aboyeur.urls.entries')),
 

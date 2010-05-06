@@ -44,7 +44,7 @@
             {# {% endif %} #}
             <p>{% trans "Submitted on" %}: {{ recipe.date_posted|date }}</p>
             <p>{% trans "Author" %}: <a href="{% url profile_public recipe.author %}">{% if recipe.author.get_profile.firstname  %}{{ recipe.author.get_profile.firstname }} {{ recipe.author.get_profile.surname }}{% else %}{{ recipe.author }}{% endif %}</a></p>
-            {% if user.is_autenticated %}
+            {% if user.is_authenticated %}
                 <a href="{% url toggle_favorite recipe.id %}">
                     {% if favorite_recipe %}
                         {% trans "Remove favorite" %}
