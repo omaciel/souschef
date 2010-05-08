@@ -8,12 +8,15 @@
     <script type="text/javascript">
         $(function(){
             var $add_new_recipe = $('#add_new_recipe');
+            var $input_title = $('#id_title');
             $add_new_recipe.hide();
             
             $('#user_recipes h3 a').toggle(function(){
-                $add_new_recipe.slideDown();
+                $add_new_recipe.slideDown(function(){
+                    $input_title.focus();
+                });
             }, function(){
-                $add_new_recipe.slideUp();                
+                $add_new_recipe.slideUp();
             });
         });
     </script>
@@ -29,7 +32,7 @@
 
 {% block content %}
     <div id="user_favorite_recipes">
-        <h3>Favorite Recipes</h3>
+        <h3>{% trans "Favorite Recipes" %}</h3>
         <ul>
             <li class="favorite_recipe">
                 {% for favorite in favorites %}
@@ -41,31 +44,33 @@
         </ul>
     </div><!--end user_favorite_recipes-->
     
-    <div id="user_recipes">
-        <h3>My Recipes <a class="administrative_links" href="#add_new_recipe">Add New Recipe</a></h3>
-        <div id="add_new_recipe">
-            <!-- use jquery to hide this block -->
-            <form action="{% url add_recipe %}" method="post">
-                {% for field in form %}
-                    {{ field.label }}: <br />
-                    {{ field }}<br /><br />
-                {% endfor %}
-                <input type="submit" value="Send Recipe" />
-            </form>
+    {% if perms.aboyeur.add_recipe %}
+        <div id="user_recipes">
+            <h3>My Recipes <a class="administrative_links" href="#add_new_recipe">Add New Recipe</a></h3>
+            <div id="add_new_recipe">
+                <!-- use jquery to hide this block -->
+                <form action="{% url add_recipe %}" method="post">
+                    {% for field in form %}
+                        {{ field.label }}: <br />
+                        {{ field }}<br /><br />
+                    {% endfor %}
+                    <input type="submit" value="Save" />
+                </form>
             
-        </div><!--end add_new_recipe-->
+            </div><!--end add_new_recipe-->
         
-        <ul>
-            <li class="user_recipe">
-                {% for recipe in user_recipes %}
-                    <h4> <a class="administrative_links" href="#">{% trans "Edit" %}</a> <a class="administrative_links" href="#">{% trans "Delete" %}</a> <a href="{% url recipe recipe.id %}">{{ recipe.title }}.</a> </h4>
-                {% empty %}
-                    {% trans "No recipes have been added yet. No Soup For You!" %}
-                {% endfor %}
-            </li><!--end favorite_recipe-->
+            <ul>
+                <li class="user_recipe">
+                    {% for recipe in user_recipes %}
+                        <h4> <a class="administrative_links" href="{% url edit_recipe recipe.id%}">{% trans "Edit" %}</a> <a class="administrative_links" href="{% url delete_recipe recipe.id %}">{% trans "Delete" %}</a> <a href="{% url recipe recipe.id %}">{{ recipe.title }}.</a> </h4>
+                    {% empty %}
+                        {% trans "No recipes have been added yet. No Soup For You!" %}
+                    {% endfor %}
+                </li><!--end user_recipe-->
             
-        </ul>
-    </div><!--end user_recipes-->
+            </ul>
+        </div><!--end user_recipes-->
+    {% endif %}
 {% endblock %}
 
 {% block sidebar %}
@@ -78,7 +83,7 @@
             <img class="border" src="{% avatar 96 %}" />
         </a>
         <p>
-            Name:
+            {% trans "Name" %}:
             {% if user.get_profile.firstname %}
                 {{ user.get_profile.firstname }}
             {% else %}
@@ -86,7 +91,7 @@
             {% endif %}
         </p>
         <p>
-            Surname:
+            {% trans "Surname" %}:
             {% if user.get_profile.surname %}
                 {{ user.get_profile.surname }}
             {% else %}
@@ -94,7 +99,7 @@
             {% endif %}
         </p>
         <p>
-            Email:
+            {% trans "Email" %}:
             {% if not email %}
                 {% trans "Not set yet" %}
             {% else %}
@@ -106,17 +111,17 @@
         </p>
         {% if user.get_profile.about %}
             <p>
-                <br />About:<br />
+                <br />{% trans "About" %}:<br />
                 {{ user.get_profile.about }}<br /><br />
             </p>
         {% endif %}
-        <p><a class="administrative_links_sidebar" href="{% url profile_edit_personal %}">Edit user info</a><p>
+        <p><a class="administrative_links_sidebar" href="{% url profile_edit_personal %}">{% trans "Edit user info" %}</a><p>
         <p><a class="administrative_links_sidebar" href="{{ request.path_info }}edit/avatar/">{% if user.get_profile.has_avatar %}{% trans "Change avatar" %}{% else %}{% trans "Add avatar" %}{% endif %}</a></p>
-        <p><a class="administrative_links_sidebar" href="/accounts/profile/edit/location/">Location</a></p>
+        <p><a class="administrative_links_sidebar" href="/accounts/profile/edit/location/">{% trans "Location" %}</a></p>
         <p><a class="administrative_links_sidebar" href="{% url password_change %}">{% trans "Change password" %}</a></p>
         <p><a class="administrative_links_sidebar" href="{% url email_validation %}">{% if email %}{% trans "Change your e-mail address" %}{% else %}{% trans "Add your e-mail address" %}{% endif %}</a></p>
         {% if not validated and email %}<p><a class="administrative_links_sidebar" href="{% url email_validation_reset %}">{% trans "Resend validation e-mail" %}</a></p>{% endif %}
-        <p><a class="administrative_links_sidebar" href="/accounts/profile/delete/">Remove profile</a></p>
+        <p><a class="administrative_links_sidebar" href="/accounts/profile/delete/">{% trans "Remove profile" %}</a></p>
     </div><!--end user_profile_info-->
 
     </div><!--end sidebar-->

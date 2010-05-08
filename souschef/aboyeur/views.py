@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
+from django.views.generic.create_update import update_object
 from aboyeur.models import *
 from aboyeur.forms import *
 from django.contrib.auth.decorators import login_required
@@ -65,27 +66,57 @@ def recipes(request, id):
         'recipe': recipe,
     }, context_instance=RequestContext(request))
 
-@login_required
-def add_recipe(request):
-    if not request.user.has_perm('aboyeur.add_recipe'):
+def _verify_permission(request, permission):
+    if not request.user.has_perm(permission):
         response = render_to_response('403.html', context_instance=RequestContext(request))
         response.status_code = 403
         return response
+
+@login_required
+def add_recipe(request):
+    _verify_permission(request, 'aboyeur.add_recipe')
     
     if request.method == 'POST':
         form = RecipeForm(request.POST)
-        print form.data
         if form.is_valid():
             recipe = form.save(commit=False)
             recipe.author = request.user
             recipe.save()
-            # TODO: redirect to the author's recipes
-            return HttpResponseRedirect('/recipes/')
+            return HttpResponseRedirect(reverse('profile_overview'))
     else:
         form = RecipeForm()
-    return render_to_response('aboyeur/add_recipe.html', {
+    
+    return render_to_response('aboyeur/recipe_form.html', {
         'form': form
     }, context_instance=RequestContext(request))
+
+@login_required
+def delete_recipe(request, recipe_id):
+    _verify_permission(request, 'aboyeur.delete_recipe')
+    
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    
+    if request.method == 'POST':
+        for favorite in Favorite.objects.favorites_for_object(recipe):
+            favorite.delete()
+        
+        recipe.delete()
+        return HttpResponseRedirect(reverse('profile_overview'))
+    else:
+        return render_to_response('aboyeur/recipe_confirm_delete.html', {
+            'recipe': recipe
+        }, context_instance=RequestContext(request))
+
+@login_required
+def update_recipe(request, recipe_id):
+    _verify_permission(request, 'aboyeur.change_recipe')
+    
+    return update_object(request,
+        form_class=RecipeForm,
+        object_id=recipe_id,
+        post_save_redirect='/accounts/profile/',
+        template_object_name='recipe'
+    )
 
 @login_required
 def toggle_favorite(request, recipe_id):

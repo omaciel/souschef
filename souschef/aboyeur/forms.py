@@ -10,4 +10,4 @@ class SearchForm(forms.Form):
 class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
-        exclude = ('author', 'published')
+        exclude = ('author',)

@@ -3,9 +3,8 @@
 
 {% block content %}
 <h1>{% trans "Add a new recipe" %}</h1>
-
-<form action="{% url add_recipe %}" method="post">
+<form action="." method="post">
     {{ form.as_p }}
-    <p><input type="submit" value="Add recipe"></p>
+    <p><input type="submit" value="Save"></p>
 </form>
 {% endblock %}
