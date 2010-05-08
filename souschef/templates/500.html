@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content_class %}error_container{% endblock %}
+
+{% block content %}
+    <div id="error">
+        <h2>{% trans "Error 500!" %}</h2>
+        <p>{% trans "The requested page is currently unavailable." %} XOXO, Mom.</p>    
+    </div><!--end error-->
+    
+    <div id="postit_error">
+        <p>{% trans "We're messing around with things internally, and the server had a bit of a hiccup. Please try again later." %}<p>
+    </div><!--end postit_error-->
+{% endblock %}
