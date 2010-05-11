@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse
+from django.http import Http404
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.create_update import update_object
@@ -24,9 +25,10 @@ def recipes_page(request):
         if query:
             form = SearchForm({'query' : query})
             recipes = Recipe.objects.filter(
+                published=True,
                 tags__icontains=query
                 )[:10]
-    if not query:
+    else:
         query = ""
     
     variables = RequestContext(request, {
@@ -42,13 +44,16 @@ def recipes_page(request):
         return render_to_response('recipes.html', variables)
 
 def tagged_recipes(request, tag):
-    queryset = Recipe.objects.all()
+    queryset = Recipe.objects.all(published=True)
     return tagged_object_list(request, queryset, tag, paginate_by=25,
         allow_empty=True, template_object_name='recipe')
 
 def recipes(request, id):
-    recipe = get_object_or_404(Recipe, id=id)
-
+    if request.user.has_perm('aboyeur.add_recipe'):
+        recipe = get_object_or_404(Recipe, id=id, author=request.user)
+    else:
+        recipe = get_object_or_404(Recipe, id=id, published=True)
+    
     # Apply the syntax highligter
     html_formater = HtmlFormatter(linenos=True, style='native')
     recipe.body = highlight(recipe.body, PythonLexer(), html_formater)
