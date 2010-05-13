@@ -9,14 +9,8 @@ class SearchForm(forms.Form):
     )
 
 class RecipeForm(forms.ModelForm):
+    body = forms.CharField(widget=TinyMCE(attrs={'cols': 8, 'rows': 10}))
+
     class Meta:
         model = Recipe
         exclude = ('author',)
-        widgets = {
-            'body': forms.CharField(widget = TinyMCE(
-                attrs={
-                    'cols': 80,
-                    'rows': 30
-                }
-            ))
-        }

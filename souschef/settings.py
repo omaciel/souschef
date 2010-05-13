@@ -63,6 +63,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -111,7 +112,8 @@ AVATAR_QUOTA = 8
 RATINGS_VOTES_PER_IP = 1
 
 # django-tinymce settings
-TINYMCE_JS_URL = MEDIA_ROOT + 'js/tiny_mce/tiny_mce.js'
+TINYMCE_JS_URL = os.path.join(MEDIA_URL, 'js/tiny_mce/tiny_mce.js')
+TINYMCE_JS_ROOT = os.path.join(MEDIA_ROOT, 'js/tiny_mce/tiny_mce.js')
 TINYMCE_DEFAULT_CONFIG = {
     'plugins': "table,spellchecker,paste,searchreplace",
     'theme': "advanced",
@@ -120,6 +122,7 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 TINYMCE_SPELLCHECKER = True
 TINYMCE_COMPRESSOR = True
+
 # Import production settings if it exists
 try:
     from production_settings import *
