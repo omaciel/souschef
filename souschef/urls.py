@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('demoprofile.urls')),
     url(r'^accounts/', include('userprofile.urls')),
     url(r'^aboyeur/', include('aboyeur.urls.entries')),
+    url(r'^tinymce/', include('tinymce.urls')),
 
     # Administration
     url(r'^admin/', include(admin.site.urls)),

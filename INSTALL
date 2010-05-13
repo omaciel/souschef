@@ -16,3 +16,4 @@ django-profile				0.6			http://code.google.com/p/django-profile/
 pygments					1.3			http://pygments.org/
 django-favorites			b145949		http://github.com/apgwoz/django-favorites
 django-ratings				9e32d33		http://github.com/dcramer/django-ratings
+django-tinymce              1.5         http://code.google.com/p/django-tinymce/

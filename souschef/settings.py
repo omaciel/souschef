@@ -87,6 +87,7 @@ INSTALLED_APPS = (
     'djangoratings',
     'favorites',
     'tagging',
+    'tinymce',
     'userprofile',
     # Application modules
     'aboyeur',
@@ -109,8 +110,18 @@ AVATAR_QUOTA = 8
 # START of django-ratings specific options
 RATINGS_VOTES_PER_IP = 1
 
+# django-tinymce settings
+TINYMCE_JS_URL = MEDIA_ROOT + 'js/tiny_mce/tiny_mce.js'
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
+TINYMCE_SPELLCHECKER = True
+TINYMCE_COMPRESSOR = True
 # Import production settings if it exists
 try:
     from production_settings import *
 except ImportError:
-    pass 
+    pass
