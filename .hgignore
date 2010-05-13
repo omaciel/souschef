@@ -1,7 +1,9 @@
 syntax: glob
+*.orig
 *.pyc
 *.pyo
 *~
 *.db
 media/avatars*
 .DS_Store
+production_settings.py
