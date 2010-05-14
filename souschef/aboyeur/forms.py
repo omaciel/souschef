@@ -9,7 +9,9 @@ class SearchForm(forms.Form):
     )
 
 class RecipeForm(forms.ModelForm):
-    body = forms.CharField(widget=TinyMCE(attrs={'cols': 8, 'rows': 10}))
+    body = forms.CharField(widget=TinyMCE(
+        attrs={'cols': 80, 'rows': 30},
+    ))
 
     class Meta:
         model = Recipe

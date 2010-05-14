@@ -5,6 +5,9 @@
 
 {% block title %}{{ block.super }} - {% trans "Recipe for" %} {{ recipe.title }}{% endblock %}
 
+{% block extrajs %}
+<script type="text/javascript" src="{{ MEDIA_URL }}/js/tiny_mce/tiny_mce.js"></script>
+{% endblock %}
 {% block extracss %}
 <style type="text/css">
     {{ extracss }}

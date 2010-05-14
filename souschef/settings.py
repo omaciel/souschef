@@ -63,7 +63,8 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #TODO: uncomment the line below if running Django 1.2
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -115,10 +116,8 @@ RATINGS_VOTES_PER_IP = 1
 TINYMCE_JS_URL = os.path.join(MEDIA_URL, 'js/tiny_mce/tiny_mce.js')
 TINYMCE_JS_ROOT = os.path.join(MEDIA_ROOT, 'js/tiny_mce/tiny_mce.js')
 TINYMCE_DEFAULT_CONFIG = {
-    'plugins': "table,spellchecker,paste,searchreplace",
-    'theme': "advanced",
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 10,
+    'plugins': "paste,preview,searchreplace",
+    'theme': "simple",
 }
 TINYMCE_SPELLCHECKER = True
 TINYMCE_COMPRESSOR = True
