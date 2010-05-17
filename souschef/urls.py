@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Browsing
-    url(r'^$', direct_to_template, {'template': 'front.html' }, name="frontpage"),
+    url(r'^$', front, name="frontpage"),
     url(r'^accounts/', include('demoprofile.urls')),
     url(r'^accounts/', include('userprofile.urls')),
     url(r'^aboyeur/', include('aboyeur.urls.entries')),

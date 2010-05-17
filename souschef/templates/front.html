@@ -1,8 +1,112 @@
 {% extends "base.html" %}
+{% load avatars %}
 {% load i18n %}
+{% load tagging_tags %}
+
 {% block title %}{{ block.super }} &raquo; {% trans "Front page" %}{% endblock %}
 
+{% block extracss %}
+    <style type="text/css" media="screen">
+            {{ extracss }}
+            #featured_recipe_code {
+                overflow:hidden;
+            }
+            .highlight {
+                padding:5px;
+            }
+            .linenos {
+                background:#888;
+                padding:5px;
+            }
+    </style>
+{% endblock %}
+
 {% block content %}
+    {% if featured_recipe %}
+        <div id="featured_recipe"> 
+            <h2 class="hide">{% trans "Featured Recipe" %}</h2> 
+            
+                <div id="featured_recipe_info"> 
+                    <ul> 
+                        <li>{% trans "Recipe for" %}: <a href="{% url recipe featured_recipe.id %}">{{ featured_recipe.title }}.</a></li> 
+                        <li>
+                            {% trans "tags" %}:
+                            {% tags_for_object featured_recipe as recipe_tags %}
+                            {% for tag in recipe_tags %}
+                                <a href="#">{{ tag }}</a>
+                            {% endfor %}
+                        </li> 
+                        <li>{% trans "Stars" %}: * * * * *</li> 
+                    </ul> 
+                </div><!-- end featured_recipe_info--> 
+                
+                <div id="featured_recipe_code"> 
+                    {{ featured_recipe.body|safe }}
+                </div><!--end featured_recipe_code--> 
+        </div><!--end featured_recipe--> 
+        
+        <div class="clear"></div>
+    {% endif %}
+    
+    {% if languages %}
+        <div id="recipe_list_container" class="rc"> 
+            <h3 class="hide">{% trans "Recipes by Language" %}</h3> 
+            <ul class="recipe_list">
+                {% for language in languages %}
+                    <li><a href="#">{{ language.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div><!--end recipe_list--> 
+
+        <div class="clear"></div>
+    {% endif %}
+    
+    <div id="other_info">
+        {% if latest_recipes %}
+            <div id="latest_recipes" class="box rc">
+                <h3 class="hide">{% trans "Latest Recipes" %}</h3>
+                <ul>
+                    {% for recipe in latest_recipes %}
+                        <li><a href="{% url recipe recipe.id %}">{{ recipe.title }}.</a></li>
+                    {% endfor %}
+                </ul>
+            </div><!--end box-->
+        {% endif %}
+        
+        {% if top_sous_chefs %}
+            <div id="top_sous_chefs" class="box rc no_li">
+                <h3 class="hide">{% trans "Top 3 Sous Chefs" %}</h3>
+                <ul>
+                    {% for author in top_sous_chefs %}
+                        <li class="sous_chef_info">
+                            <a href="#"><img src="{% avatar 96 %}" alt="{{ author }}" title="{% if user.get_profile.firstname %}{{ user.get_profile.firstname }} {{ user.get_profile.surname }}{% else %}{{ author }}{% endif %}" width="42" height="42" /></a>
+                            <ul>
+                                <li>
+                                    {% if user.get_profile.firstname %}
+                                        {{ user.get_profile.firstname }} {{ user.get_profile.surname }}
+                                    {% else %}
+                                        {{ author }}
+                                    {% endif %}
+                                </li>
+                                <li>Recipes: <a href="#">{{ author.recipe_count }}</a></li>
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div><!--end box-->
+        {% endif %}
+        
+        {% if top_recipes %}
+            <div id="top_recipes" class="box rc"> 
+                <h3 class="hide">{% trans "Top 5 Recipes" %}</h3> 
+                <ul class="show_list"> 
+                    {% for recipe in top_recipes %}
+                        <li><a href="{% url recipe recipe.id %}">{{ recipe.title }}.</a></li>                         
+                    {% endfor %}
+                </ul> 
+            </div><!--end box--> 
+        {% endif %}
+    </div><!--end other_info-->
 {% endblock %}
 
 {% block sidebar %}

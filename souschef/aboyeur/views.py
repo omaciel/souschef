@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.create_update import update_object
 from aboyeur.models import *
 from aboyeur.forms import *
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from djangoratings.views import AddRatingFromModel
@@ -13,6 +14,29 @@ from tagging.views import tagged_object_list
 from pygments import highlight
 from pygments.lexers import PythonLexer
 from pygments.formatters import HtmlFormatter
+
+def front(request):
+    recipes = Recipe.objects.filter(published=True).order_by('-date_posted')[:5]
+    featured_recipe = recipes[:1].get()
+    
+    authors = []
+    for user in User.objects.iterator():
+        if user.has_perm('aboyeur.add_recipe'):
+            user.recipe_count = Recipe.objects.filter(author=user).count()
+            authors.append(user)
+    authors.sort(key=lambda author: author.recipe_count, reverse=True)
+    # Apply the syntax highligter
+    html_formater = HtmlFormatter(linenos=True, style='native')
+    featured_recipe.body = highlight(featured_recipe.body, PythonLexer(), html_formater)
+    
+    return render_to_response("front.html", {
+        'extracss': html_formater.get_style_defs('.highlight'),
+        'featured_recipe': featured_recipe,
+        'languages': Category.objects.all(),
+        'latest_recipes': recipes,
+        'top_recipes': recipes,
+        'top_sous_chefs': authors[:3]
+    }, context_instance=RequestContext(request))
 
 def recipes_page(request):
     form = SearchForm()
