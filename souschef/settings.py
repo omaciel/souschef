@@ -1,7 +1,6 @@
 # Django settings for souschef project.
 
 import os.path
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -72,7 +71,7 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     #TODO: uncomment the line below if running Django 1.2
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
