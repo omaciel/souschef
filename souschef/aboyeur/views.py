@@ -17,8 +17,11 @@ from pygments.formatters import HtmlFormatter
 
 def front(request):
     recipes = Recipe.objects.filter(published=True).order_by('-date_posted')[:5]
-    featured_recipe = recipes[:1].get()
-    
+    if recipes:
+        featured_recipe = recipes[:1].get()
+    else:
+        featured_recipe = []
+
     authors = []
     for user in User.objects.iterator():
         if user.has_perm('aboyeur.add_recipe'):
@@ -27,8 +30,9 @@ def front(request):
     authors.sort(key=lambda author: author.recipe_count, reverse=True)
     # Apply the syntax highligter
     html_formater = HtmlFormatter(linenos=True, style='native')
-    featured_recipe.body = highlight(featured_recipe.body, PythonLexer(), html_formater)
-    
+    if featured_recipe:
+        featured_recipe.body = highlight(featured_recipe.body, PythonLexer(), html_formater)
+
     return render_to_response("front.html", {
         'extracss': html_formater.get_style_defs('.highlight'),
         'featured_recipe': featured_recipe,

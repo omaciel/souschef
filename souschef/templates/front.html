@@ -22,10 +22,10 @@
 {% endblock %}
 
 {% block content %}
-    {% if featured_recipe %}
         <div id="featured_recipe"> 
+            {% if featured_recipe %}
             <h2 class="hide">{% trans "Featured Recipe" %}</h2> 
-            
+
                 <div id="featured_recipe_info"> 
                     <ul> 
                         <li>{% trans "Recipe for" %}: <a href="{% url recipe featured_recipe.id %}">{{ featured_recipe.title }}.</a></li> 
@@ -39,40 +39,55 @@
                         <li>{% trans "Stars" %}: * * * * *</li> 
                     </ul> 
                 </div><!-- end featured_recipe_info--> 
-                
+
                 <div id="featured_recipe_code"> 
                     {{ featured_recipe.body|safe }}
                 </div><!--end featured_recipe_code--> 
+            {% else %}
+            <div id="featured_recipe_info">·
+                <ul>·
+                    <li>{% trans "There ano no featured recipes." %}:</li>·
+                    <li>
+                        {% trans "tags" %}:
+                    </li>·
+                    <li>{% trans "Stars" %}: * * * * *</li>·
+                </ul>·
+            </div><!-- end featured_recipe_info-->·
+
+            <div id="featured_recipe_code">·
+                {% trans "The kitchen's pantry is empty!" %}
+            </div><!--end featured_recipe_code-->·
+
+            {% endif %}
         </div><!--end featured_recipe--> 
-        
+
         <div class="clear"></div>
-    {% endif %}
-    
-    {% if languages %}
+
         <div id="recipe_list_container" class="rc"> 
             <h3 class="hide">{% trans "Recipes by Language" %}</h3> 
+            {% if languages %}
             <ul class="recipe_list">
                 {% for language in languages %}
                     <li><a href="#">{{ language.name }}</a></li>
                 {% endfor %}
             </ul>
+        {% endif %}
         </div><!--end recipe_list--> 
 
         <div class="clear"></div>
-    {% endif %}
-    
+
     <div id="other_info">
-        {% if latest_recipes %}
             <div id="latest_recipes" class="box rc">
                 <h3 class="hide">{% trans "Latest Recipes" %}</h3>
+                {% if latest_recipes %}
                 <ul>
                     {% for recipe in latest_recipes %}
                         <li><a href="{% url recipe recipe.id %}">{{ recipe.title }}.</a></li>
                     {% endfor %}
                 </ul>
+            {% endif %}
             </div><!--end box-->
-        {% endif %}
-        
+
         {% if top_sous_chefs %}
             <div id="top_sous_chefs" class="box rc no_li">
                 <h3 class="hide">{% trans "Top 3 Sous Chefs" %}</h3>
@@ -95,24 +110,24 @@
                 </ul>
             </div><!--end box-->
         {% endif %}
-        
-        {% if top_recipes %}
+
             <div id="top_recipes" class="box rc"> 
                 <h3 class="hide">{% trans "Top 5 Recipes" %}</h3> 
+                {% if top_recipes %}
                 <ul class="show_list"> 
                     {% for recipe in top_recipes %}
                         <li><a href="{% url recipe recipe.id %}">{{ recipe.title }}.</a></li>                         
                     {% endfor %}
                 </ul> 
+            {% endif %}
             </div><!--end box--> 
-        {% endif %}
     </div><!--end other_info-->
 {% endblock %}
 
 {% block sidebar %}
     <div id="sidebar" class="rc">
-        <h2 class="hide">About Sous Chef</h2>
+        <h2 class="hide">About Conary Recipe</h2>
         <img src="{{ MEDIA_URL }}images/pie_224x111.png" alt="Pie" title="Pie" id="pie_image"/>
-        <p>Nunc auctor bibendum eros. Maecenas porta accumsan mauris. Etiam enim enim, elementum sed, bibendum quis, rhoncus non, metus. Fusce neque dolor, adipiscing sed, consectetuer et, lacinia sit amet, quam. Suspendisse wisi quam, consectetuer in, blandit sed, suscipit eu, eros. Etiam ligula enim, tempor ut, blandit nec, mollis eu, lectus. Nam cursus. Vivamus iaculis. Aenean risus purus, pharetra in, blandit quis, gravida a, turpis. Donec nisl. Aenean eget mi. Fusce mattis est id diam. Phasellus faucibus interdum sapien. Duis quis nunc. Sed enim.</p>
+        <p>This is where we talk about Conary Recipe. Buon appetit!</p>
     </div><!--end sidebar-->
 {% endblock %}
