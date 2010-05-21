@@ -73,10 +73,7 @@ def tagged_recipes(request, tag):
         allow_empty=True, template_object_name='recipe')
 
 def recipes(request, id):
-    if request.user.has_perm('aboyeur.add_recipe'):
-        recipe = get_object_or_404(Recipe, id=id, author=request.user)
-    else:
-        recipe = get_object_or_404(Recipe, id=id, published=True)
+    recipe = get_object_or_404(Recipe, id=id, published=True)
     
     # Apply the syntax highligter
     html_formater = HtmlFormatter(linenos=True, style='native')
@@ -88,11 +85,17 @@ def recipes(request, id):
         favorite_recipe = True
     except Favorite.DoesNotExist:
         favorite_recipe = False
-
+    
+    try:
+        recipe_stars = recipe.rating.score / recipe.rating.votes
+    except ZeroDivisionError:
+        recipe_stars = 0
+    
     return render_to_response('aboyeur/recipe.html', {
         'extracss': html_formater.get_style_defs('.highlight'),
         'favorite_recipe': favorite_recipe,
         'recipe': recipe,
+        'recipe_stars': recipe_stars
     }, context_instance=RequestContext(request))
 
 def _verify_permission(request, permission):

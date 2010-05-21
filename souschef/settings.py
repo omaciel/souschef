@@ -55,6 +55,14 @@ ADMIN_MEDIA_PREFIX = '/media/'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 't6&w@k)srt%aj6g$j^s@=*s-04=8#7ga7lqbbih#&*lt(7ufj='
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.core.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.request"
+)
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
@@ -108,9 +116,6 @@ GOOGLE_MAPS_API_KEY = "ABQIAAAAn7xaxKrYcZCx8cCWR6ZTfBT2yXp_ZAY8_ufC3CFXhHIE1Nvwk
 #GOOGLE_MAPS_API_KEY="ABQIAAAA06IJoYHDPFMx4u3hTtaghxS1mGAeXhF8eEwoOC3WUqD9xSVHbhT_wvgbriWemZzoPwFT5-HqnLJ9-A"
 REQUIRE_EMAIL_CONFIRMATION = False
 AVATAR_QUOTA = 8
-
-# START of django-ratings specific options
-RATINGS_VOTES_PER_IP = 1
 
 # django-tinymce settings
 TINYMCE_JS_URL = os.path.join(MEDIA_URL, 'js/tiny_mce/tiny_mce.js')
