@@ -19,8 +19,6 @@
                 
                 fill_stars(rating);
                 
-                console.log($rating_list, $rating_items, rating, $rating_list.attr('class'), !$rating_list.hasClass('rating-readonly'));
-                
                 if (!$rating_list.hasClass('rating-readonly')) {
                     $rating_items.each(function(){
                         $(this).hover(function(){
