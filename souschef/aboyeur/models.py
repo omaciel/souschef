@@ -6,19 +6,12 @@ from django.template.defaultfilters import slugify
 
 # External Modules
 from djangoratings.fields import RatingField
-from pygments import lexers
 from tagging.fields import TagField
 from tagging.models import Tag
 
 class Category(models.Model):
     name = models.CharField(max_length=30)
     slug = models.SlugField(editable=False)
-    language_code = models.CharField(max_length=50,
-        help_text="This should be an alias of a Pygments lexer which can handle this language.")
-    file_extension = models.CharField(max_length=10,
-        help_text="The file extension to use when downloading recipes; leave out the dot.")
-    mime_type = models.CharField(max_length=100,
-        help_text="The HTTP Content-Type to use when downloading recipes.")
 
     objects = managers.RecipesManager()
 
@@ -31,25 +24,15 @@ class Category(models.Model):
             self.slug = slugify(self.name)
         super(Category, self).save()
 
-    def get_absolute_url(self):
-        return ('cab.views.snippets.snippets_by_language', (), { 'slug': self.slug })
-    get_absolute_url = models.permalink(get_absolute_url)
-
     def __unicode__(self):
         return self.name
-
-    def get_lexer(self):
-        """
-        Returns an instance of the Pygments lexer for this language.
-        """
-        return lexers.get_lexer_by_name(self.language_code)
 
 class Recipe(models.Model):
     author = models.ForeignKey(User)
     title = models.CharField(max_length=30)
     body = models.TextField()
-    date_posted = models.DateField(editable=False)
-    date_updated = models.DateTimeField(editable=False)
+    date_posted = models.DateField(editable=False, blank=True, null=True)
+    date_updated = models.DateTimeField(editable=False, blank=True, null=True)
     published = models.BooleanField(default=False)
 
     rating = RatingField(range=5)
