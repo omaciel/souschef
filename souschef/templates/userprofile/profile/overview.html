@@ -49,7 +49,7 @@
             <h3>My Recipes <a class="administrative_links" href="#add_new_recipe">Add New Recipe</a></h3>
             <div id="add_new_recipe">
                 <!-- use jquery to hide this block -->
-                <form action="{% url add_recipe %}" method="post">
+                <form action="{% url add_recipe %}" method="post">{% csrf_token %}
                     {% for field in form %}
                         {{ field.label }}: <br />
                         {{ field }}<br /><br />

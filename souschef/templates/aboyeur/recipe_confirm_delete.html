@@ -2,8 +2,8 @@
 
 {% block content %}
     <p>You are about to delete the recipe for {{ recipe.title }}. Are you sure?</p>
-    
-    <form action="{% url delete_recipe recipe.id %}" method="post">
+
+    <form action="{% url delete_recipe recipe.id %}" method="post">{% csrf_token %}
         <p><input type="submit" value="Delete"></p>
     </form>
 {% endblock %}

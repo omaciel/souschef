@@ -3,7 +3,7 @@
 
 {% block content %}
 <h1>{% trans "Add a new recipe" %}</h1>
-<form action="." method="post">
+<form action="." method="post">{% csrf_token %}
     {{ form.as_p }}
     <p><input type="submit" value="Save"></p>
 </form>
