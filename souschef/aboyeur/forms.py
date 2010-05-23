@@ -1,5 +1,4 @@
 from django import forms
-from tinymce.widgets import TinyMCE
 from aboyeur.models import Recipe
 
 class SearchForm(forms.Form):
@@ -9,9 +8,6 @@ class SearchForm(forms.Form):
     )
 
 class RecipeForm(forms.ModelForm):
-    body = forms.CharField(widget=TinyMCE(
-        attrs={'cols': 80, 'rows': 30},
-    ))
 
     class Meta:
         model = Recipe

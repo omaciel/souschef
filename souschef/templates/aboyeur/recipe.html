@@ -12,13 +12,13 @@
                 var $rating_items = $('.rating li');
                 var $rating_list = $rating_items.parent();
                 var rating = /rating-(\d)/.exec($rating_list.attr('class'))[1] - 1;
-                
+
                 function fill_stars (number) {
                     $($rating_items[number]).prevAll().andSelf().addClass('rating-active');
                 }
-                
+
                 fill_stars(rating);
-                
+
                 if (!$rating_list.hasClass('rating-readonly')) {
                     $rating_items.each(function(){
                         $(this).hover(function(){
@@ -52,7 +52,7 @@
         display:inline-block;
     }
     .rating a {
-        background:url({{ MEDIA_URL }}/images/star_15x15.png);
+        background:url({{ media_url }}/images/star_15x15.png);
         display:block;
         height:15px;
         width:15px;
@@ -99,7 +99,7 @@
                     <li><a class="hide" href="{% url add_rating recipe.id 4 %}">4</a></li>
                     <li><a class="hide" href="{% url add_rating recipe.id 5 %}">5</a></li>
                 </ul>
-                
+
             <p>{% trans "Submitted on" %}: {{ recipe.date_posted|date }}</p>
             <p>{% trans "Author" %}: <a href="{% url profile_public recipe.author %}">{% if recipe.author.get_profile.firstname  %}{{ recipe.author.get_profile.firstname }} {{ recipe.author.get_profile.surname }}{% else %}{{ recipe.author }}{% endif %}</a></p>
             {% if user.is_authenticated %}

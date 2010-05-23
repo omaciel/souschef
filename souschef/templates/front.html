@@ -18,16 +18,34 @@
                 background:#888;
                 padding:5px;
             }
+            .rating, .rating li {
+                display:inline-block;
+            }
+            .rating a {
+                background:url({{ media_url }}/images/star_15x15.png);
+                display:block;
+                height:15px;
+                width:15px;
+            }
+            .rating-active {
+                background-color:#ad4e1f;
+            }
+            .rating-hover {
+                background-color:#ccc366;
+            }
+            .rating-readonly a {
+                cursor:default !important;
+                outline:none;
     </style>
 {% endblock %}
 
 {% block content %}
-        <div id="featured_recipe"> 
+        <div id="featured_recipe">
+            <h2 class="hide">{% trans "Featured Recipe" %}</h2>
             {% if featured_recipe %}
-            <h2 class="hide">{% trans "Featured Recipe" %}</h2> 
 
-                <div id="featured_recipe_info"> 
-                    <ul> 
+                <div id="featured_recipe_info">
+                    <ul>
                         <li>{% trans "Recipe for" %}: <a href="{% url recipe featured_recipe.id %}">{{ featured_recipe.title }}.</a></li> 
                         <li>
                             {% trans "tags" %}:
@@ -35,10 +53,14 @@
                             {% for tag in recipe_tags %}
                                 <a href="#">{{ tag }}</a>
                             {% endfor %}
-                        </li> 
-                        <li>{% trans "Stars" %}: * * * * *</li> 
-                    </ul> 
-                </div><!-- end featured_recipe_info--> 
+                        </li>
+                        <ul class="rating rating-{{ recipe_stars }} rating-readonly">{% trans "Stars" %}:
+                            {% for star in featured_recipe.rating_score|make_list %}
+                            <li><a class="hide" href="{% url add_rating featured_recipe.id star %}">1</a></li>
+                            {% endfor %}
+                        </ul>
+                    </ul>
+                </div><!-- end featured_recipe_info-->
 
                 <div id="featured_recipe_code"> 
                     {{ featured_recipe.body|safe }}
@@ -50,7 +72,7 @@
                     <li>
                         {% trans "tags" %}:
                     </li>·
-                    <li>{% trans "Stars" %}: * * * * *</li>·
+                    <li>{% trans "Stars" %}:</li>·
                 </ul>·
             </div><!-- end featured_recipe_info-->·
 

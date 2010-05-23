@@ -15,7 +15,7 @@ from pygments.lexers import PythonLexer
 from pygments.formatters import HtmlFormatter
 
 def front(request):
-    recipes = Recipe.objects.filter(published=True).order_by('-date_posted')[:5]
+    recipes = Recipe.objects.filter(published=True).order_by('-date_updated')[:5]
     if recipes:
         featured_recipe = recipes[:1][0]
     else:

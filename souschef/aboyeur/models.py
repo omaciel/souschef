@@ -46,6 +46,9 @@ class Recipe(models.Model):
     def get_tags(self):
         return Tag.objects.get_for_object(self)
 
+    def stars(self):
+        return range(self.rating_score)
+
     class Meta:
         ordering = ('-date_updated',)
 
