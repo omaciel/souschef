@@ -1,5 +1,4 @@
 from django.core.urlresolvers import reverse
-from django.http import Http404
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.create_update import update_object
@@ -18,7 +17,7 @@ from pygments.formatters import HtmlFormatter
 def front(request):
     recipes = Recipe.objects.filter(published=True).order_by('-date_posted')[:5]
     if recipes:
-        featured_recipe = recipes[:1].get()
+        featured_recipe = recipes[:1][0]
     else:
         featured_recipe = []
 
@@ -58,7 +57,7 @@ def recipes_page(request):
                 )[:10]
     else:
         query = ""
-    
+
     variables = RequestContext(request, {
         'form': form,
         'query': query,
@@ -77,24 +76,24 @@ def tagged_recipes(request, tag):
         allow_empty=True, template_object_name='recipe')
 
 def recipes(request, id):
-    recipe = get_object_or_404(Recipe, id=id, published=True)
-    
+    recipe = get_object_or_404(Recipe, id=id)
+
     # Apply the syntax highligter
     html_formater = HtmlFormatter(linenos=True, style='native')
     recipe.body = highlight(recipe.body, PythonLexer(), html_formater)
-    
+
     # Verify if its a favorite recipe for the current user
     try:
         Favorite.objects.favorite_for_user(recipe, user=request.user)
         favorite_recipe = True
     except Favorite.DoesNotExist:
         favorite_recipe = False
-    
+
     try:
         recipe_stars = recipe.rating.score / recipe.rating.votes
     except ZeroDivisionError:
         recipe_stars = 0
-    
+
     return render_to_response('aboyeur/recipe.html', {
         'extracss': html_formater.get_style_defs('.highlight'),
         'favorite_recipe': favorite_recipe,
@@ -111,7 +110,7 @@ def _verify_permission(request, permission):
 @login_required
 def add_recipe(request):
     _verify_permission(request, 'aboyeur.add_recipe')
-    
+
     if request.method == 'POST':
         form = RecipeForm(request.POST)
         if form.is_valid():
@@ -121,7 +120,7 @@ def add_recipe(request):
             return HttpResponseRedirect(reverse('profile_overview'))
     else:
         form = RecipeForm()
-    
+
     return render_to_response('aboyeur/recipe_form.html', {
         'form': form
     }, context_instance=RequestContext(request))
@@ -129,13 +128,13 @@ def add_recipe(request):
 @login_required
 def delete_recipe(request, recipe_id):
     _verify_permission(request, 'aboyeur.delete_recipe')
-    
+
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    
+
     if request.method == 'POST':
         for favorite in Favorite.objects.favorites_for_object(recipe):
             favorite.delete()
-        
+
         recipe.delete()
         return HttpResponseRedirect(reverse('profile_overview'))
     else:
@@ -146,7 +145,7 @@ def delete_recipe(request, recipe_id):
 @login_required
 def update_recipe(request, recipe_id):
     _verify_permission(request, 'aboyeur.change_recipe')
-    
+
     return update_object(request,
         form_class=RecipeForm,
         object_id=recipe_id,
@@ -172,9 +171,9 @@ def add_rating(request, recipe_id, score):
         'object_id': recipe_id,
         'score': score
     }
-    
+
     response = AddRatingFromModel()(request, **params)
-    
+
     if response.status_code == 200:
         return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
     return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
