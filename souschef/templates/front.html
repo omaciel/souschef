@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load avatars %}
 {% load i18n %}
+{% load ratings %}
 {% load tagging_tags %}
 
 {% block title %}{{ block.super }} &raquo; {% trans "Front page" %}{% endblock %}
@@ -22,21 +23,23 @@
                 display:inline-block;
             }
             .rating a {
-                background:url({{ media_url }}/images/star_15x15.png);
+                background:url({{ MEDIA_URL }}/images/star_15x30.png) 0 0;
                 display:block;
                 height:15px;
                 width:15px;
             }
-            .rating-active {
-                background-color:#ad4e1f;
-            }
-            .rating-hover {
-                background-color:#ccc366;
+            .rating-active a {
+                background-position:0 -15px;
             }
             .rating-readonly a {
                 cursor:default !important;
                 outline:none;
+            }
     </style>
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/rating.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -54,11 +57,17 @@
                                 <a href="#">{{ tag }}</a>
                             {% endfor %}
                         </li>
-                        <ul class="rating rating-{{ recipe_stars }} rating-readonly">{% trans "Stars" %}:
-                            {% for star in featured_recipe.rating_score|make_list %}
-                            <li><a class="hide" href="{% url add_rating featured_recipe.id star %}">1</a></li>
-                            {% endfor %}
-                        </ul>
+                        <li>
+                            {% trans "Stars" %}:
+                            {% rating_by_request request on featured_recipe.rating as vote %}
+                            <ul class="rating rating-{{ featured_recipe.stars }} rating-readonly">
+                                <li><a class="hide" href="#">1</a></li>
+                                <li><a class="hide" href="#">2</a></li>
+                                <li><a class="hide" href="#">3</a></li>
+                                <li><a class="hide" href="#">4</a></li>
+                                <li><a class="hide" href="#">5</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div><!-- end featured_recipe_info-->
 

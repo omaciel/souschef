@@ -18,6 +18,10 @@ def front(request):
     recipes = Recipe.objects.filter(published=True).order_by('-date_updated')[:5]
     if recipes:
         featured_recipe = recipes[0]
+        try:
+            featured_recipe.stars = featured_recipe.rating.score / featured_recipe.rating.votes
+        except ZeroDivisionError:
+            featured_recipe.stars = 0
     else:
         featured_recipe = []
 
