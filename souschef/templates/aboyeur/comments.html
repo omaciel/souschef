@@ -1,0 +1,19 @@
+{% load comments %}
+{% load i18n %}
+
+<div id="comments"> 
+{% if user.is_authenticated %}
+    <p>{% trans 'Leave a <a href="#comment_form">Comment</a>' %}</p>
+{% else %}
+    <p>{% trans "You must be logged in to post comments." %}</p>
+{% endif %}
+{% get_comment_list for recipe as comment_list %}
+{% include "comments/list.html" %}
+</div><!--end comments--> 
+
+{% if user.is_authenticated  %}
+<div id="comment_form_container" class="rc"> 
+    {% get_comment_form for recipe as form %}
+    {% include "comments/form.html" %}
+</div><!-- end comment_form-->    
+{% endif %}

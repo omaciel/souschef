@@ -17,7 +17,7 @@ from pygments.formatters import HtmlFormatter
 def front(request):
     recipes = Recipe.objects.filter(published=True).order_by('-date_updated')[:5]
     if recipes:
-        featured_recipe = recipes[:1][0]
+        featured_recipe = recipes[0]
     else:
         featured_recipe = []
 
@@ -97,6 +97,7 @@ def recipes(request, id):
     return render_to_response('aboyeur/recipe.html', {
         'extracss': html_formater.get_style_defs('.highlight'),
         'favorite_recipe': favorite_recipe,
+        'next': reverse('recipe', args=[recipe.id]),
         'recipe': recipe,
         'recipe_stars': recipe_stars
     }, context_instance=RequestContext(request))
