@@ -6,7 +6,7 @@
 {% block title %}{{ block.super }} - {% trans "Recipe for" %} {{ recipe.title }}{% endblock %}
 
 {% block extrajs %}
-<script type="text/javascript" src="{{ MEDIA_URL }}/js/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript">
     jQuery(function($){
                 var $rating_items = $('.rating li');
@@ -52,7 +52,7 @@
         display:inline-block;
     }
     .rating a {
-        background:url({{ media_url }}/images/star_15x15.png);
+        background:url({{ MEDIA_URL }}/images/star_15x15.png);
         display:block;
         height:15px;
         width:15px;
