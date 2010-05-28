@@ -40,6 +40,27 @@
 
 {% block extrajs %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/rating.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $recipe_list = $('.recipe_list');
+        $recipe_list_items = $recipe_list.children();
+        if ($recipe_list_items.length >= 4) {
+            var column_size = Math.ceil($recipe_list_items.length / 4);
+            $recipe_list_items.detach();
+            
+            var columns = [
+                $recipe_list.append($recipe_list_items.slice(0, column_size)),
+                $('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(column_size, 2 * column_size)),
+                $('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(2 * column_size, 3 * column_size)),
+                $('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(3 * column_size))
+            ];
+            
+            columns[1].insertAfter(columns[0]);
+            columns[2].insertAfter(columns[1]);
+            columns[3].insertAfter(columns[2]);
+        };
+    });
+</script>
 {% endblock %}
 
 {% block content %}
