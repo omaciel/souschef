@@ -35,10 +35,10 @@ body{
 
 h1 a{
 	display:block;
-	background: url(../images/sous_chef_logo_230x65.png) no-repeat;
-	width:230px;
-	height:65px;
-	margin:20px auto;
+	background: url(../images/conary_recipes_logo200x79.png) no-repeat;
+	width:200px;
+	height:79px;
+	margin:20px auto 15px;
 }
 
 #menu_container{
@@ -65,12 +65,12 @@ h1 a{
 }
 
 
-/*menus*/
+/*menus
 
 a.menu_item{
-/*	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;*/
+	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
 	display:block;
-/*	text-indent: -5000px;*/
+	text-indent: -5000px;
 	 height:20px;
 	 float:left;
 	 margin-right:10px;
@@ -91,6 +91,7 @@ a#menu_contact:hover { width:63px;background-position: -211px -19px; }
 
 a#menu_login { width:47px;background-position: -283px 0; }
 a#menu_login:hover { width:47px;background-position: -283px -19px; }
+*/
 
 /* Search */
 #search{
@@ -419,25 +420,6 @@ form input[type=password]{
 }
 
 
-#login_form_container{
-	margin-top:45%;
-	background:black;
-	color:#fff;
-	margin:0;
-	width:200px;
-	position:relative;
-	font-size:90%;
-}
-
-form#login_form{
-	padding:20px;
-}
-
-form#login_form input[type=text],
-form#login_form input[type=password]{
-	width:150px;
-}
-
 #mom_postal{
 	background: url(../images/mom_postal582x452.png) no-repeat;
 	width:582px;
@@ -467,6 +449,46 @@ form#login_form input[type=password]{
 	right:333px;
 	top:333px;
 	font-size:1.5em;
+}
+
+/* login and register forms */
+
+#login_form_container,
+#register_form_container{
+	margin-top:45%;
+	background:black;
+	color:#fff;
+	margin:0;
+	position:relative;
+	font-size:90%;
+	width:200px;
+}
+
+#login_form_container{
+	height:190px;
+}
+
+#register_form_container{
+	height:315px;
+}
+
+
+form#box_form{
+	position:absolute;
+	top:20px;
+	left:20px;
+}
+
+form#box_form input[type=text],
+form#box_form input[type=password]{
+	width:150px;
+}
+
+
+/* Register page*/
+
+#register h2{
+	margin: 25px 0;
 }
 
 /* Single Recipe */
@@ -564,6 +586,23 @@ li.result{
 	float:left;
 	margin-right:35px;
 	margin-bottom:35px;
+}
+
+
+#search_none{
+	background: url(../images/mom_empty_pan_526x459.png) no-repeat;
+	width:526px;
+	height:459px;
+	margin:auto;
+	position:relative;
+}
+
+#search_none h2{
+	position:absolute;
+	font-family:"DanielRegular",Arial,sans-serif;
+	top:300px;
+	left:20px;
+	font-size:1.6em;
 }
 
 /*404*/
@@ -692,11 +731,61 @@ a.administrative_links_sidebar:hover{
 
 
 
-
-
 /* add_new_recipe */
 
 #add_new_recipe{
 	margin-bottom:25px;
 	font-size:90%;
+}
+
+/*logout page*/
+#logout_mom_sweater{
+	background: url("../images/mom_sweater_589x493.png") no-repeat;
+	width:589px;
+	height:493px;
+	margin-top:30px;
+	float:right;
+	font-family:"DanielRegular",Arial,sans-serif;
+	position:relative;
+}
+
+
+#logout_mom_sweater p{
+	position:absolute;
+	top:269px;
+	left:58px;
+	color:#fff;
+	font-size:1.5em;
+}
+#logout_postit{
+	background: url("../images/postit_206x224.png") no-repeat;
+	width: 186px;
+	height: 224px;
+	float:left;
+	margin-top:30px;
+	font-family:"DanielRegular",Arial,sans-serif;
+	padding:20px;
+}
+
+#logout_postit p{
+	font-size:30px;
+
+}
+
+/*register page*/
+#register_container{
+	height:500px;
+}	
+
+#mom_menu{
+	background: url("../images/mom_menu_555x491.png") no-repeat;
+	width:555px;
+	height:491px;
+	position:absolute;
+	left:340px;
+	top:50px;
+}
+
+.register_container{
+	height:500px;
 }

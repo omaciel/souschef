@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "User registration" %}{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+    $(function() {
+        $("input#id_username").focus();
+        $("input[type='text'], input[type='password']").addClass("text");
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+    <div id="register">
+        <h2>Register</h2>
+        <div id="register_form_container" class="rc">
+            <form id="box_form" action="" method="post">{% csrf_token %}
+                {% trans "Username" %}:<br />{{ form.username }}<br />{{ form.username.errors }}<br />
+                {% trans "Email (optional)" %}:<br />{{ form.email }}<br />{{ form.email.errors }}<br />
+                {% trans "Password" %}:<br />{{ form.password1 }}<br />{{ form.password1.errors }}<br />
+                {% trans "Repeat Password" %}:<br />{{ form.password2 }}<br />{{ form.password2.errors }}<br />
+                <input value="{% trans "Register" %}" type="submit" />
+            </form>
+        </div><!-- end div login_form_container-->
+    </div>
+    <div id="mom_menu">
+        
+    </div><!--end mom_postal-->
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div id="logout_mom_sweater">
+    <p>{% trans "Do not forget to grab your coat!" %}<br />
+    XOXOXO,<br />
+    {% trans "Mom" %}<p>
+</div>
+
+<div id="logout_postit">
+    <p>You've been logged out. <a href="{% url login %}">Log in again</a></p>
+</div><!--end logout_postit-->
+{% endblock %}
