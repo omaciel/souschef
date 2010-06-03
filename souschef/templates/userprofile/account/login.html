@@ -7,7 +7,7 @@
     <div id="login">
         <h2 class="hide">Login</h2>
         <div id="login_form_container" class="rc">
-            <form id="login_form" action="{% url login %}" method="post">{% csrf_token %}
+            <form id="box_form" action="{% url login %}" method="post">{% csrf_token %}
                 {{ form.username.label }}:<br /> {{ form.username }}<br />{{ form.username.errors }}<br />
                 {{ form.password.label}}:<br /> {{ form.password }}<br />{{ form.password.errors }}<br />
                 <input value="Submit" type="submit">
