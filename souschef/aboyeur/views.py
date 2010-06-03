@@ -13,11 +13,13 @@ from tagging.views import tagged_object_list
 from pygments import highlight
 from pygments.lexers import PythonLexer
 from pygments.formatters import HtmlFormatter
+import random
 
 def front(request):
     recipes = Recipe.objects.filter(published=True).order_by('-date_updated')[:5]
+    top_recipes = Recipe.objects.all().order_by('-rating_score')[:5]
     if recipes:
-        featured_recipe = recipes[0]
+        featured_recipe = top_recipes[random.randint(0,len(top_recipes) - 1)]
         try:
             featured_recipe.stars = featured_recipe.rating.score / featured_recipe.rating.votes
         except ZeroDivisionError:
@@ -41,7 +43,7 @@ def front(request):
         'featured_recipe': featured_recipe,
         'languages': Category.objects.all(),
         'latest_recipes': recipes,
-        'top_recipes': recipes,
+        'top_recipes': top_recipes,
         'top_sous_chefs': authors[:3]
     }, context_instance=RequestContext(request))
 
