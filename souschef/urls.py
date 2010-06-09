@@ -20,7 +20,6 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('userprofile.urls')),
     url(r'^aboyeur/', include('aboyeur.urls.entries')),
     url(r'^comments/', include('django.contrib.comments.urls')),
-    url(r'^tinymce/', include('tinymce.urls')),
 
     # Administration
     url(r'^admin/', include(admin.site.urls)),
