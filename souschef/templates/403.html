@@ -4,12 +4,14 @@
 {% block content_class %}error_container{% endblock %}
 
 {% block content %}
-    <div id="error">
-        <h2>{% trans "Error 403!" %}</h2>
-        <p>{% trans "Looks like you do not have the necessary permissions for the required action." %} XOXO, Mom.</p>    
-    </div><!--end error-->
+    <div id="forbidden_error"> 
+        <h2>{% trans "Error 403!" %}</h2> 
+        <p>{% trans "Sorry! There is nothing here. XOXOX, Mom." %}</p> 
+    </div><!--end error--> 
     
-    <div id="postit_error">
-        <p>{% blocktrans %}Here's a link to the <a href="/">homepage</a>.<br /> You know, just in case.{% endblocktrans %}<p>
+    <p class="image-credit">{% trans "Image by" %}: <a href="http://www.flickr.com/photos/ackook/4073405489/" target="_blank">Ack Ook</a></p> 
+    
+    <div id="postit_error"> 
+        <p>{% trans "Do not forget<br /> to use the search!" %}<p> 
     </div><!--end postit_error-->
 {% endblock %}

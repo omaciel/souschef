@@ -627,24 +627,53 @@ li.result{
 	top:25px;
 }
 
+#forbidden_error{
+	background: url(../images/mom_vortex_596x454.png) no-repeat;
+	display:block;
+	width:596px;
+	height:454px;
+	position:relative;
+	top:25px;
+}
+
+
+
 
 #error h2,
 #error p,
-#postit_error p{
+#postit_error p,
+#forbidden_error h2,
+#forbidden_error p{
 	position:absolute;
 	font-family: "DanielRegular", Arial, sans-serif;
 	color:#fff;
 }
 
+#error h2,
+#forbidden_error h2{
+	font-size:4em;
+}
+
+#forbidden_error h2{
+	left:63px;
+	top:30px;
+}
+
 #error h2{
 	top:70px;
 	right:80px;
-	font-size:4em;
 }
 
 #error p{
 	font-size:1.5em;
 	left:80px;
+	position:absolute;
+	top:300px;
+}
+
+#forbidden_error p{
+	font-size:1.5em;
+	left:59px;
 	position:absolute;
 	top:300px;
 }
@@ -664,6 +693,15 @@ li.result{
 	font-size:1.8em;
 	line-height:1.2em;
 
+}
+
+p.image-credit{
+	position:absolute;
+	z-index:20;
+	top:404px;
+	left:441px;
+	color:#fff;
+	font-size:12px;
 }
 
 /* sidebar_user */
