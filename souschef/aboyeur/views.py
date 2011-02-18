@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.create_update import update_object
 from aboyeur.models import Recipe, User
 from aboyeur.forms import RecipeForm, SearchForm
-
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from djangoratings.views import AddRatingFromModel
@@ -55,11 +55,7 @@ def recipes_page(request):
         show_results = True
         query = request.GET['query'].strip()
         if query:
-            form = SearchForm({'query' : query})
-            recipes = Recipe.objects.filter(
-                published=True,
-                tags__icontains=query
-                )[:10]
+            recipes = Recipe.objects.filter(Q(title__icontains = query) | Q(body__icontains = query) | Q(tags__icontains = query))[:10]
     else:
         query = ""
 
