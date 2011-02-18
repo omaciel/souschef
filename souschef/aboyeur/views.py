@@ -55,7 +55,7 @@ def recipes_page(request):
         show_results = True
         query = request.GET['query'].strip()
         if query:
-            recipes = Recipe.objects.filter(Q(title__icontains = query) | Q(body__icontains = query) | Q(tags__icontains = query))[:10]
+            recipes = Recipe.objects.filter(Q(title__icontains = query) | Q(body__icontains = query) | Q(tags__icontains = query), Q(published__exact=True))[:10]
     else:
         query = ""
 
