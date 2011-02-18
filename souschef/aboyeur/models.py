@@ -1,31 +1,11 @@
 import datetime
-import managers
 from django.db import models
 from django.contrib.auth.models import User
-from django.template.defaultfilters import slugify
 
 # External Modules
 from djangoratings.fields import RatingField
 from tagging.fields import TagField
 from tagging.models import Tag
-
-class Category(models.Model):
-    name = models.CharField(max_length=30)
-    slug = models.SlugField(editable=False)
-
-    objects = managers.RecipesManager()
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name_plural = 'categories'
-
-    def save(self):
-        if not self.id:
-            self.slug = slugify(self.name)
-        super(Category, self).save()
-
-    def __unicode__(self):
-        return self.name
 
 class Recipe(models.Model):
     author = models.ForeignKey(User)
@@ -37,7 +17,6 @@ class Recipe(models.Model):
     published = models.BooleanField(default=False)
 
     rating = RatingField(range=5)
-    category = models.ForeignKey(Category)
     tags = TagField()
 
     def set_tags(self, tags):
@@ -55,7 +34,7 @@ class Recipe(models.Model):
     class Admin:
         fields = (
             ('Metadata', {
-            'fields': ('title', 'category', 'author', 'tags', )}),
+            'fields': ('title', 'author', 'tags', )}),
             ('None', {
              'fields': ('body')}),
             )

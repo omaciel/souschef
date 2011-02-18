@@ -2,8 +2,8 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.create_update import update_object
-from aboyeur.models import *
-from aboyeur.forms import *
+from aboyeur.models import Recipe, User
+from aboyeur.forms import RecipeForm, SearchForm
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -41,7 +41,6 @@ def front(request):
     return render_to_response("front.html", {
         'extracss': html_formater.get_style_defs('.highlight'),
         'featured_recipe': featured_recipe,
-        'languages': Category.objects.all(),
         'latest_recipes': recipes,
         'top_recipes': top_recipes,
         'top_sous_chefs': authors[:3]
