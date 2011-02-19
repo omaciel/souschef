@@ -5,7 +5,7 @@
 {% for comment in comment_list %}
     <li class="comment"> 
         <div class="comment_info rc">
-            <a href="{% url profile_public comment.user %}"><img src="{% avatar 96 %}" alt="{{ author }}" title="{% if user.get_profile.firstname %}{{ user.get_profile.firstname }} {{ user.get_profile.surname }}{% else %}{{ author }}{% endif %}" width="42" height="42" /></a>
+            <a href="{% url profile_public comment.user %}"><img src="{% avatar 96 comment.user %}" alt="{{ comment.user.get_profile.firstname }} {{comment.user.get_profile.surname}}" title="{{ comment.user.get_profile.firstname }} {{comment.user.get_profile.surname}}" width="42" height="42" /></a>
             <p>{% trans "User" %}: <a href="{% url profile_public comment.user %}">{% if comment.user.get_profile.firstname  %}{{ comment.user.get_profile.firstname }} {{ comment.user.get_profile.surname }}{% else %}{{ comment.user }}{% endif %}</a> {% trans "Date" %}: {{ comment.submit_date|date:"SHORT_DATE_FORMAT" }}</p>
         </div><!--end comment_info-->
         <div class="comment_content">

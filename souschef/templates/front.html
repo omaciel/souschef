@@ -7,179 +7,198 @@
 {% block title %}{{ block.super }} &raquo; {% trans "Front page" %}{% endblock %}
 
 {% block extracss %}
-    <style type="text/css" media="screen">
-            {{ extracss }}
-            #featured_recipe_code {
-                overflow:hidden;
-            }
-            .highlight {
-                padding:5px;
-            }
-            .linenos {
-                background:#888;
-                padding:5px;
-            }
-            .rating, .rating li {
-                display:inline-block;
-            }
-            .rating a {
-                background:url({{ MEDIA_URL }}/images/star_15x30.png) 0 0;
-                display:block;
-                height:15px;
-                width:15px;
-            }
-            .rating-active a {
-                background-position:0 -15px;
-            }
-            .rating-readonly a {
-                cursor:default !important;
-                outline:none;
-            }
-    </style>
+<style type="text/css" media="screen">
+{{ extracss }}
+#featured_recipe_code {
+overflow:hidden;
+}
+.highlight {
+padding:5px;
+}
+.linenos {
+background:#888;
+padding:5px;
+}
+.rating, .rating li {
+display:inline-block;
+}
+.rating a {
+background:url({{ MEDIA_URL }}/images/star_15x30.png) 0 0;
+display:block;
+height:15px;
+width:15px;
+}
+.rating-active a {
+background-position:0 -15px;
+}
+.rating-readonly a {
+cursor:default !important;
+outline:none;
+}
+</style>
 {% endblock %}
 
 {% block extrajs %}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/rating.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/rating.js">
+</script>
 <script type="text/javascript">
-    $(function(){
-        $recipe_list = $('.recipe_list');
-        $recipe_list_items = $recipe_list.children();
-        if ($recipe_list_items.length >= 4) {
-            var column_size = Math.ceil($recipe_list_items.length / 4);
-            $recipe_list_items.detach();
-            
-            var columns = [
-                $recipe_list.append($recipe_list_items.slice(0, column_size)),
-                $('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(column_size, 2 * column_size)),
-                $('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(2 * column_size, 3 * column_size)),
-                $('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(3 * column_size))
-            ];
-            
-            columns[1].insertAfter(columns[0]);
-            columns[2].insertAfter(columns[1]);
-            columns[3].insertAfter(columns[2]);
-        };
-    });
+	$( function() {
+		$recipe_list = $('.recipe_list');
+		$recipe_list_items = $recipe_list.children();
+		if ($recipe_list_items.length >= 4) {
+			var column_size = Math.ceil($recipe_list_items.length / 4);
+			$recipe_list_items.detach();
+
+			var columns = [
+			$recipe_list.append($recipe_list_items.slice(0, column_size)),
+			$('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(column_size, 2 * column_size)),
+			$('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(2 * column_size, 3 * column_size)),
+			$('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(3 * column_size))
+			];
+
+			columns[1].insertAfter(columns[0]);
+			columns[2].insertAfter(columns[1]);
+			columns[3].insertAfter(columns[2]);
+		};
+	});
 </script>
 {% endblock %}
 
 {% block content %}
-        <div id="featured_recipe">
-            <h2 class="hide">{% trans "Featured Recipe" %}</h2>
-            {% if featured_recipe %}
+<div id="featured_recipe">
+	<h2 class="hide">{% trans "Featured Recipe" %}</h2>
+	{% if featured_recipe %}
 
-                <div id="featured_recipe_info">
-                    <ul>
-                        <li>{% trans "Recipe for" %}: <a href="{% url recipe featured_recipe.id %}">{{ featured_recipe.title }}.</a></li> 
-                        <li>
-                            {% trans "tags" %}:
-                            {% tags_for_object featured_recipe as recipe_tags %}
-                            {% for tag in recipe_tags %}
-                                <a href="#">{{ tag }}</a>
-                            {% endfor %}
-                        </li>
-                        <li>
-                            {% trans "Stars" %}:
-                            {% rating_by_request request on featured_recipe.rating as vote %}
-                            <ul class="rating rating-{{ featured_recipe.stars }} rating-readonly">
-                                <li><a class="hide" href="#">1</a></li>
-                                <li><a class="hide" href="#">2</a></li>
-                                <li><a class="hide" href="#">3</a></li>
-                                <li><a class="hide" href="#">4</a></li>
-                                <li><a class="hide" href="#">5</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div><!-- end featured_recipe_info-->
+	<div id="featured_recipe_info">
+		<ul>
+			<li>
+				{% trans "Recipe for" %}:
+				<a href="{% url recipe featured_recipe.id %}">{{ featured_recipe.title }}.</a>
+			</li>
+			<li>
+				{% trans "tags" %}:
+				{% tags_for_object featured_recipe as recipe_tags %}
+				{% for tag in recipe_tags %}
+				<a href="#">{{ tag }}</a>
+				{% endfor %}
+			</li>
+			<li>
+				{% trans "Stars" %}:
+				{% rating_by_request request on featured_recipe.rating as vote %}
+				<ul class="rating rating-{{ featured_recipe.stars }} rating-readonly">
+					<li>
+						<a class="hide" href="#">1</a>
+					</li>
+					<li>
+						<a class="hide" href="#">2</a>
+					</li>
+					<li>
+						<a class="hide" href="#">3</a>
+					</li>
+					<li>
+						<a class="hide" href="#">4</a>
+					</li>
+					<li>
+						<a class="hide" href="#">5</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div><!-- end featured_recipe_info-->
+	<div id="featured_recipe_code">
+		{{ featured_recipe.body|safe }}
+	</div><!--end featured_recipe_code-->
+	{% else %}
+	<div id="featured_recipe_info">
+		·
+		<ul>
+			·
+			<li>
+				{% trans "There ano no featured recipes." %}:
+			</li>·
+			<li>
+				{% trans "tags" %}:
+			</li>·
+			<li>
+				{% trans "Stars" %}:
+			</li>·
+		</ul>·
+	</div><!-- end featured_recipe_info-->·
+	<div id="featured_recipe_code">
+		·
+		{% trans "The kitchen's pantry is empty!" %}
+	</div><!--end featured_recipe_code-->·
+	{% endif %}
+</div><!--end featured_recipe-->
+<div class="clear">
+</div>
+<div id="recipe_list_container" class="rc">
+	<h3 class="hide">{% trans "Recipes by Language" %}</h3>
+	{% if languages %}
+	<ul class="recipe_list">
+		{% for language in languages %}
+		<li>
+			<a href="#">{{ language.name }}</a>
+		</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+</div><!--end recipe_list-->
+<div class="clear">
+</div>
+<div id="other_info">
+	<div id="latest_recipes" class="box rc">
+		<h3 class="hide">{% trans "Latest Recipes" %}</h3>
+		{% if latest_recipes %}
+		<ul>
+			{% for recipe in latest_recipes %}
+			<li>
+				<a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
+			</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+	</div><!--end box-->
+	{% if top_sous_chefs %}
+	<div id="top_sous_chefs" class="box rc no_li">
+		<h3 class="hide">{% trans "Top 3 Sous Chefs" %}</h3>
+		<ul>
+			{% for author in top_sous_chefs %}
+			<li class="sous_chef_info">
+				<a href="/accounts/profile/{{author}}">
+				<img src="{% avatar  96 author %}" alt="{{ author }}" title="{% if user.get_profile.firstname %}{{ user.get_profile.firstname }} {{ user.get_profile.surname }}{% else %}{{ author }}{% endif %}" width="42" height="42" />
+				{{ author }}
+				</a>
+				<br>
+				Recipes:
+				<a href="#">{{ author.recipe_count }}</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div><!--end box-->
+	{% endif %}
 
-                <div id="featured_recipe_code"> 
-                    {{ featured_recipe.body|safe }}
-                </div><!--end featured_recipe_code--> 
-            {% else %}
-            <div id="featured_recipe_info">·
-                <ul>·
-                    <li>{% trans "There ano no featured recipes." %}:</li>·
-                    <li>
-                        {% trans "tags" %}:
-                    </li>·
-                    <li>{% trans "Stars" %}:</li>·
-                </ul>·
-            </div><!-- end featured_recipe_info-->·
-
-            <div id="featured_recipe_code">·
-                {% trans "The kitchen's pantry is empty!" %}
-            </div><!--end featured_recipe_code-->·
-
-            {% endif %}
-        </div><!--end featured_recipe--> 
-
-        <div class="clear"></div>
-
-        <div id="recipe_list_container" class="rc"> 
-            <h3 class="hide">{% trans "Recipes by Language" %}</h3> 
-            {% if languages %}
-            <ul class="recipe_list">
-                {% for language in languages %}
-                    <li><a href="#">{{ language.name }}</a></li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        </div><!--end recipe_list--> 
-
-        <div class="clear"></div>
-
-    <div id="other_info">
-            <div id="latest_recipes" class="box rc">
-                <h3 class="hide">{% trans "Latest Recipes" %}</h3>
-                {% if latest_recipes %}
-                <ul>
-                    {% for recipe in latest_recipes %}
-                        <li><a href="{% url recipe recipe.id %}">{{ recipe.title }}.</a></li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-            </div><!--end box-->
-
-        {% if top_sous_chefs %}
-            <div id="top_sous_chefs" class="box rc no_li">
-                <h3 class="hide">{% trans "Top 3 Sous Chefs" %}</h3>
-                <ul>
-                    {% for author in top_sous_chefs %}
-                        <li class="sous_chef_info">
-                            <a href="#"><img src="{% avatar 96 %}" alt="{{ author }}" title="{% if user.get_profile.firstname %}{{ user.get_profile.firstname }} {{ user.get_profile.surname }}{% else %}{{ author }}{% endif %}" width="42" height="42" /></a>
-                            <ul>
-                                <li>
-                                    {% if user.get_profile.firstname %}
-                                        {{ user.get_profile.firstname }} {{ user.get_profile.surname }}
-                                    {% else %}
-                                        {{ author }}
-                                    {% endif %}
-                                </li>
-                                <li>Recipes: <a href="#">{{ author.recipe_count }}</a></li>
-                            </ul>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div><!--end box-->
-        {% endif %}
-
-            <div id="top_recipes" class="box rc"> 
-                <h3 class="hide">{% trans "Top 5 Recipes" %}</h3> 
-                {% if top_recipes %}
-                <ul class="show_list"> 
-                    {% for recipe in top_recipes %}
-                        <li><a href="{% url recipe recipe.id %}">{{ recipe.title }}.</a></li>                         
-                    {% endfor %}
-                </ul> 
-            {% endif %}
-            </div><!--end box--> 
-    </div><!--end other_info-->
+	<div id="top_recipes" class="box rc">
+		<h3 class="hide">{% trans "Top 5 Recipes" %}</h3>
+		{% if top_recipes %}
+		<ul class="show_list">
+			{% for recipe in top_recipes %}
+			<li>
+				<a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
+			</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+	</div><!--end box-->
+</div><!--end other_info-->
 {% endblock %}
 
 {% block sidebar %}
-    <div id="sidebar" class="rc">
-        <h2 class="hide">About Conary Recipe</h2>
-        <img src="{{ MEDIA_URL }}images/pie_224x111.png" alt="Pie" title="Pie" id="pie_image"/>
-        <p>This is where we talk about Conary Recipe. Buon appetit!</p>
-    </div><!--end sidebar-->
+<div id="sidebar" class="rc">
+	<h2 class="hide">About Conary Recipe</h2>
+	<img src="{{ MEDIA_URL }}images/pie_224x111.png" alt="Pie" title="Pie" id="pie_image"/>
+	<p>
+		This is where we talk about Conary Recipe. Bon appetit!
+	</p>
+</div><!--end sidebar-->
 {% endblock %}

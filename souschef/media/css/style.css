@@ -212,7 +212,14 @@ margin-right:10px;
 
 li.sous_chef_info{
 	margin:5px 0;
+	width: 100%;
 }
+
+li.sous_chef_info img{
+	float: left;
+	display: block;
+}
+
 
 #content{
 	float:left;
