@@ -8,7 +8,6 @@
     {% block extracss %}{% endblock %}
 
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/tiny_mce/tiny_mce.js"></script>
     {% block extrajs %}{% endblock %}
 
     <meta name="robots" content="{% block robots %}index,follow{% endblock %}" />
@@ -39,7 +38,7 @@
             
             <form name="input" action="{% url recipes %}" method="get">
                 <input name="query" type="text">
-                <input value="Submit" type="submit">
+                <input value="Search" type="submit">
             </form>
             
             </div><!--end search-->

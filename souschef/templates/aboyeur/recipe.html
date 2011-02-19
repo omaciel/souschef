@@ -74,7 +74,7 @@ outline:none;
 		{% trans "Stars" %}:
 	</p>
 	{% rating_by_request request on recipe.rating as vote %}
-	{% if vote or not user.is_authenticated %}
+	{% if vote or not user.is_authenticated or user == recipe.author %}
 	<ul class="rating rating-{{ recipe_stars }} rating-readonly">
 		{% else %}
 		<ul class="rating rating-{{ recipe_stars }}">

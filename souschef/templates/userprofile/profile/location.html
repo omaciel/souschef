@@ -1,0 +1,38 @@
+{% extends "base_2col.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktrans %}{{ user }}'s Dashboard{% endblocktrans %}{% endblock %}
+{% block robots %}noindex,nofollow{% endblock %}
+
+{% block extrajs %}
+        {% if GOOGLE_MAPS_API_KEY %}
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&language=en"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}userprofile/js/jquery.location.js"></script>
+        {% endif %}
+{% endblock %}
+
+{% block content %}
+<br>
+<h3> Choose your location </h3>
+<br>
+<div id="map_canvas" style="width:500px; height:500px">
+	&nbsp;
+</div>
+<br>
+<h3> Data </h3>
+<br>
+
+	<form action="{{ request.path_info }}" method="post" enctype="multipart/form-data">
+	{{ form.errors }}
+	<fieldset>
+				{% for field in form %}
+					<h4>{{ field.label_tag}}</h4>
+					{{field}} <br>
+				{% endfor %}
+	</fieldset>
+	<br>
+	<input type="submit" value="{% trans 'Save' %}" />
+	</form>
+
+
+{% endblock %}

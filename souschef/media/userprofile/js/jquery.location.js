@@ -1,91 +1,94 @@
-function mapFramework() {
+$(document).ready( function() {
+	var initialLocation;
+	var siberia = new google.maps.LatLng(60, 105);
+	var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
+	var browserSupportFlag =  new Boolean();
+	var current_lat = $("#id_latitude").val()
+	var current_lng = $("#id_longitude").val()
 
-	if (GBrowserIsCompatible()) {
+	function initialize() {
+		var myOptions = {
+			zoom: 5,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		geocoder = new google.maps.Geocoder();
+		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		// Try W3C Geolocation (Preferred)
+		if(navigator.geolocation) {
+			browserSupportFlag = true;
+			navigator.geolocation.getCurrentPosition( function(position) {
+				initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+				detected_location = initialLocation;
+				currentLocation = new google.maps.LatLng(current_lat,current_lng);
+				var currentinfowindow = new google.maps.InfoWindow({
+					content: 'Current set location'
+				});
+				var currentmarker = new google.maps.Marker({
+					position: currentLocation,
+					map: map
+				});
+				google.maps.event.addListener(currentmarker, 'click', function() {
+					currentinfowindow.open(map,currentmarker);
+				});
+				
+				var detectedinfowindow = new google.maps.InfoWindow({
+					content: 'Detected location'
+				});
+				var marker = new google.maps.Marker({
+					position: detected_location,
+					map: map,
+					draggable: true
+				});
+				google.maps.event.addListener(marker, 'click', function() {
+					detectedinfowindow.open(map,marker);
+				});
+				google.maps.event.addListener(marker, 'dragend', function() {
+					detected_location = marker.getPosition()
+					// Search for place data
+					geocoder.geocode( { 'location': detected_location}, function(results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+							map.setCenter(detected_location);
+							for(var addComponent in results[0].address_components) {
+								var component = results[0].address_components[addComponent];
+								for(typeIndex in component.types ) {
+									if(component.types[typeIndex]=='country') {
+										$("#id_country").val(component.short_name);
+									}
+									if(component.types[typeIndex]=='locality') {
+										$("#id_location").val(component.short_name);
+									}
+								}
+							}
 
-		this.map = new GMap2(document.getElementById("map"));
-		this.map.addControl(new GLargeMapControl());
-		this.map.addControl(new GMapTypeControl())
-		this.map.enableContinuousZoom();
-
-		var lat = lng = 0;
-		if ($("#id_latitude").val()) lat = $("#id_latitude").val();
-		if ($("#id_longitude").val()) lng = $("#id_longitude").val();
-
-		this.map.setCenter(new GLatLng(lat, lng), 4);
-		this.marker = new GMarker(new GLatLng(lat, lng), {clickable: false, bouncy: true, draggable: true}); 
-		this.map.addOverlay(this.marker);
-
-		GEvent.addListener(this.marker, "dragend", function(){
-			$("img.loading").show();
-			var point = this.getLatLng();
-			$("#id_latitude").val(point.lat().toFixed(6));
-			$("#id_longitude").val(point.lng().toFixed(6));
-			$.getJSON($("#fetch_geodata_url").val().replace(/\/0\/0\/$/, '/' + point.lat()  +'/' + point.lng() + '/'), function(data) {
-				$("#id_country").val(data['country']);
-				$("#id_location").val(data['region']);
-				$("#location_info").text(data['region']);
-				$("img.loading").hide();
+							$("#id_latitude").val(results[0].geometry.location.lat().toFixed(6));
+							$("#id_longitude").val(results[0].geometry.location.lng().toFixed(6));
+						} else {
+							alert("Geocode was not successful for the following reason: " + status);
+						}
+					});
+				});
+				map.setCenter(initialLocation);
+				// map.setZoom(14);
+			}, function() {
+				handleNoGeolocation(browserSupportFlag);
 			});
-		});
-	}
-}
-
-mapFramework.prototype.searchLocation = function() {
-	if (!$("#id_country option:selected").text()) {
-		return;
-	}
-
-	address = $("#id_country option:selected").text();
-	$("img.loading").show();
-	geocoder = new GClientGeocoder();
-
-	var g = this;
-	geocoder.getLatLng(address, function(point){
-		if (point) {
-			g.map.setCenter(point);
-			g.marker.setLatLng(point);
-			$("#id_latitude").val(point.lat().toFixed(6));
-			$("#id_longitude").val(point.lng().toFixed(6));
-			$.getJSON($("#fetch_geodata_url").val().replace(/\/0\/0\/$/, '/' + point.lat()  +'/' + point.lng() + '/'), function(data) {
-				$("#id_country").val(data['country']);
-				$("#id_location").val(data['region']);
-				$("#location_info").text(data['region']);
-				$("img.loading").hide();
-			});
-		}
-	});
-}
-
-var googlemaps;
-
-function initMap() {
-	googlemaps = new mapFramework();
-	googlemaps.searchLocation();
-}
-
-function initMap2() {
-	googlemaps = new mapFramework();
-}
-
-$(function() {
-	$("#id_country").change(function() {
-		if (!$("#id_country option:selected").val()) {
-			$("#id_location").val('');
-			$("#id_latitude").val('');
-			$("#id_longitude").val('');
-			$("div.mapinfo").hide();
-			return;
-		}
-		if ($("div.mapinfo").css("display") == "none") {
-			$("div.mapinfo").show();
-			$.getScript("http://maps.google.com/maps?file=api&v=2.x&key=" + $("#google_maps_apikey").val() + "&async=2&callback=initMap");
 		} else {
-			googlemaps.searchLocation();
+			browserSupportFlag = false;
+			handleNoGeolocation(browserSupportFlag);
 		}
-	});
 
-	if ($("#id_country option:selected").val()) {
-		$("div.mapinfo").show();
-		$.getScript("http://maps.google.com/maps?file=api&v=2.x&key=" + $("#google_maps_apikey").val() + "&async=2&callback=initMap2");
+		function handleNoGeolocation(errorFlag) {
+			if (errorFlag == true) {
+				alert("Geolocation service failed.");
+				initialLocation = newyork;
+			} else {
+				alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+				initialLocation = siberia;
+			}
+			map.setCenter(initialLocation);
+		}
+
 	}
+
+	initialize();
 });

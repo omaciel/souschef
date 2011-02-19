@@ -17,6 +17,10 @@ body{
 	font-family:arial, sans-serif;
 }
 
+.mapinfo {
+	display: none;
+}
+
 #container{
 	width:958px;
 	margin:auto;
@@ -25,6 +29,10 @@ body{
 .hide{
 	text-indent:-5000px;
 	overflow:hidden;
+}
+
+.hidden {
+display: none;
 }
 
 .rc{
@@ -754,7 +762,6 @@ p.image-credit{
 }
 
 
-
 /* User Profile */
 .container_user h2{
 	margin-top:25px;
@@ -869,4 +876,29 @@ a.administrative_links_sidebar:hover{
 
 .register_container{
 	height:500px;
+}
+
+.personal_data td{
+padding: 10px;
+}
+
+.item_selected {
+	background:black;
+	color:#fff;
+	height: 50px;
+	padding:20px;
+}
+
+.item_selected {
+	background:black;
+	color:#fff;
+	height: 50px;
+	padding:20px;
+}
+
+.item_not_selected {
+	background:#E6E6E6;
+	color:#000;
+	height: 50px;
+	padding:20px;
 }

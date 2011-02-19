@@ -52,7 +52,7 @@
                 <form action="{% url add_recipe %}" method="post">{% csrf_token %}
                     {% for field in form %}
                         {{ field.label }}: <br />
-                        {{ field }}<br /><br />
+                        {{ field }}<br />
                     {% endfor %}
                     <input type="submit" value="Save" />
                 </form>
@@ -62,7 +62,10 @@
             <ul>
                 <li class="user_recipe">
                     {% for recipe in user_recipes %}
-                        <h4> <a class="administrative_links" href="{% url edit_recipe recipe.id%}">{% trans "Edit" %}</a> <a class="administrative_links" href="{% url delete_recipe recipe.id %}">{% trans "Delete" %}</a> <a href="{% url recipe recipe.id %}">{{ recipe.title }}.</a> </h4>
+                        <h4> <a class="administrative_links" href="{% url edit_recipe recipe.id%}">{% trans "Edit" %}</a> <a class="administrative_links" href="{% url delete_recipe recipe.id %}">{% trans "Delete" %}</a> <a href="{% url recipe recipe.id %}">{{ recipe.title }}</a> 
+						<span style="font-size: 75%">(last updated on : {{recipe.date_updated}})</span>                        	
+                        </h4>
+						
                     {% empty %}
                         {% trans "No recipes have been added yet. No Soup For You!" %}
                     {% endfor %}
@@ -107,6 +110,22 @@
                 {% if not validated %}
                     {% trans " (Not validated)" %}
                 {% endif %}
+            {% endif %}
+        </p>
+        <p>
+            {% trans "Country" %}:
+            {% if not user.get_profile.country %}
+                {% trans "Not set yet" %}
+            {% else %}
+                {{ user.get_profile.country }}
+            {% endif %}
+        </p>
+        <p>
+            {% trans "Location" %}:
+            {% if not user.get_profile.location %}
+                {% trans "Not set yet" %}
+            {% else %}
+                {{ user.get_profile.location }}
             {% endif %}
         </p>
         {% if user.get_profile.about %}
