@@ -178,6 +178,22 @@ a#menu_login:hover { width:47px;background-position: -283px -19px; }
 	width:696px;
 }
 
+#latest_recipes li {
+	list-style-type: none;
+	background: url('/site_media/images/conary_li_small.png') left center no-repeat;
+	padding-left: 30px;
+	padding-top: 5px;
+	height: 20px;
+}
+
+#top_recipes li {
+	list-style-type: none;
+	background: url('/site_media/images/conary_li_small.png') left center no-repeat;
+	padding-left: 30px;
+	padding-top: 5px;
+	height: 20px;
+}
+
 .box{
 	width:178px;
 	height:216px;
@@ -548,12 +564,25 @@ li.comment{
 	background:black;
 	color: #fff;
 	padding:10px;
+	display: inline-block;
+	width: 420px;
+}
+
+#comment_sign {
+	background:black;
+	color: #fff;
+	padding:5px;
 }
 
 .comment_info p{
 float:right;
 margin-top:31px;
 font-size:80%;
+}
+
+.comment_info img{
+float:left;
+margin: 5px;
 }
 
 #comment_form_container{

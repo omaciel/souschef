@@ -2,11 +2,13 @@
 {% load i18n %}
 
 <div id="comments"> 
+	<div id="comment_sign" class="rc">
 {% if user.is_authenticated %}
-    <p>{% trans 'Leave a <a href="#comment_form">Comment</a>' %}</p>
+    <h3>{% trans 'Leave a <a href="#comment_form">Comment</a>' %}</h3>
 {% else %}
-    <p>{% trans "You must be logged in to post comments." %}</p>
+    <h3>{% trans "You must be logged in to post comments." %}</h3>
 {% endif %}
+</div>
 {% get_comment_list for recipe as comment_list %}
 {% include "comments/list.html" %}
 </div><!--end comments--> 

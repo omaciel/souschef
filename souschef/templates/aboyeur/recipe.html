@@ -62,8 +62,9 @@ outline:none;
 	<div id="single_recipe_code">
 		{{ recipe.body|safe }}
 	</div><!--end single_recipe_code-->
+	<h3>
 	<p>
-		{% trans "Tags" %}:
+		{% trans "Tags" %} 
 		{% tags_for_object recipe as recipe_tags %}
 		{% for tag in recipe_tags %}
 		<a href="#">{{ tag }}</a>
@@ -108,6 +109,8 @@ outline:none;
 		{% trans "Add to favorites" %}
 		{% endif %}</a>
 		{% endif %}
+		</h3>
+
 </div><!--end recipe-->
 {% include "aboyeur/comments.html" %}
 {% endblock %}

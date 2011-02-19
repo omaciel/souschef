@@ -6,10 +6,10 @@
     <li class="comment"> 
         <div class="comment_info rc">
             <a href="{% url profile_public comment.user %}"><img src="{% avatar 96 comment.user %}" alt="{{ comment.user.get_profile.firstname }} {{comment.user.get_profile.surname}}" title="{{ comment.user.get_profile.firstname }} {{comment.user.get_profile.surname}}" width="42" height="42" /></a>
+            {{ comment.comment }}
             <p>{% trans "User" %}: <a href="{% url profile_public comment.user %}">{% if comment.user.get_profile.firstname  %}{{ comment.user.get_profile.firstname }} {{ comment.user.get_profile.surname }}{% else %}{{ comment.user }}{% endif %}</a> {% trans "Date" %}: {{ comment.submit_date|date:"SHORT_DATE_FORMAT" }}</p>
         </div><!--end comment_info-->
         <div class="comment_content">
-            <p>{{ comment.comment }}</p>
         </div><!--end comment_content-->
     </li><!--end comment-->
 {% endfor %}
