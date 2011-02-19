@@ -152,7 +152,14 @@ a#menu_login:hover { width:47px;background-position: -283px -19px; }
 	color: #313131;
 	font-family: "DanielRegular", Arial, sans-serif;
 	font-size:14px;
-	
+}
+
+#featured_recipe_info li{
+	margin-bottom: 15px;
+}
+
+#featured_recipe_info img{
+	float: right;
 }
 
 #featured_recipe_code{

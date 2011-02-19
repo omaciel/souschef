@@ -73,15 +73,28 @@ outline:none;
 		<ul>
 			<li>
 				{% trans "Recipe for" %}:
-				<a href="{% url recipe featured_recipe.id %}">{{ featured_recipe.title }}.</a>
+				<a href="{% url recipe featured_recipe.id %}">{{ featured_recipe.title }}</a>
+				{% if featured_recipe.url %}
+				<a href="{{ featured_recipe.url }}"><img src="{{ MEDIA_URL }}images/frying_pan.png" alt="{{featured_recipe.title}} website" title="{{featured_recipe.title}} website" width="22" height="22" /></a>
+				{% endif %}
 			</li>
+			{% if featured_recipe.tags %}
 			<li>
 				{% trans "tags" %}:
 				{% tags_for_object featured_recipe as recipe_tags %}
 				{% for tag in recipe_tags %}
-				<a href="#">{{ tag }}</a>
+				{{ tag }}
 				{% endfor %}
 			</li>
+			{% endif %}
+			{% with featured_recipe.author as feat_author %}
+			<li>
+				{% trans "chef" %}:
+				<a href="/accounts/profile/{{feat_author}}">
+				{% if feat_author.get_profile.firstname  %}{{ feat_author.get_profile.firstname }} {{ feat_author.get_profile.surname }}{% else %}{{ feat_author }}{% endif %}
+				</a>
+			</li>
+			{% endwith %}
 			<li>
 				{% trans "Stars" %}:
 				{% rating_by_request request on featured_recipe.rating as vote %}
@@ -167,7 +180,7 @@ outline:none;
 			<li class="sous_chef_info">
 				<a href="/accounts/profile/{{author}}">
 				<img src="{% avatar  96 author %}" alt="{{ author }}" title="{% if user.get_profile.firstname %}{{ user.get_profile.firstname }} {{ user.get_profile.surname }}{% else %}{{ author }}{% endif %}" width="42" height="42" />
-				{{ author }}
+				{% if author.get_profile.firstname  %}{{ author.get_profile.firstname }} {{ author.get_profile.surname }}{% else %}{{ author }}{% endif %}
 				</a>
 				<br>
 				Recipes:

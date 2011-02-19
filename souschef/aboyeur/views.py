@@ -17,7 +17,7 @@ import random
 
 def front(request):
     recipes = Recipe.objects.filter(published=True).order_by('-date_updated')[:5]
-    top_recipes = Recipe.objects.all().order_by('-rating_score')[:5]
+    top_recipes = Recipe.objects.filter(published=True).order_by('-rating_score')[:5]
     if recipes:
         featured_recipe = top_recipes[random.randint(0,len(top_recipes) - 1)]
         try:
@@ -30,8 +30,9 @@ def front(request):
     authors = []
     for user in User.objects.iterator():
         if user.has_perm('aboyeur.add_recipe'):
-            user.recipe_count = Recipe.objects.filter(author=user).count()
-            authors.append(user)
+            user.recipe_count = Recipe.objects.filter(author=user, published=True).count()
+            if user.recipe_count > 0:
+                authors.append(user)
     authors.sort(key=lambda author: author.recipe_count, reverse=True)
     # Apply the syntax highligter
     html_formater = HtmlFormatter(linenos=True, style='native')
@@ -179,3 +180,6 @@ def add_rating(request, recipe_id, score):
     if response.status_code == 200:
         return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
     return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
+
+    
+    

@@ -6,85 +6,108 @@
 {% block title %}{{ block.super }} - {% trans "Recipe for" %} {{ recipe.title }}{% endblock %}
 
 {% block extrajs %}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/tiny_mce/tiny_mce.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/rating.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/tiny_mce/tiny_mce.js">
+</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/rating.js">
+</script>
 {% endblock %}
 {% block extracss %}
 <style type="text/css">
-    {{ extracss }}
-    .highlight {
-        padding:5px;
-        overflow:auto;
-        width:920px;
-    }
-    .linenos {
-        background:#888;
-        padding:5px;
-    }
-    .rating, .rating li {
-        display:inline-block;
-    }
-    .rating a {
-        background:url({{ MEDIA_URL }}/images/star_15x15.png);
-        display:block;
-        height:15px;
-        width:15px;
-    }
-    .rating-active {
-        background-color:#ad4e1f;
-    }
-    .rating-hover {
-        background-color:#ccc366;
-    }
-    .rating-readonly a {
-        cursor:default !important;
-        outline:none;
-    }
+{{ extracss }}
+.highlight {
+padding:5px;
+overflow:auto;
+width:920px;
+}
+.linenos {
+background:#888;
+padding:5px;
+}
+.rating, .rating li {
+display:inline-block;
+}
+.rating a {
+background:url({{ MEDIA_URL }}/images/star_15x15.png);
+display:block;
+height:15px;
+width:15px;
+}
+.rating-active {
+background-color:#ad4e1f;
+}
+.rating-hover {
+background-color:#ccc366;
+}
+.rating-readonly a {
+cursor:default !important;
+outline:none;
+}
 </style>
 {% endblock %}
 
 {% block content_class %}single_recipe_container{% endblock %}
 
 {% block content %}
-    <h2 class="hide">{% trans "Recipe" %}</h2>
-    <div id="single_recipe" class="rc">
-            <h3>{% trans "Recipe for" %}: <span>{{ recipe.title }}<span></h3>
-            <div id="single_recipe_code">
-                {{ recipe.body|safe }}
-            </div><!--end single_recipe_code-->
-            <p>
-                {% trans "Tags" %}:
-                {% tags_for_object recipe as recipe_tags %}
-                {% for tag in recipe_tags %}
-                    <a href="#">{{ tag }}</a>
-                {% endfor %}
-            </p>
-            <p class="rating">{% trans "Stars" %}:</p>
-            {% rating_by_request request on recipe.rating as vote %}
-            {% if vote or not user.is_authenticated %}
-                <ul class="rating rating-{{ recipe_stars }} rating-readonly">
-            {% else %}
-                <ul class="rating rating-{{ recipe_stars }}">
-            {% endif %}
-                    <li><a class="hide" href="{% url add_rating recipe.id 1 %}">1</a></li>
-                    <li><a class="hide" href="{% url add_rating recipe.id 2 %}">2</a></li>
-                    <li><a class="hide" href="{% url add_rating recipe.id 3 %}">3</a></li>
-                    <li><a class="hide" href="{% url add_rating recipe.id 4 %}">4</a></li>
-                    <li><a class="hide" href="{% url add_rating recipe.id 5 %}">5</a></li>
-                </ul>
-
-            <p>{% trans "Submitted on" %}: {{ recipe.date_posted|date }}</p>
-            <p>{% trans "Author" %}: <a href="{% url profile_public recipe.author %}">{% if recipe.author.get_profile.firstname  %}{{ recipe.author.get_profile.firstname }} {{ recipe.author.get_profile.surname }}{% else %}{{ recipe.author }}{% endif %}</a></p>
-            {% if user.is_authenticated %}
-                <a href="{% url toggle_favorite recipe.id %}">
-                    {% if favorite_recipe %}
-                        {% trans "Remove favorite" %}
-                    {% else %}
-                        {% trans "Add to favorites" %}
-                    {% endif %}
-                </a>
-            {% endif %}
-    </div><!--end recipe-->
-    
-    {% include "aboyeur/comments.html" %}
+<h2 class="hide">{% trans "Recipe" %}</h2>
+<div id="single_recipe" class="rc">
+	<h3>
+	{% trans "Recipe for" %}:
+	<span>
+		{{ recipe.title }}
+		{% if recipe.url %}
+		<a href="{{ recipe.url }}"><img src="{{ MEDIA_URL }}images/frying_pan.png" alt="{{recipe.title}} website" title="{{recipe.title}} website" width="22" height="22" /></a>
+		{% endif %}
+		<span>
+	</h3>
+	<div id="single_recipe_code">
+		{{ recipe.body|safe }}
+	</div><!--end single_recipe_code-->
+	<p>
+		{% trans "Tags" %}:
+		{% tags_for_object recipe as recipe_tags %}
+		{% for tag in recipe_tags %}
+		<a href="#">{{ tag }}</a>
+		{% endfor %}
+	</p>
+	<p class="rating">
+		{% trans "Stars" %}:
+	</p>
+	{% rating_by_request request on recipe.rating as vote %}
+	{% if vote or not user.is_authenticated %}
+	<ul class="rating rating-{{ recipe_stars }} rating-readonly">
+		{% else %}
+		<ul class="rating rating-{{ recipe_stars }}">
+			{% endif %}
+			<li>
+				<a class="hide" href="{% url add_rating recipe.id 1 %}">1</a>
+			</li>
+			<li>
+				<a class="hide" href="{% url add_rating recipe.id 2 %}">2</a>
+			</li>
+			<li>
+				<a class="hide" href="{% url add_rating recipe.id 3 %}">3</a>
+			</li>
+			<li>
+				<a class="hide" href="{% url add_rating recipe.id 4 %}">4</a>
+			</li>
+			<li>
+				<a class="hide" href="{% url add_rating recipe.id 5 %}">5</a>
+			</li>
+		</ul>
+		<p>
+			{% trans "Submitted on" %}: {{ recipe.date_posted|date }}
+		</p>
+		<p>
+			{% trans "Author" %}:
+			<a href="{% url profile_public recipe.author %}">{% if recipe.author.get_profile.firstname  %}{{ recipe.author.get_profile.firstname }} {{ recipe.author.get_profile.surname }}{% else %}{{ recipe.author }}{% endif %}</a>
+		</p>
+		{% if user.is_authenticated %}
+		<a href="{% url toggle_favorite recipe.id %}">{% if favorite_recipe %}
+		{% trans "Remove favorite" %}
+		{% else %}
+		{% trans "Add to favorites" %}
+		{% endif %}</a>
+		{% endif %}
+</div><!--end recipe-->
+{% include "aboyeur/comments.html" %}
 {% endblock %}
