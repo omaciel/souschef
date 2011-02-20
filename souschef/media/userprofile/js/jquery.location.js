@@ -47,6 +47,8 @@ $(document).ready( function() {
 					// Search for place data
 					geocoder.geocode( { 'location': detected_location}, function(results, status) {
 						if (status == google.maps.GeocoderStatus.OK) {
+							$("#id_country").val('');
+							$("#id_location").val('');
 							map.setCenter(detected_location);
 							for(var addComponent in results[0].address_components) {
 								var component = results[0].address_components[addComponent];
@@ -79,13 +81,64 @@ $(document).ready( function() {
 
 		function handleNoGeolocation(errorFlag) {
 			if (errorFlag == true) {
-				alert("Geolocation service failed.");
 				initialLocation = newyork;
 			} else {
-				alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
 				initialLocation = siberia;
 			}
 			map.setCenter(initialLocation);
+				detected_location = initialLocation;
+				currentLocation = new google.maps.LatLng(current_lat,current_lng);
+				var currentinfowindow = new google.maps.InfoWindow({
+					content: 'Current set location'
+				});
+				var currentmarker = new google.maps.Marker({
+					position: currentLocation,
+					map: map
+				});
+				google.maps.event.addListener(currentmarker, 'click', function() {
+					currentinfowindow.open(map,currentmarker);
+				});
+				
+				var detectedinfowindow = new google.maps.InfoWindow({
+					content: 'Detected location'
+				});
+				var marker = new google.maps.Marker({
+					position: detected_location,
+					map: map,
+					draggable: true
+				});
+				google.maps.event.addListener(marker, 'click', function() {
+					detectedinfowindow.open(map,marker);
+				});
+				google.maps.event.addListener(marker, 'dragend', function() {
+					detected_location = marker.getPosition()
+					// Search for place data
+					geocoder.geocode( { 'location': detected_location}, function(results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+							map.setCenter(detected_location);
+							$("#id_country").val('');
+							$("#id_location").val('');
+							for(var addComponent in results[0].address_components) {
+								var component = results[0].address_components[addComponent];
+								for(typeIndex in component.types ) {
+									if(component.types[typeIndex]=='country') {
+										$("#id_country").val(component.short_name);
+									}
+									if(component.types[typeIndex]=='locality') {
+										$("#id_location").val(component.short_name);
+									}
+								}
+							}
+
+							$("#id_latitude").val(results[0].geometry.location.lat().toFixed(6));
+							$("#id_longitude").val(results[0].geometry.location.lng().toFixed(6));
+						} else {
+							alert("Geocode was not successful for the following reason: " + status);
+						}
+					});
+				});
+				map.setCenter(initialLocation);
+
 		}
 
 	}
