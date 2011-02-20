@@ -1,19 +1,34 @@
 {% if recipes %}
-  <ul>
-    {% for recipe in recipes %}
-        <li class="result rc">
-            <h3>{{ recipe.title }}</h3>
-            
-            <ul>
-                <li class="language">Language: <a href="#">Python</a></li>
-                <li>View <a href="{% url recipe recipe.id %}">Code Sample</a></li>
-                <li>Stars: * * * * *</li>
-            </ul>
-        </li><!--end result-->
-    {% endfor %}
-  </ul><!--search results list-->
+<ul>
+	{% for recipe in recipes %}
+	<li class="result rc">
+		<ul>
+			<!-- <li class="language">Language: <a href="#">Python</a></li> -->
+			<li>
+				<a href="{% url recipe recipe.id %}">
+				<h3>{{ recipe.title }}
+				</a>
+				{% if recipe.url %}
+				<a href="{{ recipe.url }}">
+				<img src="{{ MEDIA_URL }}images/frying_pan.png" alt="{{recipe.title}} website" title="{{recipe.title}} website" width="32" height="32" />
+				</a>
+				{% endif %}
+				</h3>
+			</li>
+			{% with recipe.author as author %}
+			<li>
+				<h3>
+				Chef
+				<a href="/accounts/profile/{{author}}">{% if author.get_profile.firstname  %}{{ author.get_profile.firstname }} {{ author.get_profile.surname }}{% else %}{{ author }}{% endif %}</a>
+				</h3>
+			</li>
+			{% endwith %}
+		</ul>
+	</li><!--end result-->
+	{% endfor %}
+</ul><!--search results list-->
 {% else %}
-    <div id="search_none">
-        <h2>Parece que essa receita acabou...</h2>
-    </div><!--end search_none-->
+<div id="search_none">
+	<h2>Parece que essa receita acabou...</h2>
+</div><!--end search_none-->
 {% endif %}
