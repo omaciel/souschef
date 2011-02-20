@@ -166,6 +166,7 @@ outline:none;
 		<ul>
 			{% for recipe in latest_recipes %}
 			<li>
+				<img src="{{ MEDIA_URL }}images/conary_li_{{forloop.counter}}.png" alt="{{forloop.counter}} lastest recipe" title="{{forloop.counter}} lastest recipe">
 				<a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
 			</li>
 			{% endfor %}
@@ -197,6 +198,7 @@ outline:none;
 		<ul class="show_list">
 			{% for recipe in top_recipes %}
 			<li>
+				<img src="{{ MEDIA_URL }}images/conary_li_{{forloop.counter}}.png" alt="{{forloop.counter}} lastest recipe" title="{{forloop.counter}} lastest recipe">
 				<a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
 			</li>
 			{% endfor %}
