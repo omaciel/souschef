@@ -63,6 +63,11 @@
                 <li class="user_recipe">
                     {% for recipe in user_recipes %}
                         <h4> <a class="administrative_links" href="{% url edit_recipe recipe.id%}">{% trans "Edit" %}</a> <a class="administrative_links" href="{% url delete_recipe recipe.id %}">{% trans "Delete" %}</a> <a href="{% url recipe recipe.id %}">{{ recipe.title }}</a> 
+                        	{% if recipe.published %}
+								<img src="{{ MEDIA_URL }}images/published.png" alt="published" title="published" width="18" height="18" /></a>                        	
+                        	{% else %}
+								<img src="{{ MEDIA_URL }}images/not-published.png" alt="not published" title="not published" width="18" height="18" /></a>                        	
+                        	{% endif %}
 						<span style="font-size: 75%">(last updated on : {{recipe.date_updated}})</span>                        	
                         </h4>
 						

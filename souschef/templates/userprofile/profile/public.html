@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load avatars %}
+
+{% block title %}{{ profile.user }}'s public profile{% endblock %}
+{% block robots %}noindex,nofollow{% endblock %}
+
+{% block content %}
+<br>
+<h2>{% blocktrans with profile.user as user %}Public profile of {{ user }}{% endblocktrans %}</h2>
+<hr>
+<div class="vcard">
+	<div class="span-10">
+		<img class="border top" alt="{{ profile.user }}" src="{% avatar 96 profile.user %}" />
+		<ul>
+			<li>
+				{% trans "Username" %}:
+				<strong>{{ profile.user }}</strong>
+			</li>
+			{% if profile.country %}
+			<li>
+				{% trans "Country" %}:
+				<strong>{{ profile.get_country_display }}</strong>
+			</li>
+			{% endif %}
+			{% if profile.location %}
+			<li>
+				{% trans "Location" %}:
+				<strong>{{ profile.location }}</strong>
+			</li>
+			{% endif %}
+		</ul>
+	</div>
+</div>
+<br>
+<h2>User recipes</h2>
+<hr>
+<ul>
+	{% for recipe in profile.user.recipe_set.all %}
+	{% if recipe.published %}
+	<li class="item_selected rc">
+		<a href="{% url recipe recipe.id %}">
+		<h4>{{recipe.title}}</h4>
+		</a>
+		last updated on : {{recipe.date_updated}}
+		{% if recipe.url %}
+		<a href="{{ recipe.url }}">
+		<img src="{{ MEDIA_URL }}images/frying_pan.png" alt="{{recipe.title}} website" title="{{recipe.title}} website" width="22" height="22" />
+		</a>
+		{% endif %}
+	</li>
+	<br>
+	{% endif %}
+	{% endfor %}
+</ul>
+{% endblock %}
