@@ -5,10 +5,8 @@
 {% block robots %}noindex,nofollow{% endblock %}
 
 {% block extrajs %}
-        {% if GOOGLE_MAPS_API_KEY %}
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&language=en"></script>
-        <script type="text/javascript" src="{{ MEDIA_URL }}userprofile/js/jquery.location.js"></script>
-        {% endif %}
+<script type="text/javascript" src="{{ MEDIA_URL }}userprofile/js/jquery.location.js"></script>
 {% endblock %}
 
 {% block content %}
