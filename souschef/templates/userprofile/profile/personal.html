@@ -26,10 +26,14 @@
 			</thead>
 			<tbody>
 				{% for field in form %}
+				{% if field.label_tag != '<label for="id_birthdate">Birthdate</label>' %}
 				<tr>
 					<td><h4>{{ field.label_tag}}</h4><td>
 					<td>{{field}}<td>
 				</tr>
+				{% else %}
+				<input type="hidden" name="birthdate" value="1910-01-01" id="id_birthdate">
+				{% endif %}
 				{% endfor %}
 			</tbody>
 		</table>
