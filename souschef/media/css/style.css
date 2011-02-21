@@ -889,3 +889,28 @@ padding: 10px;
 	height: 50px;
 	padding:20px;
 }
+
+#recipe_body{
+	width: 90%;
+	height: 300px;
+}
+
+#recipe_body #id_body{
+	width: 90%;
+	height: 300px;
+}
+
+.CodeMirror-line-numbers {
+        width: 2.2em;
+        color: #aaa;
+        background-color: #eee;
+        text-align: right;
+        padding: .4em;
+        margin: 0;
+        font-family: monospace;
+        font-size: 10pt;
+        line-height: 1.1em;
+      }
+.CodeMirror-wrapping {
+	background-color: white;
+}

@@ -20,6 +20,21 @@
 			});
 		});
     </script>
+    <script src="{{ MEDIA_URL }}js/codemirror/js/codemirror.js" type="text/javascript"></script> 
+ <script type="text/javascript">
+	window.onload = function() {
+    var editor = CodeMirror.fromTextArea('id_body', {
+        parserfile: "../contrib/python/js/parsepython.js",
+        stylesheet: "{{ MEDIA_URL }}js/codemirror/contrib/python/css/pythoncolors.css",
+        path: "{{ MEDIA_URL }}js/codemirror/js/",
+        lineNumbers: true,
+        textWrapping: false,
+        indentUnit: 4,
+        parserConfig: {'pythonVersion': 2, 'strictErrors': true}
+    });
+	};
+</script>
+   
 {% endblock %}
 
 {% block container_class %}container_user{% endblock %}
@@ -48,12 +63,17 @@
         <div id="user_recipes">
             <h3>My Recipes <a class="administrative_links" href="#add_new_recipe">Add New Recipe</a></h3>
             <div id="add_new_recipe">
+            	<h4> Recipe data </h4>
                 <!-- use jquery to hide this block -->
                 <form action="{% url add_recipe %}" method="post">{% csrf_token %}
-                    {% for field in form %}
-                        {{ field.label }}: <br />
-                        {{ field }}<br />
-                    {% endfor %}
+						<fieldset>
+							{{form.title.label_tag}} <br> {{form.title}} <br>
+							{{form.body.label_tag}} <br> <div id="recipe_body"> {{form.body}} </div><br>
+							{{form.url.label_tag}} <br> {{form.url}} <br>
+							{{form.published.label_tag}} <br> {{form.published}} <br>
+							{{form.tags.label_tag}} <br> {{form.tags}} 
+						</fieldset>
+						<br>
                     <input type="submit" value="Save" />
                 </form>
             
