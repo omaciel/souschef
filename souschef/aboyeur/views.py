@@ -180,6 +180,3 @@ def add_rating(request, recipe_id, score):
     if response.status_code == 200:
         return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
     return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
-
-    
-    

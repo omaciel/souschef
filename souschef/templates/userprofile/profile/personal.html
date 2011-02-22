@@ -4,12 +4,9 @@
 {% block title %}{% trans "Edit your personal information" %}{% endblock %}
 {% block robots %}noindex,nofollow{% endblock %}
 
-{% block extracss %}
-    <link rel="stylesheet" href="{{ MEDIA_URL }}userprofile/css/ui.datepicker.css" type="text/css" />
-{% endblock %}
+{% block extracss %} {% endblock %}
 
 {% block extrajs %}
-<script type="text/javascript" src="{{ MEDIA_URL }}userprofile/js/ui.datepicker.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}userprofile/js/jquery.personal.js"></script>
 {% endblock %}
 
@@ -17,26 +14,22 @@
 <form class="personal" action="{{ request.path_info }}" method="post" enctype="multipart/form-data">{% csrf_token %}
     <fieldset>
         <h3>{% trans "Edit your personal information" %}</h3>
-		<table width="75%" class="personal_data">
-			<thead>
-				<tr>
-					<th></th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for field in form %}
-				{% if field.label_tag != '<label for="id_birthdate">Birthdate</label>' %}
-				<tr>
-					<td><h4>{{ field.label_tag}}</h4><td>
-					<td>{{field}}<td>
-				</tr>
-				{% else %}
-				<input type="hidden" name="birthdate" value="1910-01-01" id="id_birthdate">
-				{% endif %}
-				{% endfor %}
-			</tbody>
-		</table>
+        <table width="75%" class="personal_data">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for field in form %}
+                <tr>
+                    <td><h4>{{ field.label_tag}}</h4><td>
+                    <td>{{field}}<td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </fieldset>
     <input type="submit" value="{% trans 'Save' %}" />
     </form>

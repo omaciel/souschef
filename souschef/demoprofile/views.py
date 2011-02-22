@@ -32,10 +32,10 @@ def overview(request):
     except EmailValidation.DoesNotExist:
         email = request.user.email
         if email: validated = True
-    
+
     favorites = Favorite.objects.favorites_for_model(Recipe, user=request.user)
     user_recipes = Recipe.objects.filter(author=request.user)
-    
+
     template = "userprofile/profile/overview.html"
     data = {
         'section': 'overview',
@@ -43,6 +43,7 @@ def overview(request):
         'favorites': favorites,
         'form': RecipeForm(),
         'user_recipes': user_recipes,
-        'validated': validated
+        'validated': validated,
+        'sucess_url': template,
     }
     return render_to_response(template, data, context_instance=RequestContext(request))

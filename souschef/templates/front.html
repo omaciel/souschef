@@ -14,6 +14,7 @@ overflow:hidden;
 }
 .highlight {
 padding:5px;
+background: #000000;
 }
 .linenos {
 background:#888;
@@ -75,7 +76,7 @@ outline:none;
 				{% trans "Recipe for" %}:
 				<a href="{% url recipe featured_recipe.id %}">{{ featured_recipe.title }}</a>
 				{% if featured_recipe.url %}
-				<a href="{{ featured_recipe.url }}"><img src="{{ MEDIA_URL }}images/frying_pan.png" alt="{{featured_recipe.title}} website" title="{{featured_recipe.title}} website" width="32" height="18" /></a>
+				<a href="{{ featured_recipe.url }}"></a>
 				{% endif %}
 			</li>
 			{% if featured_recipe.tags %}
