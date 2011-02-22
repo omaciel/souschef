@@ -44,6 +44,5 @@ def overview(request):
         'form': RecipeForm(),
         'user_recipes': user_recipes,
         'validated': validated,
-        'sucess_url': template,
     }
     return render_to_response(template, data, context_instance=RequestContext(request))
