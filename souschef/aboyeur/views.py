@@ -10,9 +10,6 @@ from django.http import HttpResponseRedirect
 from djangoratings.views import AddRatingFromModel
 from favorites.models import Favorite
 from tagging.views import tagged_object_list
-from pygments import highlight
-from pygments.lexers import PythonLexer
-from pygments.formatters import HtmlFormatter
 import random
 
 def front(request):
@@ -81,8 +78,8 @@ def recipes(request, id):
     recipe = get_object_or_404(Recipe, id=id)
 
     # Apply the syntax highligter
-    html_formater = HtmlFormatter(linenos=True, style='native')
-    recipe.body = highlight(recipe.body, PythonLexer(), html_formater)
+#    html_formater = HtmlFormatter(linenos=True, style='native')
+#    recipe.body = highlight(recipe.body, PythonLexer(), html_formater)
 
     # Verify if its a favorite recipe for the current user
     try:
@@ -97,7 +94,7 @@ def recipes(request, id):
         recipe_stars = 0
 
     return render_to_response('aboyeur/recipe.html', {
-        'extracss': html_formater.get_style_defs('.highlight'),
+#        'extracss': html_formater.get_style_defs('.highlight'),
         'favorite_recipe': favorite_recipe,
         'next': reverse('recipe', args=[recipe.id]),
         'recipe': recipe,

@@ -8,6 +8,26 @@
 {% block extrajs %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/rating.js">
 </script>
+    <script src="{{ MEDIA_URL }}js/codemirror/js/codemirror.js" type="text/javascript"></script>
+ <script type="text/javascript">
+    window.onload = function() {
+    var editor = new CodeMirror.fromTextArea('single_recipe_code', {
+        parserfile: "../contrib/python/js/parsepython.js",
+        stylesheet: "{{ MEDIA_URL }}js/codemirror/contrib/python/css/pythoncolors.css",
+        path: "{{ MEDIA_URL }}js/codemirror/js/",
+        lineNumbers: true,
+        textWrapping: false,
+        indentUnit: 4,
+        height: "dynamic",
+        width: "dynamic",
+        content: document.getElementById("single_recipe_code").value,
+        tabMode: "spaces",
+        parserConfig: {'pythonVersion': 2, 'strictErrors': true},
+        readOnly: true
+    });
+    };
+</script>
+
 {% endblock %}
 {% block extracss %}
 <style type="text/css">
@@ -58,9 +78,8 @@ outline:none;
 		{% endif %}
 		<span>
 	</h3>
-	<div id="single_recipe_code">
-		{{ recipe.body|safe }}
-	</div><!--end single_recipe_code-->
+		<textarea id="single_recipe_code">{{ recipe.body|safe }}</textarea>
+		<br>
 	<h3>
 	<p>
 		{% trans "Tags" %} 
