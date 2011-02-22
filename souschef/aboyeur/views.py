@@ -32,12 +32,8 @@ def front(request):
                 authors.append(user)
     authors.sort(key=lambda author: author.recipe_count, reverse=True)
     # Apply the syntax highligter
-    html_formater = HtmlFormatter(linenos=True, style='native')
-    if featured_recipe:
-        featured_recipe.body = highlight(featured_recipe.body, PythonLexer(), html_formater)
 
     return render_to_response("front.html", {
-        'extracss': html_formater.get_style_defs('.highlight'),
         'featured_recipe': featured_recipe,
         'latest_recipes': recipes,
         'top_recipes': top_recipes,

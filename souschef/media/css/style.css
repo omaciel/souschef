@@ -120,43 +120,17 @@ a#menu_login:hover { width:47px;background-position: -283px -19px; }
 	width:179px;
 	height:28px;
 	background-position:0 -40px;
-	margin: 20px 0;
-}
-
-
-
-#featured_recipe_code{
-	height:201px;
-	width:431px;
-	background:black;
-}
-
-#featured_recipe_info,
-#featured_recipe_code{
-	float:left;
-}
-
-/*Featured Recipe*/
-
-#featured_recipe h2{
-	display:block;
-	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
-	width:179px;
-	height:28px;
-	background-position:0 -40px;
 	margin: 25px 0;
 }
 
 
 #featured_recipe_info{
+	display: inline-block;
 	background: url(../images/postit_206x224.png) no-repeat;
 	width:162px;
 	height:160px;
-	font-size:90%;
 	padding:20px;
-	margin-top:-4px;
-	margin-left:-5px;
-	margin-bottom:35px;
+	margin-bottom:65px;
 	color: #313131;
 	font-family: "DanielRegular", Arial, sans-serif;
 	font-size:14px;
@@ -166,21 +140,13 @@ a#menu_login:hover { width:47px;background-position: -283px -19px; }
 	margin-bottom: 15px;
 }
 
-#featured_recipe_info img{
-	float: right;
+#featured_recipe_code{ 
+	display: inline-block;
+	width: 60%;
+	margin-left: 30px;
+	height: 130px;
 }
 
-#featured_recipe_code{
-	margin-left:32px;
-	height:196px;
-	width:428px;
-	background:black;
-}
-
-#featured_recipe_info,
-#featured_recipe_code{
-	float:left;
-}
 
 #other_info{
 	width:696px;

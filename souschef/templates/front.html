@@ -9,13 +9,10 @@
 {% block extracss %}
 <style type="text/css" media="screen">
 {{ extracss }}
-#featured_recipe_code {
-overflow:hidden;
-}
 .highlight {
 padding:5px;
 background: #000000;
-}
+} -->
 .linenos {
 background:#888;
 padding:5px;
@@ -63,6 +60,28 @@ outline:none;
 		};
 	});
 </script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/rating.js">
+</script>
+<script src="{{ MEDIA_URL }}js/codemirror/js/codemirror.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+	window.onload = function() {
+		var editor = new CodeMirror.fromTextArea('featured_recipe_code_value', {
+			parserfile: "../contrib/python/js/parsepython.js",
+			stylesheet: "{{ MEDIA_URL }}js/codemirror/contrib/python/css/pythoncolors.css",
+			path: "{{ MEDIA_URL }}js/codemirror/js/",
+			lineNumbers: true,
+			textWrapping: true,
+			indentUnit: 4,
+			height: 190,
+			width: 150,
+			content: document.getElementById("featured_recipe_code_value").value,
+			tabMode: "spaces",
+			parserConfig: {'pythonVersion': 2, 'strictErrors': true},
+			readOnly: true
+		});
+	};
+</script>
 {% endblock %}
 
 {% block content %}
@@ -91,9 +110,7 @@ outline:none;
 			{% with featured_recipe.author as feat_author %}
 			<li>
 				{% trans "chef" %}:
-				<a href="/accounts/profile/{{feat_author}}">
-				{% if feat_author.get_profile.firstname  %}{{ feat_author.get_profile.firstname }} {{ feat_author.get_profile.surname }}{% else %}{{ feat_author }}{% endif %}
-				</a>
+				<a href="/accounts/profile/{{feat_author}}">{% if feat_author.get_profile.firstname  %}{{ feat_author.get_profile.firstname }} {{ feat_author.get_profile.surname }}{% else %}{{ feat_author }}{% endif %}</a>
 			</li>
 			{% endwith %}
 			<li>
@@ -120,8 +137,10 @@ outline:none;
 		</ul>
 	</div><!-- end featured_recipe_info-->
 	<div id="featured_recipe_code">
-		{{ featured_recipe.body|safe }}
-	</div><!--end featured_recipe_code-->
+		<textarea id="featured_recipe_code_value">
+			{{ featured_recipe.body|safe }}
+		</textarea>
+	</div>
 	{% else %}
 	<div id="featured_recipe_info">
 		·
@@ -147,16 +166,16 @@ outline:none;
 <div class="clear">
 </div>
 <!-- <div id="recipe_list_container" class="rc">
-	<h3 class="hide">{% trans "Recipes by Language" %}</h3>
-	{% if languages %}
-	<ul class="recipe_list">
-		{% for language in languages %}
-		<li>
-			<a href="#">{{ language.name }}</a>
-		</li>
-		{% endfor %}
-	</ul>
-	{% endif %}
+<h3 class="hide">{% trans "Recipes by Language" %}</h3>
+{% if languages %}
+<ul class="recipe_list">
+{% for language in languages %}
+<li>
+<a href="#">{{ language.name }}</a>
+</li>
+{% endfor %}
+</ul>
+{% endif %}
 </div> -->
 <!--end recipe_list-->
 <div class="clear">
@@ -215,7 +234,8 @@ outline:none;
 	<h2 class="hide">About Conary Recipe</h2>
 	<img src="{{ MEDIA_URL }}images/pie_224x111.png" alt="Pie" title="Pie" id="pie_image"/>
 	<p>
-    <strong>Sous-Chef</strong> is a <a href="https://secure.wikimedia.org/wikipedia/en/wiki/Conary_(package_manager)" alt="Conary">conary</a> recipe browser for anyone who wants to sharpen their packaging skills or just want to show off how you can turn overly complicated applications into well behaved packages! Become a chef and add your custom recipes or send your compliments to the chefs by voting for their exquisite selections! Bon appetit!
+		<strong>Sous-Chef</strong> is a
+		<a href="https://secure.wikimedia.org/wikipedia/en/wiki/Conary_(package_manager)" alt="Conary">conary</a> recipe browser for anyone who wants to sharpen their packaging skills or just want to show off how you can turn overly complicated applications into well behaved packages! Become a chef and add your custom recipes or send your compliments to the chefs by voting for their exquisite selections! Bon appetit!
 	</p>
 </div><!--end sidebar-->
 {% endblock %}
