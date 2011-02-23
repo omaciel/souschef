@@ -74,7 +74,7 @@ outline:none;
 			textWrapping: true,
 			indentUnit: 4,
 			height: 290,
-			width: 150,
+			width: "dynamic",
 			content: document.getElementById("featured_recipe_code_value").value,
 			tabMode: "spaces",
 			parserConfig: {'pythonVersion': 2, 'strictErrors': true},
@@ -88,7 +88,9 @@ outline:none;
 <div id="featured_recipe">
 	<h2 class="hide">{% trans "Featured Recipe" %}</h2>
 	{% if featured_recipe %}
-
+	<table width="90%">
+		<tr>
+			<td>
 	<div id="featured_recipe_info">
 		<ul>
 			<li>
@@ -139,11 +141,16 @@ outline:none;
 			</li>
 		</ul>
 	</div><!-- end featured_recipe_info-->
+<td>	
 	<div id="featured_recipe_code">
 		<textarea id="featured_recipe_code_value">
 			{{ featured_recipe.body|safe }}
 		</textarea>
 	</div>
+</td>	
+			</tr>
+		</table>
+
 	{% else %}
 	<div id="featured_recipe_info">
 		·
