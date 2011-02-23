@@ -173,3 +173,7 @@ def add_rating(request, recipe_id, score):
     if response.status_code == 200:
         return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
     return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
+
+def show_contact(request):
+        return render_to_response('contact.html', context_instance=RequestContext(request))
+    

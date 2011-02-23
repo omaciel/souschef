@@ -834,6 +834,15 @@ a.administrative_links_sidebar:hover{
 	top:50px;
 }
 
+#contact_menu{
+	background: url("../images/mom_sweater_589x493.png") no-repeat;
+	width:555px;
+	height:491px;
+	position:absolute;
+	left:340px;
+	top:50px;
+}
+
 .register_container{
 	height:500px;
 }
