@@ -32,6 +32,7 @@
                     <li><a id="menu_logout" class="menu_item" href="{% url logout %}">{% trans "Logout" %}</a></li>
                 {% else %}
                     <li><a id="menu_login" class="menu_item" href="{% url login %}">{% trans "Login" %}</a></li>
+                    <li><a id="menu_register" class="menu_register" href="{% url signup %}">{% trans "Sign up" %}</a></li>
                 {% endif %}
             	</h3>
             </ul>
