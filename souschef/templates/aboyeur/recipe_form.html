@@ -23,9 +23,12 @@
 {% endblock %}
 
 {% block content %}
+<br>
 <h1>{% trans "Edit recipe" %}</h1>
+<br>
             <div id="add_new_recipe">
                 <h4> Recipe data </h4>
+                <br>
                 <form action="{% url edit_recipe recipe.id %}" method="post">{% csrf_token %}
                         <fieldset>
                             {{form.title.label_tag}} <br> {{form.title}} <br>
@@ -33,7 +36,7 @@
                             {{form.install_path.label_tag}} <br> {{form.install_path}} <br>
                             {{form.url.label_tag}} <br> {{form.url}} <br>
                             {{form.published.label_tag}} <br> {{form.published}} <br>
-                            {{form.tags.label_tag}} <br> {{form.tags}}
+                            {{form.tags.label_tag}}  (separated by commas)<br> {{form.tags}}
                         </fieldset>
                         <br>
                     <input type="submit" value="Save" />
