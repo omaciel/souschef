@@ -12,7 +12,7 @@
         lineNumbers: true,
         textWrapping: false,
         indentUnit: 4,
-        height: "dynamic",
+        height: 100,
         width: "600px",
         tabMode: "spaces",
         parserConfig: {'pythonVersion': 2, 'strictErrors': true}
@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block content %}
-<h1>{% trans "Add a new recipe" %}</h1>
+<h1>{% trans "Edit recipe" %}</h1>
             <div id="add_new_recipe">
                 <h4> Recipe data </h4>
                 <form action="{% url edit_recipe recipe.id %}" method="post">{% csrf_token %}
