@@ -82,11 +82,14 @@ outline:none;
 		<br>
 	<h3>
 	<p>
-		{% trans "Tags" %} 
+		{% trans "Tags:" %} 
 		{% tags_for_object recipe as recipe_tags %}
 		{% for tag in recipe_tags %}
 		<a href="#">{{ tag }}</a>
 		{% endfor %}
+	</p>
+	<p>
+		Install path: {{ recipe.install_path }}
 	</p>
 	<p class="rating">
 		{% trans "Stars" %}:
