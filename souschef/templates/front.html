@@ -131,9 +131,7 @@ outline:none;
 	</div><!-- end featured_recipe_info-->
 <td>	
 	<div id="featured_recipe_code">
-		<textarea id="featured_recipe_code_value">
-			{{ featured_recipe.body|safe }}
-		</textarea>
+		<textarea id="featured_recipe_code_value">{{featured_recipe.body|escape }}</textarea>
 </div>
 		<div class="tag_list rc">
 					{% if featured_recipe.tags %}
