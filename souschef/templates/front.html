@@ -100,15 +100,6 @@ outline:none;
 				<a href="{{ featured_recipe.url }}"></a>
 				{% endif %}
 			</li>
-			{% if featured_recipe.tags %}
-			<li>
-				{% trans "tags" %}:
-				{% tags_for_object featured_recipe as recipe_tags %}
-				{% for tag in recipe_tags %}
-				<a href="/tag/{{tag.id}}">{{ tag }}</a>
-				{% endfor %}
-			</li>
-			{% endif %}
 			{% with featured_recipe.author as feat_author %}
 			<li>
 				{% trans "chef" %}:
@@ -143,6 +134,17 @@ outline:none;
 		<textarea id="featured_recipe_code_value">
 			{{ featured_recipe.body|safe }}
 		</textarea>
+</div>
+		<div class="tag_list rc">
+					{% if featured_recipe.tags %}
+				{% trans "Tags" %}:
+				{% tags_for_object featured_recipe as recipe_tags %}
+				{% for tag in recipe_tags %}
+				<a href="/tag/{{tag.id}}">{{ tag }}</a>
+				{% endfor %}
+			{% endif %}
+<br>
+
 	</div>
 </td>	
 			</tr>
