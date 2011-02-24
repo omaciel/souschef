@@ -10,6 +10,8 @@ from django.http import HttpResponseRedirect
 from djangoratings.views import AddRatingFromModel
 from favorites.models import Favorite
 from tagging.views import tagged_object_list
+from tagging.models import Tag
+from tagging.models import TaggedItem
 import random
 
 def front(request):
@@ -65,10 +67,18 @@ def recipes_page(request):
     else:
         return render_to_response('recipes.html', variables)
 
-def tagged_recipes(request, tag):
-    queryset = Recipe.objects.all(published=True)
-    return tagged_object_list(request, queryset, tag, paginate_by=25,
-        allow_empty=True, template_object_name='recipe')
+def tagged_recipes(request, tag_id):
+    form = SearchForm()
+    tag = Tag.objects.get(pk=tag_id)
+    queryset = TaggedItem.objects.get_by_model(Recipe, tag)
+    print queryset
+    variables = RequestContext(request, {
+        'recipes': queryset,
+        'form': form,
+        'tag': tag
+        })
+
+    return render_to_response('recipes.html', variables)
 
 def recipes(request, id):
     recipe = get_object_or_404(Recipe, id=id)
@@ -175,5 +185,7 @@ def add_rating(request, recipe_id, score):
     return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
 
 def show_contact(request):
-        return render_to_response('contact.html', context_instance=RequestContext(request))
+    return render_to_response('contact.html', context_instance=RequestContext(request))
+    
+        
     

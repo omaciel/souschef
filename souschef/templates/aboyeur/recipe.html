@@ -85,7 +85,7 @@ outline:none;
 		{% trans "Tags:" %} 
 		{% tags_for_object recipe as recipe_tags %}
 		{% for tag in recipe_tags %}
-		<a href="#">{{ tag }}</a>
+		<a href="/tag/{{tag.id}}">{{ tag }}</a>
 		{% endfor %}
 	</p>
 	<p>

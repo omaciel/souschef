@@ -1,7 +1,4 @@
 {% extends "base.html" %}
-{% block extrajs %}
-  <script type="text/javascript" src="{{ MEDIA_URL }}search.js"></script>
-{% endblock %}
 {% block title %}{{ block.super }} &raquo; Search Bookmarks{% endblock %}
 
 {% block content_class %}search_results_container{% endblock %}
@@ -22,5 +19,12 @@
     <div id="search-results">
         {% include "recipe_list.html" %}
     </div><!-- end search results-->
+{% else %}
+    <h2>Tagged recipes for {{ tag }}</h2>
+
+    <div id="search-results">
+        {% include "recipe_list.html" %}
+    </div><!-- end search results-->
+
 {% endif %}
 {% endblock %}

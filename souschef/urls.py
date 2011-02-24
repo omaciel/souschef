@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     # Browsing
     url(r'^$', front, name="frontpage"),
     url(r'^contact', 'aboyeur.views.show_contact', name="contact"),
+    (r'^tag/(?P<tag_id>\d+)', 'aboyeur.views.tagged_recipes'),
     url(r'^accounts/', include('demoprofile.urls')),
     url(r'^accounts/', include('userprofile.urls')),
     url(r'^aboyeur/', include('aboyeur.urls.entries')),
