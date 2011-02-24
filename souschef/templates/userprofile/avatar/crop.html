@@ -15,7 +15,7 @@
 			$("input[name='bottom']").val(selection.y2);
 		}
 		$(window).load(function() {
-			$("#cropimage").imgAreaSelect({ aspectRatio: "1:1", onSelectEnd: updateValues, minHeight: 96, minWidth: 96 });
+			$("#cropimage").imgAreaSelect({ aspectRatio: "1:1", onSelectEnd: updateValues });
 		});
 	});
 </script>
@@ -28,7 +28,8 @@
 {% block content %}
 	<form action="{{ request.path_info }}" method="post" accept-charset="utf-8">
 	<fieldset>
-		<h3>{% trans "Crop &amp; resize the area you want" %}</h3>
+		<br>
+		<h3>{% trans "Crop &amp; resize the area you want (minimum width and height 96px" %}</h3>
 
 		{% if form.errors %}
 			{% for error,desc in form.errors.items %}
