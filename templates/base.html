@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load tryinclude %}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -14,6 +16,7 @@
     {% block external %}{% endblock %}
 
     <link rel="alternate" type="application/rss+xml"  href="/aboyeur/feeds/recipes" title="Latest Recipes" />
+    {% try_to_include "analytics.html" %}
 </head>
 
 <body>

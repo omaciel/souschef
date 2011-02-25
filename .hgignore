@@ -7,3 +7,4 @@ syntax: glob
 media/avatars*
 .DS_Store
 production_settings.py
+analytics.html
