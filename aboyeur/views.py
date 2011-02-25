@@ -186,6 +186,3 @@ def add_rating(request, recipe_id, score):
 
 def show_contact(request):
     return render_to_response('contact.html', context_instance=RequestContext(request))
-    
-        
-    
