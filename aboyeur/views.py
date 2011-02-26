@@ -13,6 +13,7 @@ from tagging.views import tagged_object_list
 from tagging.models import Tag
 from tagging.models import TaggedItem
 import random
+from django.core.paginator import Paginator
 
 def front(request):
     recipes = Recipe.objects.filter(published=True).order_by('-date_updated')[:5]
@@ -55,6 +56,15 @@ def recipes_page(request):
     else:
         query = ""
 
+    paginator = Paginator(recipes,5)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    recipes = paginator.page(page)
+        
+        
+
     variables = RequestContext(request, {
         'form': form,
         'query': query,
@@ -71,7 +81,15 @@ def tagged_recipes(request, tag_id):
     form = SearchForm()
     tag = Tag.objects.get(pk=tag_id)
     queryset = TaggedItem.objects.get_by_model(Recipe, tag)
-    print queryset
+
+    paginator = Paginator(queryset,5)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    queryset = paginator.page(page)
+    
+    
     variables = RequestContext(request, {
         'recipes': queryset,
         'form': form,

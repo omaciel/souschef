@@ -1,6 +1,19 @@
 {% if recipes %}
+<div class="pagination">
+	<span class="step-links">
+		{% if recipes.has_previous %}
+		<a href="?page={{ recipes.previous_page_number}}&query={{query}}">previous</a>
+		{% endif %}
+
+		<span class="current">Page {{ recipes.number }} of {{ recipes.paginator.num_pages }}.</span>
+		{% if recipes.has_next %}
+		<a href="?page={{ recipes.next_page_number }}&query={{query}}">next</a>
+		{% endif %}
+	</span>
+</div>
+<br>
 <ul>
-	{% for recipe in recipes %}
+	{% for recipe in recipes.object_list %}
 	<li class="result rc">
 		<ul>
 			<!-- <li class="language">Language: <a href="#">Python</a></li> -->
@@ -27,6 +40,7 @@
 	</li><!--end result-->
 	{% endfor %}
 </ul><!--search results list-->
+
 {% else %}
 <div id="search_none">
 	<h2>We couldn't find that recipe...</h2>
