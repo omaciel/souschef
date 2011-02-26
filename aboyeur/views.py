@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.views.generic.create_update import update_object
 from aboyeur.models import Recipe, User
 from aboyeur.forms import RecipeForm, SearchForm
@@ -136,6 +136,8 @@ def delete_recipe(request, recipe_id):
     _verify_permission(request, 'aboyeur.delete_recipe')
 
     recipe = get_object_or_404(Recipe, id=recipe_id)
+    if recipe.author != request.user:
+        return redirect('/')
 
     if request.method == 'POST':
         for favorite in Favorite.objects.favorites_for_object(recipe):
@@ -151,6 +153,9 @@ def delete_recipe(request, recipe_id):
 @login_required
 def update_recipe(request, recipe_id):
     _verify_permission(request, 'aboyeur.change_recipe')
+    recipe = Recipe.objects.get(pk=recipe_id)
+    if recipe.author != request.user:
+        return redirect('/')
 
     return update_object(request,
         form_class=RecipeForm,
