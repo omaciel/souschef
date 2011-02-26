@@ -7,6 +7,8 @@ import os.path
 from djangoratings.fields import RatingField
 from tagging.fields import TagField
 from tagging.models import Tag
+from django import forms
+from django.core.exceptions import ValidationError
 
 def get_recipe_files_path(instance, filename):
     return os.path.join('recipe_files', str(instance.recipe.id), filename)
@@ -60,4 +62,10 @@ class Recipe_file(models.Model):
 
     def filename(self):
         return os.path.basename(self.file.name)
+    
+    def clean(self):
+        if not self.file.name.split('.')[-1] in ['zip', 'tar', 'gz', 'bz2']:
+            raise ValidationError("Unsupported extension")
+        if self.file.size > 500*1024:
+            raise ValidationError("File size over limit")
     

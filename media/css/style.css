@@ -903,6 +903,17 @@ padding: 10px;
 	margin-left: 30px;
 }
 
+.proper_links a{
+	color: black;
+}
+
 .pagination {
 	display: block;
+}
+
+.file_error {
+ padding 5px;
+ color: red;
+ border: solid 1px;
+ text-align: center;
 }

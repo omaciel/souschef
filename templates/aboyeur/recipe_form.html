@@ -26,10 +26,16 @@
 <br>
 <h1>{% trans "Edit recipe" %}</h1>
 <br>
+{% if file_error %}
+<div class="file_error rc">
+{{file_error}}
+</div>
+<br>
+{% endif %}
 <div id="add_new_recipe">
 	<h4>Recipe data</h4>
 	<br>
-	<form action="{% url edit_recipe recipe.id %}" method="post" enctype="multipart/form-data">
+	<form action="/aboyeur/recipes/edit/{{recipe.id}}/" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
 		<fieldset>
 			{{form.title.label_tag}}
@@ -59,14 +65,21 @@
 			{{form.tags}}
 		</fieldset>
 		<br>
-		Files:
+		<div class="proper_links">
+		Files (Limit 500kb, accepted : zip, tar, tar.gz, tar.bz2) :
 		<br>
+		{% if recipe.recipe_file_set.all %}
+		Current (will be deleted) :
 		{% for recipe_file in recipe.recipe_file_set.all %}
 		<a href="{{ MEDIA_URL }}{{recipe_file.file}}">
 		{{recipe_file.filename}}
+		</a>
 		<br>
 		{% endfor %}
+		{% endif %}
+		{{file_form.file.errors}}
 		{{file_form.file}}
+		</div>
 		<br>
 		<input type="submit" value="Save" />
 	</form>

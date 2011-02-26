@@ -6,36 +6,36 @@
 
 {% block extrajs %}
     <script type="text/javascript">
-        $( function() {
-            var $add_new_recipe = $('#add_new_recipe');
-            var $input_title = $('#id_title');
-            $add_new_recipe.hide();
+		$( function() {
+			var $add_new_recipe = $('#add_new_recipe');
+			var $input_title = $('#id_title');
+			$add_new_recipe.hide();
 
-            $('#user_recipes h3 a').toggle( function() {
-                $add_new_recipe.slideDown( function() {
-                    $input_title.focus();
-                });
-            }, function() {
-                $add_new_recipe.slideUp();
-            });
-        });
+			$('#user_recipes h3 a').toggle( function() {
+				$add_new_recipe.slideDown( function() {
+					$input_title.focus();
+				});
+			}, function() {
+				$add_new_recipe.slideUp();
+			});
+		});
     </script>
     <script src="{{ MEDIA_URL }}js/codemirror/js/codemirror.js" type="text/javascript"></script>
  <script type="text/javascript">
-    window.onload = function() {
-    var editor = CodeMirror.fromTextArea('id_body', {
-        parserfile: "../contrib/python/js/parsepython.js",
-        stylesheet: "{{ MEDIA_URL }}js/codemirror/contrib/python/css/pythoncolors.css",
-        path: "{{ MEDIA_URL }}js/codemirror/js/",
-        lineNumbers: true,
-        textWrapping: false,
-        indentUnit: 4,
-        height: 150,
-        width: "dynamic",
-        tabMode: "spaces",
-        parserConfig: {'pythonVersion': 2, 'strictErrors': true}
-    });
-    };
+	window.onload = function() {
+		var editor = CodeMirror.fromTextArea('id_body', {
+			parserfile: "../contrib/python/js/parsepython.js",
+			stylesheet: "{{ MEDIA_URL }}js/codemirror/contrib/python/css/pythoncolors.css",
+			path: "{{ MEDIA_URL }}js/codemirror/js/",
+			lineNumbers: true,
+			textWrapping: false,
+			indentUnit: 4,
+			height: 150,
+			width: "dynamic",
+			tabMode: "spaces",
+			parserConfig: {'pythonVersion': 2, 'strictErrors': true}
+		});
+	};
 </script>
 
 {% endblock %}
@@ -65,6 +65,13 @@
     {% if perms.aboyeur.add_recipe %}
         <div id="user_recipes">
             <h3>My Recipes <a class="administrative_links" href="#add_new_recipe">Add New Recipe</a></h3>
+				{% if file_error %}
+				<div class="file_error rc">
+				{{file_error}}
+				</div>
+				<br>
+				{% endif %}
+            
             <div id="add_new_recipe">
                 <h4> Recipe data </h4>
                 <!-- use jquery to hide this block -->
@@ -79,6 +86,7 @@
                         </fieldset>
                         <br>
                         {{file_form.file}}
+                        <br>
                     <input type="submit" value="Save" />
                 </form>
 

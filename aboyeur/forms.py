@@ -16,3 +16,5 @@ class RecipeForm(forms.ModelForm):
 class Recipe_File_Form(forms.ModelForm):
     class Meta:
         model = Recipe_file
+        exclude = ('recipe')
+

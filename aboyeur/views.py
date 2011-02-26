@@ -14,6 +14,8 @@ from tagging.models import Tag
 from tagging.models import TaggedItem
 import random
 from django.core.paginator import Paginator
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
+
 
 def front(request):
     recipes = Recipe.objects.filter(published=True).order_by('-date_updated')[:5]
@@ -134,19 +136,29 @@ def _verify_permission(request, permission):
 @login_required
 def add_recipe(request):
     _verify_permission(request, 'aboyeur.add_recipe')
-
+    file_form = Recipe_File_Form()
     if request.method == 'POST':
         form = RecipeForm(request.POST)
         if form.is_valid():
             recipe = form.save(commit=False)
             recipe.author = request.user
-            recipe.save()
-            if request.FILES['file']:
+            if request.FILES:
                 recipe_file = request.FILES['file']
                 recipe_file_container = Recipe_file()
-                recipe_file_container.recipe = recipe
                 recipe_file_container.file = recipe_file
+                try:
+                    recipe_file_container.clean()
+                except: 
+                    return render_to_response('userprofile/profile/overview.html', {
+                        'form': form, 'recipe':recipe, 'file_error': 'Attachment does not comply with limits', 'file_form':file_form
+                    }, context_instance=RequestContext(request))
+                recipe.save()
+                recipe_file_container.recipe = recipe
+                recipe.recipe_file_set.all().delete()
                 recipe_file_container.save()
+            else:
+                recipe.save()
+                
             return HttpResponseRedirect(reverse('profile_overview'))
     else:
         form = RecipeForm()
@@ -177,17 +189,25 @@ def delete_recipe(request, recipe_id):
 @login_required
 def update_recipe(request, recipe_id):
     file_form = Recipe_File_Form()
-
     _verify_permission(request, 'aboyeur.change_recipe')
     recipe = Recipe.objects.get(pk=recipe_id)
     if recipe.author != request.user:
         return redirect('/')
+    form = RecipeForm(request.POST)
     if request.FILES:
-        recipe.recipe_file_set.all().delete()
         recipe_file = request.FILES['file']
         recipe_file_container = Recipe_file()
         recipe_file_container.recipe = recipe
         recipe_file_container.file = recipe_file
+        print '1'
+        try:
+            print '2'
+            recipe_file_container.clean()
+        except: 
+            return render_to_response('aboyeur/recipe_form.html', {
+                'form': form, 'file_form':file_form, 'recipe':recipe, 'file_error': 'Attachment does not comply with limits'
+            }, context_instance=RequestContext(request))
+        recipe.recipe_file_set.all().delete()
         recipe_file_container.save()
 
     return update_object(request,
