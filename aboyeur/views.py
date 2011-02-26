@@ -14,14 +14,6 @@ from tagging.models import Tag
 from tagging.models import TaggedItem
 import random
 from django.core.paginator import Paginator
-from django.conf import settings
-from django.contrib.auth.models import SiteProfileNotAvailable
-from django.core.exceptions import ImproperlyConfigured
-from userprofile.forms import AvatarForm, AvatarCropForm, EmailValidationForm, \
-                              ProfileForm, RegistrationForm, LocationForm, \
-                              PublicFieldsForm
-from django.db import models
-
 
 def front(request):
     recipes = Recipe.objects.filter(published=True).order_by('-date_updated')[:5]
@@ -217,37 +209,3 @@ def add_rating(request, recipe_id, score):
 
 def show_contact(request):
     return render_to_response('contact.html', context_instance=RequestContext(request))
-
-if not settings.AUTH_PROFILE_MODULE:
-    raise SiteProfileNotAvailable
-try:
-    app_label, model_name = settings.AUTH_PROFILE_MODULE.split('.')
-    Profile = models.get_model(app_label, model_name)
-except (ImportError, ImproperlyConfigured):
-    raise SiteProfileNotAvailable
-
-GOOGLE_MAPS_API_KEY = hasattr(settings, "GOOGLE_MAPS_API_KEY") and \
-                      settings.GOOGLE_MAPS_API_KEY or None
-
-#Django-profile override
-@login_required
-def personal(request):
-    print 'aa'
-    """
-    Personal data of the user profile
-    """
-    profile, created = Profile.objects.get_or_create(user=request.user)
-
-    if request.method == "POST":
-        form = ProfileForm(request.POST, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('/accounts/profile')
-    else:
-        form = ProfileForm(instance=profile)
-
-    template = "userprofile/profile/personal.html"
-    data = { 'section': 'personal', 'GOOGLE_MAPS_API_KEY': GOOGLE_MAPS_API_KEY,
-             'form': form, }
-    return render_to_response(template, data, context_instance=RequestContext(request))
-
