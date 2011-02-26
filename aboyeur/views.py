@@ -62,8 +62,8 @@ def recipes_page(request):
     except ValueError:
         page = 1
     recipes = paginator.page(page)
-        
-        
+
+
 
     variables = RequestContext(request, {
         'form': form,
@@ -88,8 +88,8 @@ def tagged_recipes(request, tag_id):
     except ValueError:
         page = 1
     queryset = paginator.page(page)
-    
-    
+
+
     variables = RequestContext(request, {
         'recipes': queryset,
         'form': form,
