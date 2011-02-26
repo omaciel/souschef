@@ -25,28 +25,27 @@
     <div id="menu_container">
         <div id="top_menu">
             <ul>
-            	<h3>
+                <h3>
                 <li><a id="menu_home" class="menu_item" href="{% url frontpage %}">{% trans "Home" %}</a></li>
                 <!--<li><a id="menu_recipes" class="menu_item" href="#">{% trans "Recipes" %}</a></li>
                 <li><a id="menu_sous_chef" class="menu_item" href="#">{% trans "Sous Chefs" %}</a></li>-->
                 <li><a id="menu_contact" class="menu_item" href="{% url contact %}">{% trans "Contact" %}</a></li>
                 {% if user.is_authenticated %}
-                    <li><a id="menu_profile" class="menu_item" href="{% url profile_overview %}">{% trans "Profile" %}</a></li>
-                    <li><a id="menu_logout" class="menu_item" href="{% url logout %}">{% trans "Logout" %}</a></li>
+                    <li><a id="menu_logout" class="menu_item" href="{% url logout %}">{% trans "Logout" %}</a> <a href="{% url profile_overview %}">( {{ user }} )</a></li>
                 {% else %}
                     <li><a id="menu_login" class="menu_item" href="{% url login %}">{% trans "Login" %}</a></li>
                     <li><a id="menu_register" class="menu_register" href="{% url signup %}">{% trans "Sign up" %}</a></li>
                 {% endif %}
-            	</h3>
+                </h3>
             </ul>
-            
+
             <div id="search">
-            
+
             <form name="input" action="{% url recipes %}" method="get">
                 <input name="query" type="text">
                 <input value="Search" type="submit">
             </form>
-            
+
             </div><!--end search-->
         </div><!--end top_menu-->
     </div><!--end menu_container-->
@@ -64,11 +63,11 @@
         <div id="content" class="{% block content_class %}{% endblock %}">
             {% block content %}{% endblock %}
         </div><!--end content-->
-        
+
         {% block sidebar %}{% endblock %}
-        
+
         <div class="clear"></div>
-        
+
         <div id="footer">
             <p>Sous Chef - Conary Recipes 2010-2011. All Rigths Reserved. Website: <a href="#">QuartoEstudio.com</a></p>
         </div><!--end footer-->
