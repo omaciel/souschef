@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block userprofile_content %}
+<br>
 <form class="personal" action="{{ request.path_info }}" method="post" enctype="multipart/form-data">{% csrf_token %}
     <fieldset>
         <h3>{% trans "Edit your personal information" %}</h3>
