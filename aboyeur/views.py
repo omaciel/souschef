@@ -2,8 +2,8 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.views.generic.create_update import update_object
-from aboyeur.models import Recipe, User
-from aboyeur.forms import RecipeForm, SearchForm
+from aboyeur.models import Recipe, User, Recipe_file
+from aboyeur.forms import RecipeForm, SearchForm, Recipe_File_Form
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -141,6 +141,12 @@ def add_recipe(request):
             recipe = form.save(commit=False)
             recipe.author = request.user
             recipe.save()
+            if request.FILES['file']:
+                recipe_file = request.FILES['file']
+                recipe_file_container = Recipe_file()
+                recipe_file_container.recipe = recipe
+                recipe_file_container.file = recipe_file
+                recipe_file_container.save()
             return HttpResponseRedirect(reverse('profile_overview'))
     else:
         form = RecipeForm()
@@ -170,16 +176,26 @@ def delete_recipe(request, recipe_id):
 
 @login_required
 def update_recipe(request, recipe_id):
+    file_form = Recipe_File_Form()
+
     _verify_permission(request, 'aboyeur.change_recipe')
     recipe = Recipe.objects.get(pk=recipe_id)
     if recipe.author != request.user:
         return redirect('/')
+    if request.FILES:
+        recipe.recipe_file_set.all().delete()
+        recipe_file = request.FILES['file']
+        recipe_file_container = Recipe_file()
+        recipe_file_container.recipe = recipe
+        recipe_file_container.file = recipe_file
+        recipe_file_container.save()
 
     return update_object(request,
         form_class=RecipeForm,
         object_id=recipe_id,
         post_save_redirect='/accounts/profile/',
-        template_object_name='recipe'
+        template_object_name='recipe',
+        extra_context={'file_form':file_form}
     )
 
 @login_required

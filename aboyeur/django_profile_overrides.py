@@ -17,6 +17,7 @@ from userprofile.models import EmailValidation, Avatar
 from django.template import RequestContext
 from django.conf import settings
 from xml.dom import minidom
+from aboyeur.forms import Recipe_File_Form, RecipeForm
 import urllib2
 import random
 import cPickle as pickle
@@ -108,16 +109,17 @@ def overview(request):
     Main profile page
     """
     profile, created = Profile.objects.get_or_create(user=request.user)
+    file_form = Recipe_File_Form()
+    recipe_form = RecipeForm()
     validated = False
     try:
         email = EmailValidation.objects.get(user=request.user).email
     except EmailValidation.DoesNotExist:
         email = request.user.email
         if email: validated = True
-
     template = "userprofile/profile/overview.html"
     data = { 'section': 'overview', 'GOOGLE_MAPS_API_KEY': GOOGLE_MAPS_API_KEY,
-             'email': email, 'validated': validated }
+             'email': email, 'validated': validated, 'file_form':file_form, 'form':recipe_form }
     return render_to_response(template, data, context_instance=RequestContext(request))
 
 @login_required

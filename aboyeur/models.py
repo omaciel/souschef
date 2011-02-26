@@ -1,11 +1,15 @@
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
+import os.path
 
 # External Modules
 from djangoratings.fields import RatingField
 from tagging.fields import TagField
 from tagging.models import Tag
+
+def get_recipe_files_path(instance, filename):
+    return os.path.join('recipe_files', str(instance.recipe.id), filename)
 
 class Recipe(models.Model):
     author = models.ForeignKey(User)
@@ -49,3 +53,11 @@ class Recipe(models.Model):
 
     def __unicode__(self):
         return self.title
+    
+class Recipe_file(models.Model):
+    recipe = models.ForeignKey(Recipe)
+    file = models.FileField(upload_to=get_recipe_files_path)
+
+    def filename(self):
+        return os.path.basename(self.file.name)
+    

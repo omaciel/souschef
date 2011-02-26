@@ -1,5 +1,5 @@
 from django import forms
-from aboyeur.models import Recipe
+from aboyeur.models import Recipe, Recipe_file
 
 class SearchForm(forms.Form):
     query = forms.CharField(
@@ -12,3 +12,7 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         exclude = ('author',)
+        
+class Recipe_File_Form(forms.ModelForm):
+    class Meta:
+        model = Recipe_file

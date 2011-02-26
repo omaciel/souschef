@@ -68,7 +68,7 @@
             <div id="add_new_recipe">
                 <h4> Recipe data </h4>
                 <!-- use jquery to hide this block -->
-                <form action="{% url add_recipe %}" method="post">{% csrf_token %}
+                <form action="{% url add_recipe %}" method="post" enctype="multipart/form-data">{% csrf_token %}
                         <fieldset>
                             {{form.title.label_tag}} <br> {{form.title}} <br>
                             {{form.body.label_tag}} <br> <div id="recipe_body"> {{form.body}} </div><br>
@@ -78,6 +78,7 @@
                             {{form.tags.label_tag}}  (separated by commas)<br> {{form.tags}}
                         </fieldset>
                         <br>
+                        {{file_form.file}}
                     <input type="submit" value="Save" />
                 </form>
 
@@ -85,7 +86,7 @@
 
             <ul>
                 <li class="user_recipe">
-                    {% for recipe in user_recipes %}
+                    {% for recipe in user.recipe_set.all %}
                         <h4> <a class="administrative_links" href="{% url edit_recipe recipe.id%}">{% trans "Edit" %}</a> <a class="administrative_links" href="{% url delete_recipe recipe.id %}">{% trans "Delete" %}</a> <a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
                             {% if recipe.published %}
                                 <img src="{{ MEDIA_URL }}images/published.png" alt="published" title="published" width="18" height="18" /></a>

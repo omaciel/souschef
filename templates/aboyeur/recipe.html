@@ -82,6 +82,12 @@ outline:none;
 		<br>
 	<h3>
 	<p>
+		{% trans "Files:" %}
+		{% for recipe_file in recipe.recipe_file_set.all %}
+		<a href="{{ MEDIA_URL }}{{recipe_file.file}}">
+		{{recipe_file.filename}}<br>
+		</a>
+		{% endfor %}
 		{% trans "Tags:" %} 
 		{% tags_for_object recipe as recipe_tags %}
 		{% for tag in recipe_tags %}
