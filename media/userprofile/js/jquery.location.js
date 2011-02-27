@@ -19,6 +19,12 @@ $(document).ready( function() {
 			navigator.geolocation.getCurrentPosition( function(position) {
 				initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 				detected_location = initialLocation;
+                                if ($("#id_latitude").val() == ''){
+                                    $("#id_latitude").val(detected_location.lat().toFixed(6));
+                                }
+                                if ($("#id_longitude").val() == ''){
+                                    $("#id_longitude").val(detected_location.lng().toFixed(6));
+                                }
 				currentLocation = new google.maps.LatLng(current_lat,current_lng);
 				var currentinfowindow = new google.maps.InfoWindow({
 					content: 'Current set location'
