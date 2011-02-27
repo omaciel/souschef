@@ -18,7 +18,6 @@
             var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
             {% for profile in profiles %}
-            {% if profile.latitude and profile.longitude %}
             var infowindow_{{forloop.counter}} = new google.maps.InfoWindow({
                 content: 'User <br> Location : {{profile.location}} <br> Country : {{profile.country}}'
             });
@@ -31,7 +30,6 @@
                 map.setZoom(14);
                 infowindow_{{forloop.counter}}.open(map,marker_{{forloop.counter}});
             });
-            {% endif %}
             {% endfor %}
 
         }

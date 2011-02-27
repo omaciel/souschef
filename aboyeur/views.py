@@ -249,7 +249,12 @@ def show_user_map(request):
     users = User.objects.all()
     profiles = []
     for user in users:
-        profiles.append(user.get_profile())
+        profile = user.get_profile()
+        try:
+            if profile.latitude and profile.longitude:
+                profiles.append(user.get_profile())
+        except:
+            pass
     return render_to_response('user_map.html', {'profiles':profiles},context_instance=RequestContext(request))
 
 @login_required
