@@ -30,6 +30,7 @@
                 <!--<li><a id="menu_recipes" class="menu_item" href="#">{% trans "Recipes" %}</a></li>
                 <li><a id="menu_sous_chef" class="menu_item" href="#">{% trans "Sous Chefs" %}</a></li>-->
                 <li><a id="menu_contact" class="menu_item" href="{% url contact %}">{% trans "Contact" %}</a></li>
+                <li><a id="menu_user_map" class="menu_item" href="{% url user_map %}">{% trans "Chefs map" %}</a></li>
                 {% if user.is_authenticated %}
                     <li><a id="menu_logout" class="menu_item" href="{% url logout %}">{% trans "Logout" %}</a> <a href="{% url profile_overview %}">( {{ user }} )</a></li>
                 {% else %}

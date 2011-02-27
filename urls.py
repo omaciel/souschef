@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     # Browsing
     url(r'^$', front, name="frontpage"),
     url(r'^contact', 'aboyeur.views.show_contact', name="contact"),
+    url(r'^user_map', 'aboyeur.views.show_user_map', name="user_map"),
     (r'^tag/(?P<tag_id>\d+)', 'aboyeur.views.tagged_recipes'),
     url(r'^accounts/profile/edit/personal/$', 'aboyeur.django_profile_overrides.personal', name='profile_edit_personal'),
     url(r'^accounts/profile/$', 'aboyeur.django_profile_overrides.overview', name='profile_overview'),

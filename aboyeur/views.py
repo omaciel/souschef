@@ -15,6 +15,7 @@ from tagging.models import TaggedItem
 import random
 from django.core.paginator import Paginator
 import smtplib
+from django.contrib.auth.models import User
 
 
 def front(request):
@@ -243,6 +244,13 @@ def add_rating(request, recipe_id, score):
 
 def show_contact(request):
     return render_to_response('contact.html', context_instance=RequestContext(request))
+
+def show_user_map(request):
+    users = User.objects.all()
+    profiles = []
+    for user in users:
+        profiles.append(user.get_profile())
+    return render_to_response('user_map.html', {'profiles':profiles},context_instance=RequestContext(request))
 
 @login_required
 def friend_invite(request):
