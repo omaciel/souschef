@@ -249,8 +249,8 @@ def show_user_map(request):
     users = User.objects.all()
     profiles = []
     for user in users:
-        profile = user.get_profile()
         try:
+            profile = user.get_profile()
             if profile.latitude and profile.longitude:
                 profiles.append(user.get_profile())
         except:
