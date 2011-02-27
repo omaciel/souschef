@@ -14,7 +14,6 @@ from tagging.models import Tag
 from tagging.models import TaggedItem
 import random
 from django.core.paginator import Paginator
-from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 import smtplib
 
 

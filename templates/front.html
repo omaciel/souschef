@@ -209,8 +209,7 @@ outline:none;
 			<li class="sous_chef_info">
 				<a href="/accounts/profile/{{author}}">
 				<img src="{% avatar  96 author %}" alt="{{ author }}" title="{% if user.get_profile.firstname %}{{ user.get_profile.firstname }} {{ user.get_profile.surname }}{% else %}{{ author }}{% endif %}" width="42" height="42" />
-				{% if author.get_profile.firstname  %}{{ author.get_profile.firstname }} {{ author.get_profile.surname }}{% else %}{{ author }}{% endif %}
-				</a>
+				{% if author.get_profile.firstname  %}{{ author.get_profile.firstname }} {{ author.get_profile.surname }}{% else %}{{ author }}{% endif %}</a>
 				<br>
                 Recipes: <strong>{{ author.recipe_count }}</strong>
 			</li>

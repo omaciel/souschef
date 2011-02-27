@@ -66,10 +66,10 @@
 		</fieldset>
 		<br>
 		<div class="proper_links">
-		Files (Limit 500kb, accepted : zip, tar, tar.gz, tar.bz2) :
+		Attachement (Limit 500kb, accepted : zip, tar, tar.gz, tar.bz2) :
 		<br>
 		{% if recipe.recipe_file_set.all %}
-		Current (will be deleted) :
+		Current (will be deleted if sumbitted) :
 		{% for recipe_file in recipe.recipe_file_set.all %}
 		<a href="{{ MEDIA_URL }}{{recipe_file.file}}">
 		{{recipe_file.filename}}
