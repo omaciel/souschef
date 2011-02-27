@@ -82,21 +82,33 @@
                 <br>
                 <h3>
                     <p>
+                        {% if recipe.recipe_file_set.all %}
 		{% trans "Attachment:" %}
 		{% for recipe_file in recipe.recipe_file_set.all %}
                         <a href="{{ MEDIA_URL }}{{recipe_file.file}}">
                             {{recipe_file.filename}}
                         </a>
 		{% endfor %}
-                <br>
+                        {% else %}
+                        {% trans "No attachment" %}
+                        {% endif %}
+                        <br>
+                        {% if recipe_tags %}
 		{% trans "Tags:" %} 
 		{% tags_for_object recipe as recipe_tags %}
 		{% for tag in recipe_tags %}
                         <a href="/tag/{{tag.id}}">{{ tag }}</a>
 		{% endfor %}
+                        {% else %}
+                        {% trans "No tags" %}
+                {% endif %}
                     </p>
                     <p>
+                        {% if recipe.install_path %}
 		Install path: {{ recipe.install_path }}
+                {% else %}
+                        {% trans "No install path" %}
+                {% endif %}
                     </p>
                     <p class="rating">
 		{% trans "Stars" %}:

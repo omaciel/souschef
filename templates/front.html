@@ -140,6 +140,8 @@ outline:none;
 				{% for tag in recipe_tags %}
 				<a href="/tag/{{tag.id}}">{{ tag }}</a>
 				{% endfor %}
+                                {% else %}
+				{% trans "No tags" %}
 			{% endif %}
 <br>
 
