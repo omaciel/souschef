@@ -5,6 +5,7 @@ syntax: glob
 *~
 *.db
 media/avatars*
+media/recipe_files*
 .DS_Store
 production_settings.py
 analytics.html
