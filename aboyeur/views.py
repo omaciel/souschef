@@ -16,6 +16,7 @@ import random
 from django.core.paginator import Paginator
 import smtplib
 from django.contrib.auth.models import User
+from decimal import *
 
 
 def front(request):
@@ -252,7 +253,10 @@ def show_user_map(request):
         try:
             profile = user.get_profile()
             if profile.latitude and profile.longitude:
-                profiles.append(user.get_profile())
+                random_add = Decimal(str(random.uniform(-0.009,0.009))).quantize(Decimal('0.000001'), rounding=ROUND_HALF_UP)
+                profile.latitude = profile.latitude + random_add
+                profile.longitude = profile.longitude + random_add
+                profiles.append(profile)
         except:
             pass
     return render_to_response('user_map.html', {'profiles':profiles},context_instance=RequestContext(request))
