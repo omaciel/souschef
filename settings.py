@@ -118,6 +118,15 @@ GOOGLE_MAPS_API_KEY = ""
 REQUIRE_EMAIL_CONFIRMATION = False
 AVATAR_QUOTA = 8
 
+SITE_HOST = '127.0.0.1:8000'
+DEFAULT_FROM_EMAIL = \
+    'Conary Recipes <contact@conaryrecipes.com>'
+EMAIL_HOST = 'mail.example.com'
+EMAIL_PORT = ''
+EMAIL_HOST_USER = 'contact@example.com'
+EMAIL_HOST_PASSWORD = ''
+
+
 # Import production settings if it exists
 try:
     from production_settings import *

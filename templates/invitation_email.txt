@@ -1,0 +1,9 @@
+Hi {{ name }},
+
+{{ sender }} invited you to join Conary Recipes, a website where you can post
+and share your conary recipes with friends!
+
+To accept the invitation, please click the link below:
+{{ link }}
+
+-- Conary Recipes Team

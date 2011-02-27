@@ -8,12 +8,6 @@ from souschef import aboyeur
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Example:
-    # (r'^souschef/', include('souschef.foo.urls')),
-
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
-    # to INSTALLED_APPS to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Browsing
     url(r'^$', front, name="frontpage"),
@@ -25,6 +19,9 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('userprofile.urls')),
     url(r'^aboyeur/', include('aboyeur.urls.entries')),
     url(r'^comments/', include('django.contrib.comments.urls')),
+
+    (r'^friend/invite/$', friend_invite),
+    (r'^friend/accept/(\w+)/$', friend_accept),
 
     # Administration
     url(r'^admin/', include(admin.site.urls)),

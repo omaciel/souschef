@@ -175,6 +175,9 @@
                 {{ user.get_profile.about }}<br /><br />
             </p>
         {% endif %}
+        {% if user.is_superuser %}
+            <p><a class="administrative_links_sidebar" href="/friend/invite/">Invite a friend!</a></p>
+        {% endif %}
         <p><a class="administrative_links_sidebar" href="{% url profile_edit_personal %}">{% trans "Edit user info" %}</a><p>
         <p><a class="administrative_links_sidebar" href="{{ request.path_info }}edit/avatar/">{% if user.get_profile.has_avatar %}{% trans "Change avatar" %}{% else %}{% trans "Add avatar" %}{% endif %}</a></p>
         <p><a class="administrative_links_sidebar" href="/accounts/profile/edit/location/">{% trans "Location" %}</a></p>

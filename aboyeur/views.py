@@ -2,8 +2,8 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.views.generic.create_update import update_object
-from aboyeur.models import Recipe, User, Recipe_file
-from aboyeur.forms import RecipeForm, SearchForm, Recipe_File_Form
+from aboyeur.models import *
+from aboyeur.forms import *
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -15,6 +15,7 @@ from tagging.models import TaggedItem
 import random
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
+import smtplib
 
 
 def front(request):
@@ -199,11 +200,9 @@ def update_recipe(request, recipe_id):
         recipe_file_container = Recipe_file()
         recipe_file_container.recipe = recipe
         recipe_file_container.file = recipe_file
-        print '1'
         try:
-            print '2'
             recipe_file_container.clean()
-        except: 
+        except:
             return render_to_response('aboyeur/recipe_form.html', {
                 'form': form, 'file_form':file_form, 'recipe':recipe, 'file_error': 'Attachment does not comply with limits'
             }, context_instance=RequestContext(request))
@@ -245,3 +244,39 @@ def add_rating(request, recipe_id, score):
 
 def show_contact(request):
     return render_to_response('contact.html', context_instance=RequestContext(request))
+
+@login_required
+def friend_invite(request):
+    if request.method == 'POST':
+        form = FriendInviteForm(request.POST)
+        if form.is_valid():
+            invitation = Invitation(
+                    name=form.cleaned_data['name'],
+                    email=form.cleaned_data['email'],
+                    code=User.objects.make_random_password(20),
+                    sender=request.user
+                    )
+            invitation.save()
+            try:
+                invitation.send()
+                request.user.message_set.create(
+                        message=u'An invitation was sent to %s.' %
+                        invitation.email
+                        )
+            except smtplib.SMTPException:
+                request.user.message_set.create(
+                        message=u'An error happened when '
+                        u'sending the invitation.')
+            return HttpResponseRedirect('/friend/invite/')
+    else:
+        form = FriendInviteForm()
+        variables = RequestContext(request, {
+            'form': form
+            })
+    return render_to_response('friend_invite.html', variables)
+
+def friend_accept(request, code):
+    invitation = get_object_or_404(Invitation, code__exact=code)
+    request.session['invitation'] = invitation.id
+    return HttpResponseRedirect('/accounts/register/')
+
