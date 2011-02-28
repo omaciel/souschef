@@ -1,9 +1,9 @@
 from django.conf.urls.defaults import *
-from aboyeur.feeds import LatestRecipesFeed
-from aboyeur.views import *
+from souschef.aboyeur.feeds import *
+from souschef.aboyeur.views import *
 
 feeds = {
-    'recipes': LatestRecipesFeed,
+    'recent': RecentRecipes,
 }
 
 urlpatterns = patterns('',
