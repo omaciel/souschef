@@ -269,7 +269,7 @@ def friend_invite(request):
     if request.method == 'POST':
         form = FriendInviteForm(request.POST)
         random_password = User.objects.make_random_password(20)
-        while Invitation.objects.filter(code__exact = random_password).count > 0:
+        while Invitation.objects.filter(code__exact = random_password).count() > 0:
             random_password = User.objects.make_random_password(20)
         if form.is_valid():
             invitation = Invitation(
@@ -291,12 +291,12 @@ def friend_invite(request):
                         message=u'An error happened when '
                         u'sending the invitation.')
             return HttpResponseRedirect('/friend/invite/')
+        else:
+            return HttpResponseRedirect('/friend/invite/')
     else:
         form = FriendInviteForm()
-        variables = RequestContext(request, {
-            'form': form
-            })
-    return render_to_response('friend_invite.html', variables)
+        variables = {'form': form}
+    return render_to_response('friend_invite.html', variables,context_instance=RequestContext(request))
 
 def friend_accept(request, code):
     invitation = get_object_or_404(Invitation, code__exact=code)

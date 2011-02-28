@@ -314,6 +314,8 @@ def register(request):
                 EmailValidation.objects.add(user=newuser, email=newuser.email)
 
             newuser.save()
+            invitation.active = False
+            invitation.save()
             return HttpResponseRedirect('%scomplete/' % request.path_info)
     else:
         suggested_login = invitation.name.encode('ascii','replace').lower().strip().replace(' ','')
