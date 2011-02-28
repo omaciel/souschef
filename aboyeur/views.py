@@ -265,7 +265,7 @@ def show_user_map(request):
 @login_required
 def friend_invite(request):
     if request.user.is_staff == False:
-        return redirect('/')
+        return redirect('/accounts/profile')
     if request.method == 'POST':
         form = FriendInviteForm(request.POST)
         random_password = User.objects.make_random_password(20)
