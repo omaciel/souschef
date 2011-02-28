@@ -297,7 +297,7 @@ def register(request):
     except:
         return redirect('/')
     invitation_id = request.session['invitation']
-    if not Invitation.objects.get(id__exact = invitation_id, active__exact = True):
+    if not Invitation.objects.filter(id__exact = invitation_id, active__exact = True):
         return redirect('/')
     else:
         invitation = Invitation.objects.get(id__exact = invitation_id)
