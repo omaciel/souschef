@@ -263,6 +263,8 @@ def show_user_map(request):
 
 @login_required
 def friend_invite(request):
+    if request.user.is_staff == False:
+        return redirect('/')
     if request.method == 'POST':
         form = FriendInviteForm(request.POST)
         if form.is_valid():
