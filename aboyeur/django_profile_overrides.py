@@ -14,7 +14,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
 from django.db import models
-from django.contrib.auth.models import User, SiteProfileNotAvailable
+from django.contrib.auth.models import User, SiteProfileNotAvailable, Group
 from userprofile.models import EmailValidation, Avatar
 from django.template import RequestContext
 from django.conf import settings
@@ -312,9 +312,8 @@ def register(request):
             if form.cleaned_data.get('email'):
                 newuser.email = form.cleaned_data.get('email')
                 EmailValidation.objects.add(user=newuser, email=newuser.email)
-#            Permissions
-            newuser.user_permissions.add()
-
+            standard_group = Group.objects.get(name__exact ="standard_user")
+            newuser.groups.add(standard_group)
             newuser.save()
             invitation.active = False
             invitation.save()
