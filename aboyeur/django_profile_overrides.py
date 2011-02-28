@@ -1,8 +1,10 @@
+from aboyeur.models import Invitation
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext as _
+from string import lowercase
 from userprofile.forms import AvatarForm, AvatarCropForm, EmailValidationForm, \
                               ProfileForm, RegistrationForm, LocationForm, \
                               PublicFieldsForm
@@ -290,6 +292,16 @@ def email_validation(request):
     return render_to_response(template, data, context_instance=RequestContext(request))
 
 def register(request):
+    try:
+        invitation_id = request.session['invitation']
+    except:
+        return redirect('/')
+    print request.session['invitation']
+    invitation_id = request.session['invitation']
+    if not Invitation.objects.filter(code__exact = invitation_id, active__exact = True):
+        return redirect('/')
+    else:
+        invitation = Invitation.objects.get(code__exact = invitation_id)
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -304,10 +316,11 @@ def register(request):
             newuser.save()
             return HttpResponseRedirect('%scomplete/' % request.path_info)
     else:
-        form = RegistrationForm()
+        suggested_login = invitation.name.encode('ascii','replace').lower().strip().replace(' ','')
+        form = RegistrationForm(initial={'username': suggested_login, 'email': invitation.email})
 
     template = "userprofile/account/registration.html"
-    data = { 'form': form, }
+    data = { 'form': form, 'invitation':invitation}
     return render_to_response(template, data, context_instance=RequestContext(request))
 
 @login_required

@@ -269,13 +269,13 @@ def friend_invite(request):
     if request.method == 'POST':
         form = FriendInviteForm(request.POST)
         random_password = User.objects.make_random_password(20)
-        while Invitation.objects.filter(code__exact = random_password).count == 0:
+        while Invitation.objects.filter(code__exact = random_password).count > 0:
             random_password = User.objects.make_random_password(20)
         if form.is_valid():
             invitation = Invitation(
                     name=form.cleaned_data['name'],
                     email=form.cleaned_data['email'],
-                    code=User.objects.make_random_password(20),
+                    code=random_password,
                     active=True,
                     sender=request.user
                     )
