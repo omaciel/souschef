@@ -76,6 +76,7 @@ class Invitation(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField()
     code = models.CharField(max_length=20)
+    active = models.BooleanField()
     sender = models.ForeignKey(User)
 
     def __unicode__(self):
