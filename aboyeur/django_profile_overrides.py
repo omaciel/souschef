@@ -295,7 +295,8 @@ def register(request):
     try:
         invitation_id = request.session['invitation']
     except:
-        return redirect('/')
+        template = "userprofile/account/registration.html"
+        return render_to_response(template, context_instance=RequestContext(request))
     invitation_id = request.session['invitation']
     if not Invitation.objects.filter(id__exact = invitation_id, active__exact = True):
         return redirect('/')
@@ -311,6 +312,8 @@ def register(request):
             if form.cleaned_data.get('email'):
                 newuser.email = form.cleaned_data.get('email')
                 EmailValidation.objects.add(user=newuser, email=newuser.email)
+#            Permissions
+            newuser.user_permissions.add()
 
             newuser.save()
             invitation.active = False

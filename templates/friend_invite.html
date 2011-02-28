@@ -4,7 +4,11 @@
 {% block head %}Invite A Friend{% endblock %}
 
 {% block content %}
+<br>
+<h2>
 Enter your friend name and email below, and click "send invite" to invite your friend to join the site:
+</h2>
+<br>
 <form method="post" action=".">{% csrf_token %}
   {{ form.name.label_tag }} {{ form.name }} <br>
   {{ form.email.label_tag }} {{ form.email }} <br>
