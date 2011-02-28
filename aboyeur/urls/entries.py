@@ -4,6 +4,7 @@ from souschef.aboyeur.views import *
 
 feeds = {
     'recent': RecentRecipes,
+    'user': UserRecipes,
 }
 
 urlpatterns = patterns('',

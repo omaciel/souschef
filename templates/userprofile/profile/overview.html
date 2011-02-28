@@ -5,6 +5,7 @@
 {% block robots %}noindex,nofollow{% endblock %}
 
 {% block extrajs %}
+    <link rel="alternate" type="application/rss+xml" title="Conary Recipes | Recipes by Chef {{ user.username }}" href="/aboyeur/feeds/user/{{ user.username }}" />
     <script type="text/javascript">
 		$( function() {
 			var $add_new_recipe = $('#add_new_recipe');
