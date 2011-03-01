@@ -4,6 +4,6 @@ Hi {{ name }},
 and share your conary recipes with friends!
 
 To accept the invitation, please click the link below:
-http://www.conaryrecipes.com/friend/accept/{{ link }}
+{{ link }}
 
 -- Conary Recipes Team
