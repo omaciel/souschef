@@ -223,7 +223,7 @@ li.sous_chef_info img{
 	margin-top:25px;
 	float:right;
 	width:220px;
-	height500px;
+/*	height: 1000px;*/
 	background:black;
 	color:#fff;
 	padding:20px;
@@ -912,8 +912,16 @@ padding: 10px;
 }
 
 .file_error {
- padding 5px;
+ padding: 5px;
  color: red;
  border: solid 1px;
  text-align: center;
+}
+
+#tagcloud {
+	background: url("../images/Cauldron.png") no-repeat;
+        height: 250px;
+        padding-left: 35px;
+        padding-right: 35px;
+        padding-top: 60px;
 }

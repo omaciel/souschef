@@ -39,13 +39,18 @@ def front(request):
             if user.recipe_count > 0:
                 authors.append(user)
     authors.sort(key=lambda author: author.recipe_count, reverse=True)
-    # Apply the syntax highligter
-
+    tagcloud = []
+    tag_count = TaggedItem.objects.all().count()
+    for tag in Tag.objects.all():
+        tagcloud.append([tag, float(TaggedItem.objects.filter(tag__exact = tag).count())/ tag_count * 200 + 100, tag.id])
+    tagcloud.sort(key=lambda tag: tag[1], reverse=True)
+    tagcloud = tagcloud[:10]
     return render_to_response("front.html", {
         'featured_recipe': featured_recipe,
         'latest_recipes': recipes,
         'top_recipes': top_recipes,
-        'top_sous_chefs': authors[:3]
+        'top_sous_chefs': authors[:3],
+        'tagcloud': tagcloud
     }, context_instance=RequestContext(request))
 
 def recipes_page(request):

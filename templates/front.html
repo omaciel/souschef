@@ -244,5 +244,11 @@ outline:none;
 		<strong>Sous-Chef</strong> is a
 		<a href="https://secure.wikimedia.org/wikipedia/en/wiki/Conary_(package_manager)" alt="Conary">conary</a> recipe browser for anyone who wants to sharpen their packaging skills or just want to show off how you can turn overly complicated applications into well behaved packages! Become a chef and add your custom recipes or send your compliments to the chefs by voting for their exquisite selections! Bon appetit!
 	</p>
+        <br>
+        <div id="tagcloud">
+        {% for tag in tagcloud %}
+        <a href="/tag/{{tag.2}}" style="font-size:{{tag.1}}%">{{tag.0}}</a>
+        {% endfor %}
+        </div>
 </div><!--end sidebar-->
 {% endblock %}
