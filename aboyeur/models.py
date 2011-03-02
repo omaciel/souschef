@@ -20,7 +20,7 @@ class Recipe(models.Model):
     author = models.ForeignKey(User)
     title = models.CharField(max_length=30)
     body = models.TextField()
-    install_path = models.CharField(max_length=150, blank=True, null=True)
+    install_path = models.CharField("Build Label", max_length=150, blank=True, null=True, help_text="You can install this package in your system by using this label.")
     url = models.URLField(max_length=250, blank=True, null=True)
     date_posted = models.DateField(editable=False, blank=True, null=True)
     date_updated = models.DateTimeField(editable=False, blank=True, null=True)
