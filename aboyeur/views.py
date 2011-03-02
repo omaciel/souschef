@@ -111,10 +111,6 @@ def tagged_recipes(request, tag_id):
 def recipes(request, id):
     recipe = get_object_or_404(Recipe, id=id)
 
-    # Apply the syntax highligter
-#    html_formater = HtmlFormatter(linenos=True, style='native')
-#    recipe.body = highlight(recipe.body, PythonLexer(), html_formater)
-
     # Verify if its a favorite recipe for the current user
     try:
         Favorite.objects.favorite_for_user(recipe, user=request.user)
