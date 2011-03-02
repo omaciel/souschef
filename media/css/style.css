@@ -921,7 +921,8 @@ padding: 10px;
 #tagcloud {
 	background: url("../images/Cauldron.png") no-repeat;
         height: 250px;
-        padding-left: 35px;
-        padding-right: 35px;
+        padding-left: 40px;
+        padding-right: 40px;
         padding-top: 60px;
+        padding-bottom: 60px;
 }
