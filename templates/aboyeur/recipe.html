@@ -93,7 +93,7 @@
                         {% trans "No attachment" %}
                         {% endif %}
                         <br>
-                        {% if recipe_tags %}
+                        {% if recipe.tags %}
 		{% trans "Tags:" %} 
 		{% tags_for_object recipe as recipe_tags %}
 		{% for tag in recipe_tags %}
