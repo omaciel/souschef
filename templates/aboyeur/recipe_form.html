@@ -1,24 +1,28 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block extracss %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/ui-darkness/jquery-ui-1.8.10.custom.css" type="text/css" media="screen" />
+{% endblock %}
 {% block extrajs %}
-<script src="{{ MEDIA_URL }}js/codemirror/js/codemirror.js" type="text/javascript">
-</script>
+<script src="{{ MEDIA_URL }}js/codemirror/js/codemirror.js" type="text/javascript"></script>
+<script src="{{ MEDIA_URL }}js/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
+<script src="{{ MEDIA_URL }}js/jquery.autocomplete.js" type="text/javascript"></script>
 <script type="text/javascript">
-	window.onload = function() {
-		var editor = CodeMirror.fromTextArea('id_body', {
-			parserfile: "../contrib/python/js/parsepython.js",
-			stylesheet: "{{ MEDIA_URL }}js/codemirror/contrib/python/css/pythoncolors.css",
-			path: "{{ MEDIA_URL }}js/codemirror/js/",
-			lineNumbers: true,
-			textWrapping: false,
-			indentUnit: 4,
-			height: 100,
-			width: "600px",
-			tabMode: "spaces",
-			parserConfig: {'pythonVersion': 2, 'strictErrors': true}
-		});
-	};
+    window.onload = function() {
+        var editor = CodeMirror.fromTextArea('id_body', {
+            parserfile: "../contrib/python/js/parsepython.js",
+            stylesheet: "{{ MEDIA_URL }}js/codemirror/contrib/python/css/pythoncolors.css",
+            path: "{{ MEDIA_URL }}js/codemirror/js/",
+            lineNumbers: true,
+            textWrapping: false,
+            indentUnit: 4,
+            height: 100,
+            width: "600px",
+            tabMode: "spaces",
+            parserConfig: {'pythonVersion': 2, 'strictErrors': true}
+        });
+    };
 </script>
 {% endblock %}
 
@@ -28,60 +32,60 @@
 <br>
 {% if file_error %}
 <div class="file_error rc">
-{{file_error}}
+    {{file_error}}
 </div>
 <br>
 {% endif %}
 <div id="add_new_recipe">
-	<h4>Recipe data</h4>
-	<br>
-	<form action="/aboyeur/recipes/edit/{{recipe.id}}/" method="post" enctype="multipart/form-data">
+    <h4>Recipe data</h4>
+    <br>
+    <form action="/aboyeur/recipes/edit/{{recipe.id}}/" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
-		<fieldset>
+        <fieldset>
 			{{form.title.label_tag}}
-			<br>
+            <br>
 			{{form.title}}
-			<br>
+            <br>
 			{{form.body.label_tag}}
-			<br>
-			<div id="recipe_body">
+            <br>
+            <div id="recipe_body">
 				{{form.body}}
-			</div>
-			<br>
+            </div>
+            <br>
 			{{form.install_path.label_tag}}
-			<br>
+            <br>
 			{{form.install_path}}
-			<br>
+            <br>
 			{{form.url.label_tag}}
-			<br>
+            <br>
 			{{form.url}}
-			<br>
+            <br>
 			{{form.published.label_tag}}
-			<br>
+            <br>
 			{{form.published}}
-			<br>
+            <br>
 			{{form.tags.label_tag}}  (separated by commas)
-			<br>
+            <br>
 			{{form.tags}}
-		</fieldset>
-		<br>
-		<div class="proper_links">
+        </fieldset>
+        <br>
+        <div class="proper_links">
 		Attachement (Limit 500kb, accepted : zip, tar, tar.gz, tar.bz2) :
-		<br>
+            <br>
 		{% if recipe.recipe_file_set.all %}
 		Current (will be deleted if sumbitted) :
 		{% for recipe_file in recipe.recipe_file_set.all %}
-		<a href="{{ MEDIA_URL }}{{recipe_file.file}}">
+            <a href="{{ MEDIA_URL }}{{recipe_file.file}}">
 		{{recipe_file.filename}}
-		</a>
-		<br>
+            </a>
+            <br>
 		{% endfor %}
 		{% endif %}
 		{{file_form.file.errors}}
 		{{file_form.file}}
-		</div>
-		<br>
-		<input type="submit" value="Save" />
-	</form>
+        </div>
+        <br>
+        <input type="submit" value="Save" />
+    </form>
 </div><!--end add_new_recipe-->
 {% endblock %}

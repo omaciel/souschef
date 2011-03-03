@@ -4,181 +4,187 @@
 {% block title %}{% trans "Overview of your profile" %}{% endblock %}
 {% block robots %}noindex,nofollow{% endblock %}
 
+{% block extracss %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/ui-darkness/jquery-ui-1.8.10.custom.css" type="text/css" media="screen" />
+{% endblock %}
+
 {% block extrajs %}
-    <link rel="alternate" type="application/rss+xml" title="Conary Recipes | Recipes by Chef {{ user.username }}" href="/aboyeur/feeds/user/{{ user.username }}" />
-    <script type="text/javascript">
-		$( function() {
-			var $add_new_recipe = $('#add_new_recipe');
-			var $input_title = $('#id_title');
-			$add_new_recipe.hide();
+<link rel="alternate" type="application/rss+xml" title="Conary Recipes | Recipes by Chef {{ user.username }}" href="/aboyeur/feeds/user/{{ user.username }}" />
+<script src="{{ MEDIA_URL }}js/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
+<script src="{{ MEDIA_URL }}js/jquery.autocomplete.js" type="text/javascript"></script>
 
-			$('#user_recipes h3 a').toggle( function() {
-				$add_new_recipe.slideDown( function() {
-					$input_title.focus();
-				});
-			}, function() {
-				$add_new_recipe.slideUp();
-			});
-		});
-    </script>
-    <script src="{{ MEDIA_URL }}js/codemirror/js/codemirror.js" type="text/javascript"></script>
- <script type="text/javascript">
-	window.onload = function() {
-		var editor = CodeMirror.fromTextArea('id_body', {
-			parserfile: "../contrib/python/js/parsepython.js",
-			stylesheet: "{{ MEDIA_URL }}js/codemirror/contrib/python/css/pythoncolors.css",
-			path: "{{ MEDIA_URL }}js/codemirror/js/",
-			lineNumbers: true,
-			textWrapping: false,
-			indentUnit: 4,
-			height: 150,
-			width: "dynamic",
-			tabMode: "spaces",
-			parserConfig: {'pythonVersion': 2, 'strictErrors': true}
-		});
-	};
+<script type="text/javascript">
+    $( function() {
+        var $add_new_recipe = $('#add_new_recipe');
+        var $input_title = $('#id_title');
+        $add_new_recipe.hide();
+
+        $('#user_recipes h3 a').toggle( function() {
+            $add_new_recipe.slideDown( function() {
+                $input_title.focus();
+            });
+        }, function() {
+            $add_new_recipe.slideUp();
+        });
+    });
 </script>
-
+<script src="{{ MEDIA_URL }}js/codemirror/js/codemirror.js" type="text/javascript"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var editor = CodeMirror.fromTextArea('id_body', {
+            parserfile: "../contrib/python/js/parsepython.js",
+            stylesheet: "{{ MEDIA_URL }}js/codemirror/contrib/python/css/pythoncolors.css",
+            path: "{{ MEDIA_URL }}js/codemirror/js/",
+            lineNumbers: true,
+            textWrapping: false,
+            indentUnit: 4,
+            height: 150,
+            width: "dynamic",
+            tabMode: "spaces",
+            parserConfig: {'pythonVersion': 2, 'strictErrors': true}
+        });
+    };
+</script>
 {% endblock %}
 
 {% block container_class %}container_user{% endblock %}
 
 {% block container %}
-    <h2>User Profile</h2>
+<h2>User Profile</h2>
 {% endblock %}
 
 {% block content_class %}user_profile{% endblock %}
 
 {% block content %}
-    <div id="user_favorite_recipes">
-        <h3>{% trans "Favorite Recipes" %}</h3>
-        <ul>
-            <li class="favorite_recipe">
-                {% for favorite in favorites %}
-                    <h4><a class="administrative_links" href="{% url toggle_favorite favorite.content_object.id %}">{% trans "Delete" %}</a> <a href="{% url recipe favorite.content_object.id %}">{{ favorite.content_object.title }}</a></h4>
-                {% empty %}
-                    <h4>{% trans "You haven't added any recipe to your favorites yet." %}</h4>
-                {% endfor %}
-            </li><!--end favorite_recipe-->
-        </ul>
-    </div><!--end user_favorite_recipes-->
+<div id="user_favorite_recipes">
+    <h3>{% trans "Favorite Recipes" %}</h3>
+    <ul>
+        <li class="favorite_recipe">
+            {% for favorite in favorites %}
+            <h4><a class="administrative_links" href="{% url toggle_favorite favorite.content_object.id %}">{% trans "Delete" %}</a> <a href="{% url recipe favorite.content_object.id %}">{{ favorite.content_object.title }}</a></h4>
+            {% empty %}
+            <h4>{% trans "You haven't added any recipe to your favorites yet." %}</h4>
+            {% endfor %}
+        </li><!--end favorite_recipe-->
+    </ul>
+</div><!--end user_favorite_recipes-->
 
-    {% if perms.aboyeur.add_recipe %}
-        <div id="user_recipes">
-            <h3>My Recipes <a class="administrative_links" href="#add_new_recipe">Add New Recipe</a></h3>
+{% if perms.aboyeur.add_recipe %}
+<div id="user_recipes">
+    <h3>My Recipes <a class="administrative_links" href="#add_new_recipe">Add New Recipe</a></h3>
 				{% if file_error %}
-				<div class="file_error rc">
+    <div class="file_error rc">
 				{{file_error}}
-				</div>
-				<br>
+    </div>
+    <br>
 				{% endif %}
-            
-            <div id="add_new_recipe">
-                <h4> Recipe data </h4>
-                <!-- use jquery to hide this block -->
-                <form action="{% url add_recipe %}" method="post" enctype="multipart/form-data">{% csrf_token %}
-                        <fieldset>
-                            {{form.title.label_tag}} <br> {{form.title}} <br>
-                            {{form.body.label_tag}} <br> <div id="recipe_body"> {{form.body}} </div><br>
-                            {{form.install_path.label_tag}} <br> {{form.install_path}} <br>
-                            {{form.url.label_tag}} <br> {{form.url}} <br>
-                            {{form.published.label_tag}} <br> {{form.published}} <br>
-                            {{form.tags.label_tag}}  (separated by commas)<br> {{form.tags}}
-                        </fieldset>
-                        <br>
-                        Attachement (Limit 500kb, accepted : zip, tar, tar.gz, tar.bz2) :<br>
-                        {{file_form.file}}
-                        <br>
-                    <input type="submit" value="Save" />
-                </form>
 
-            </div><!--end add_new_recipe-->
+    <div id="add_new_recipe">
+        <h4> Recipe data </h4>
+        <!-- use jquery to hide this block -->
+        <form action="{% url add_recipe %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <fieldset>
+                {{form.title.label_tag}} <br> {{form.title}} <br>
+                {{form.body.label_tag}} <br> <div id="recipe_body"> {{form.body}} </div><br>
+                {{form.install_path.label_tag}} <br> {{form.install_path}} <br>
+                {{form.url.label_tag}} <br> {{form.url}} <br>
+                {{form.published.label_tag}} <br> {{form.published}} <br>
+                {{form.tags.label_tag}}  (separated by commas)<br> {{form.tags}}
+            </fieldset>
+            <br>
+            Attachement (Limit 500kb, accepted : zip, tar, tar.gz, tar.bz2) :<br>
+            {{file_form.file}}
+            <br>
+            <input type="submit" value="Save" />
+        </form>
 
-            <ul>
-                <li class="user_recipe">
-                    {% for recipe in user.recipe_set.all %}
-                        <h4> <a class="administrative_links" href="{% url edit_recipe recipe.id%}">{% trans "Edit" %}</a> <a class="administrative_links" href="{% url delete_recipe recipe.id %}">{% trans "Delete" %}</a> <a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
-                            {% if recipe.published %}
-                                <img src="{{ MEDIA_URL }}images/published.png" alt="published" title="published" width="18" height="18" /></a>
-                            {% else %}
-                                <img src="{{ MEDIA_URL }}images/not-published.png" alt="not published" title="not published" width="18" height="18" /></a>
-                            {% endif %}
-                            {% if recipe.url %}
-                            <a href="{{ recipe.url }}"><img src="{{ MEDIA_URL }}images/frying_pan.png" alt="{{recipe.title}} website" title="{{recipe.title}} website" width="32" height="18" /></a>
-                            {% endif %}
-                        <span style="font-size: 75%">(last updated on : {{recipe.date_updated}})</span>
-                        </h4>
+    </div><!--end add_new_recipe-->
 
-                    {% empty %}
-                        {% trans "No recipes have been added yet. No Soup For You!" %}
-                    {% endfor %}
-                </li><!--end user_recipe-->
+    <ul>
+        <li class="user_recipe">
+            {% for recipe in user.recipe_set.all %}
+            <h4> <a class="administrative_links" href="{% url edit_recipe recipe.id%}">{% trans "Edit" %}</a> <a class="administrative_links" href="{% url delete_recipe recipe.id %}">{% trans "Delete" %}</a> <a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
+                {% if recipe.published %}
+                <img src="{{ MEDIA_URL }}images/published.png" alt="published" title="published" width="18" height="18" /></a>
+                {% else %}
+                <img src="{{ MEDIA_URL }}images/not-published.png" alt="not published" title="not published" width="18" height="18" /></a>
+                {% endif %}
+                {% if recipe.url %}
+                <a href="{{ recipe.url }}"><img src="{{ MEDIA_URL }}images/frying_pan.png" alt="{{recipe.title}} website" title="{{recipe.title}} website" width="32" height="18" /></a>
+                {% endif %}
+                <span style="font-size: 75%">(last updated on : {{recipe.date_updated}})</span>
+            </h4>
 
-            </ul>
-        </div><!--end user_recipes-->
-    {% endif %}
+            {% empty %}
+            {% trans "No recipes have been added yet. No Soup For You!" %}
+            {% endfor %}
+        </li><!--end user_recipe-->
+
+    </ul>
+</div><!--end user_recipes-->
+{% endif %}
 {% endblock %}
 
 {% block sidebar %}
-    {% load avatars %}
-    <div id="sidebar" class="rc sidebar_user">
-        <h3>{{ user }}</h3>
+{% load avatars %}
+<div id="sidebar" class="rc sidebar_user">
+    <h3>{{ user }}</h3>
 
-        <div id="user_profile_info">
+    <div id="user_profile_info">
         <a href="{% url profile_edit_avatar %}">
             <img class="border" src="{% avatar 96 %}" />
         </a>
         <p>
             {% trans "Name" %}:
             {% if user.get_profile.firstname %}
-                {{ user.get_profile.firstname }}
+            {{ user.get_profile.firstname }}
             {% else %}
-                {% trans "Not set" %}
+            {% trans "Not set" %}
             {% endif %}
         </p>
         <p>
             {% trans "Surname" %}:
             {% if user.get_profile.surname %}
-                {{ user.get_profile.surname }}
+            {{ user.get_profile.surname }}
             {% else %}
-                {% trans "Not set" %}
+            {% trans "Not set" %}
             {% endif %}
         </p>
         <p>
             {% trans "Email" %}:
             {% if not email %}
-                {% trans "Not set yet" %}
+            {% trans "Not set yet" %}
             {% else %}
-                {{ email }}
-                {% if not validated %}
-                    {% trans " (Not validated)" %}
-                {% endif %}
+            {{ email }}
+            {% if not validated %}
+            {% trans " (Not validated)" %}
+            {% endif %}
             {% endif %}
         </p>
         <p>
             {% trans "Country" %}:
             {% if not user.get_profile.country %}
-                {% trans "Not set yet" %}
+            {% trans "Not set yet" %}
             {% else %}
-                {{ user.get_profile.country }}
+            {{ user.get_profile.country }}
             {% endif %}
         </p>
         <p>
             {% trans "Location" %}:
             {% if not user.get_profile.location %}
-                {% trans "Not set yet" %}
+            {% trans "Not set yet" %}
             {% else %}
-                {{ user.get_profile.location }}
+            {{ user.get_profile.location }}
             {% endif %}
         </p>
         {% if user.get_profile.about %}
-            <p>
-                <br />{% trans "About" %}:<br />
-                {{ user.get_profile.about }}<br /><br />
-            </p>
+        <p>
+            <br />{% trans "About" %}:<br />
+            {{ user.get_profile.about }}<br /><br />
+        </p>
         {% endif %}
         {% if user.is_superuser %}
-            <p><a class="administrative_links_sidebar" href="/friend/invite/">Invite a friend!</a></p>
+        <p><a class="administrative_links_sidebar" href="/friend/invite/">Invite a friend!</a></p>
         {% endif %}
         <p><a class="administrative_links_sidebar" href="{% url profile_edit_personal %}">{% trans "Edit user info" %}</a><p>
         <p><a class="administrative_links_sidebar" href="{{ request.path_info }}edit/avatar/">{% if user.get_profile.has_avatar %}{% trans "Change avatar" %}{% else %}{% trans "Add avatar" %}{% endif %}</a></p>
@@ -189,5 +195,5 @@
         <p><a class="administrative_links_sidebar" href="/accounts/profile/delete/">{% trans "Remove profile" %}</a></p>
     </div><!--end user_profile_info-->
 
-    </div><!--end sidebar-->
+</div><!--end sidebar-->
 {% endblock %}

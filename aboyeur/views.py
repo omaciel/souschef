@@ -18,6 +18,8 @@ from django.core.paginator import Paginator
 import smtplib
 from django.contrib.auth.models import User
 from decimal import *
+import json
+from django.http import HttpResponse
 
 
 def front(request):
@@ -303,4 +305,17 @@ def friend_accept(request, code):
     invitation = get_object_or_404(Invitation, code__exact=code)
     request.session['invitation'] = invitation.id
     return HttpResponseRedirect('/accounts/register/')
+
+def tags_service(request):
+    try:
+        query = request.GET['term']
+        query = query.split(',')[-1].strip()
+        tags = Tag.objects.filter(name__icontains = query)[:10]
+    except:
+        tags = Tag.objects.all()[:10]
+    tag_array = []
+    for tag in tags:
+        tag_array.append(tag.name)
+    json_data = json.dumps(tag_array)
+    return HttpResponse(json_data,content_type='application/json')
 
