@@ -329,7 +329,6 @@ def tags_service(request):
 def recipe_sync(request):
     try:
         build_label = request.POST['build_label']
-
         #Info
         repository_path = 'foresight.rpath.org@' + build_label.split('@')[-1]
         package_name = build_label.split('@')[0]
