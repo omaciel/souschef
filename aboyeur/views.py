@@ -23,7 +23,10 @@ try:
 except ImportError:
     import simplejson as json
 from django.http import HttpResponse
-
+from urllib2 import urlopen
+from xml.etree import ElementTree
+import StringIO
+import gzip
 
 def front(request):
     recipes = Recipe.objects.filter(published=True).order_by('-date_updated')[:5]
@@ -321,4 +324,45 @@ def tags_service(request):
         tag_array.append(tag.name)
     json_data = json.dumps(tag_array)
     return HttpResponse(json_data,content_type='application/json')
+
+@login_required
+def recipe_sync(request):
+    try:
+        build_label = request.POST['build_label']
+
+        #Info
+        repository_path = 'foresight.rpath.org@' + build_label.split('@')[-1]
+        package_name = build_label.split('@')[0]
+
+        #Get the repository source path
+        repository_list = urlopen('https://www.rpath.org/repos/foresight/api').read()
+        repository_parsed = ElementTree.XML(repository_list)
+        for repository in repository_parsed.getiterator('label'):
+            if repository.find('name').text == repository_path:
+                source_path = repository.getiterator('sources')[0].attrib['href'].strip()
+        #Get the trove info
+        source_list = urlopen(source_path).read()
+        source_parsed = ElementTree.XML(source_list)
+        for source in source_parsed.getiterator('node'):
+            if source.find('name').text == package_name+':source':
+                trove_path = source.getiterator('trovelist')[0].attrib['id']
+        #Get the recipe info
+        trove_list = urlopen(trove_path).read()
+        trove_parsed = ElementTree.XML(trove_list)
+        for trove in trove_parsed.getiterator('fileref'):
+            trove_name = '/' + package_name+'.recipe'
+            if trove.find('path').text == trove_name:
+                recipe_path = trove.getiterator('inode')[0].attrib['id']
+        #Get the recipe file
+        recipe_list = urlopen(recipe_path).read()
+        recipe_parsed = ElementTree.XML(recipe_list)
+        for recipe in recipe_parsed.getiterator('file'):
+            recipe_file = recipe.getiterator('content')[0].attrib['href']
+        recipe_content = urlopen(recipe_file).read()
+        stream = StringIO.StringIO(recipe_content)
+        zipper = gzip.GzipFile(fileobj=stream)
+        recipe_text = zipper.read()
+        return HttpResponse(recipe_text)
+    except:
+        return HttpResponse('Error')
 

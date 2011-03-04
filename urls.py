@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('userprofile.urls')),
     url(r'^aboyeur/', include('aboyeur.urls.entries')),
     url(r'^comments/', include('django.contrib.comments.urls')),
+    url(r'^recipe_sync/', 'aboyeur.views.recipe_sync', name="recipe_sync"),
 
     (r'^friend/invite/$', friend_invite),
     (r'^friend/accept/(\w+)/$', friend_accept),
