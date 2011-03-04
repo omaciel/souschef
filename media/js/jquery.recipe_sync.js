@@ -1,8 +1,8 @@
 $(document).ready( function() {
     var editor = CodeMirror.fromTextArea('id_body', {
         parserfile: "../contrib/python/js/parsepython.js",
-        stylesheet: "/site_media/js/codemirror/contrib/python/css/pythoncolors.css",
-        path: "/site_media/js/codemirror/js/",
+        stylesheet: "/media/js/codemirror/contrib/python/css/pythoncolors.css",
+        path: "/media/js/codemirror/js/",
         lineNumbers: true,
         textWrapping: false,
         indentUnit: 4,
