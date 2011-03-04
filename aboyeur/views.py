@@ -18,7 +18,10 @@ from django.core.paginator import Paginator
 import smtplib
 from django.contrib.auth.models import User
 from decimal import *
-import json
+try:
+    import json
+except ImportError:
+    import simplejson as json
 from django.http import HttpResponse
 
 
