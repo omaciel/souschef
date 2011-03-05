@@ -116,15 +116,11 @@ a#menu_login:hover { width:47px;background-position: -283px -19px; }
 
 #featured_recipe {
 width: 100%;
-margin-bottom: 25px;
+margin-bottom: 15px;
 }
 
 #featured_recipe h2{
-	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
-	width:179px;
-	height:28px;
-	background-position:0 -40px;
-	margin: 25px 0;
+	margin: 10px 0;
 }
 
 
@@ -145,8 +141,8 @@ margin-bottom: 25px;
 
 #featured_recipe_code{ 
 	width: 100%;
-	margin-left: 30px;
-	height: 150px;
+	height: 250px;
+    padding-top: 10px;
 }
 
 
@@ -235,7 +231,6 @@ li.sous_chef_info img{
 
 #sidebar h2{
 	display:block;
-	background-position:0 -72px;
 }
 
 .clear{
@@ -925,9 +920,9 @@ padding: 10px;
 }
 
 #tagcloud {
-	background: url("../images/Cauldron.png") no-repeat;
-        height: 250px;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-top: 60px;
+    background: url("../images/cutting_board.png") no-repeat;
+    height: 480px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 35px;
 }

@@ -86,88 +86,69 @@ outline:none;
 
 {% block content %}
 <div id="featured_recipe">
-    <h2 class="hide">{% trans "Featured Recipe" %}</h2>
+    <h2>
+        {% trans "Featured Recipe:" %}
+        {% if featured_recipe %}
+            <a href="{% url recipe featured_recipe.id %}">
+                {{ featured_recipe.title }}
+            </a>
+        {% endif %}
+        {% if featured_recipe.url %}
+            <a href="{{ featured_recipe.url }}"></a>
+        {% endif %}
+    </h2>
+
     {% if featured_recipe %}
-    <table width="90%">
+    <table width="95%">
+        <th>
+            {% trans "Chef" %}:
+            {% with featured_recipe.author as feat_author %}
+                <a href="/accounts/profile/{{feat_author}}">
+                    {% if feat_author.get_profile.firstname  %}
+                        {{ feat_author.get_profile.firstname }} {{ feat_author.get_profile.surname }}
+                    {% else %}
+                        {{ feat_author }}
+                    {% endif %}</a>
+            {% endwith %}
+            {% trans "Stars" %}:
+            {% rating_by_request request on featured_recipe.rating as vote %}
+            <ul class="rating rating-{{ featured_recipe.stars }} rating-readonly">
+                <li>
+                    <a class="hide" href="#">1</a>
+                </li>
+                <li>
+                    <a class="hide" href="#">2</a>
+                </li>
+                <li>
+                    <a class="hide" href="#">3</a>
+                </li>
+                <li>
+                    <a class="hide" href="#">4</a>
+                </li>
+                <li>
+                    <a class="hide" href="#">5</a>
+                </li>
+            </ul>
+        </th>
         <tr>
             <td>
-    <div id="featured_recipe_info">
-        <ul>
-            <li>
-                {% trans "Recipe for" %}:
-                <a href="{% url recipe featured_recipe.id %}">{{ featured_recipe.title }}</a>
-                {% if featured_recipe.url %}
-                <a href="{{ featured_recipe.url }}"></a>
-                {% endif %}
-            </li>
-            {% with featured_recipe.author as feat_author %}
-            <li>
-                {% trans "chef" %}:
-                <a href="/accounts/profile/{{feat_author}}">{% if feat_author.get_profile.firstname  %}{{ feat_author.get_profile.firstname }} {{ feat_author.get_profile.surname }}{% else %}{{ feat_author }}{% endif %}</a>
-            </li>
-            {% endwith %}
-            <li>
-                {% trans "Stars" %}:
-                {% rating_by_request request on featured_recipe.rating as vote %}
-                <ul class="rating rating-{{ featured_recipe.stars }} rating-readonly">
-                    <li>
-                        <a class="hide" href="#">1</a>
-                    </li>
-                    <li>
-                        <a class="hide" href="#">2</a>
-                    </li>
-                    <li>
-                        <a class="hide" href="#">3</a>
-                    </li>
-                    <li>
-                        <a class="hide" href="#">4</a>
-                    </li>
-                    <li>
-                        <a class="hide" href="#">5</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div><!-- end featured_recipe_info-->
-<td>    
-    <div id="featured_recipe_code">
-        <textarea id="featured_recipe_code_value">{{featured_recipe.body}}</textarea>
-</div>
-        <div class="tag_list rc">
-                    {% if featured_recipe.tags %}
-                {% trans "Tags" %}:
-                {% tags_for_object featured_recipe as recipe_tags %}
-                {% for tag in recipe_tags %}
-                <a href="/tag/{{tag.id}}">{{ tag }}</a>
-                {% endfor %}
-                                {% else %}
-                {% trans "No tags" %}
-            {% endif %}
-<br>
-
-    </div>
-</td>   
-            </tr>
-        </table>
+                <div id="featured_recipe_code">
+                    <textarea id="featured_recipe_code_value">{{featured_recipe.body}}</textarea>
+                </div>
+            </td>
+        </tr>
+    </table>
 
     {% else %}
-    <div id="featured_recipe_info">
-        ·
-        <ul>
-            ·
-            <li>
-                {% trans "There ano no featured recipes." %}:
-            </li>·
-            <li>
-                {% trans "tags" %}:
-            </li>·
-            <li>
-                {% trans "Stars" %}:
-            </li>·
-        </ul>·
+        <div id="featured_recipe_info">
+            <ul>
+                <li>
+                    {% trans "There ano no featured recipes." %}:
+                </li>·
+            </ul>
     </div><!-- end featured_recipe_info-->·
     <div id="featured_recipe_code">
-        ·
+
         {% trans "The kitchen's pantry is empty!" %}
     </div><!--end featured_recipe_code-->·
     {% endif %}
@@ -239,11 +220,14 @@ outline:none;
 {% block sidebar %}
 <div id="sidebar" class="rc">
     <h2>Tags</h2>
-        <br>
-        <div id="tagcloud">
+    <div id="tagcloud">
+        <ul>
         {% for tag in tagcloud %}
-        <a href="/tag/{{tag.2}}" style="font-size:{{tag.1}}%">{{tag.0}}</a>
+        <li>
+            <a href="/tag/{{tag.2}}" style="font-size:{{tag.1}}%">{{tag.0}}</a>
+        </li>
         {% endfor %}
-        </div>
+    </ul>
+    </div>
 </div><!--end sidebar-->
 {% endblock %}
