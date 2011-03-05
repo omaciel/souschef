@@ -1,4 +1,4 @@
-{% if recipes %}
+{% if recipes and recipes.object_list|length > 0 %}
 <div class="pagination">
 	<span class="step-links">
 		{% if recipes.has_previous %}
