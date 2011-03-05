@@ -325,7 +325,6 @@ def tags_service(request):
     json_data = json.dumps(tag_array)
     return HttpResponse(json_data,content_type='application/json')
 
-@login_required
 def recipe_sync(request):
     try:
         build_label = request.POST['build_label']
@@ -352,7 +351,7 @@ def recipe_sync(request):
             trove_name = '/' + package_name+'.recipe'
             if trove.find('path').text == trove_name:
                 recipe_path = trove.getiterator('inode')[0].attrib['id']
-        #Get the recipe file
+                #Get the recipe file
         recipe_list = urlopen(recipe_path).read()
         recipe_parsed = ElementTree.XML(recipe_list)
         for recipe in recipe_parsed.getiterator('file'):
