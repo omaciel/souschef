@@ -132,7 +132,6 @@ def recipes(request, id):
         recipe_stars = 0
 
     return render_to_response('aboyeur/recipe.html', {
-#        'extracss': html_formater.get_style_defs('.highlight'),
         'favorite_recipe': favorite_recipe,
         'next': reverse('recipe', args=[recipe.id]),
         'recipe': recipe,
