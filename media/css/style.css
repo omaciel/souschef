@@ -398,7 +398,9 @@ form input[type=password]{
 	background:#e08152;
 }
 
-
+form input {
+	margin-bottom: 10px;
+}
 
 /* login page */
 
