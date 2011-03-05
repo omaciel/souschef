@@ -32,7 +32,8 @@
                 <li><a id="menu_contact" class="menu_item" href="{% url contact %}">{% trans "Contact" %}</a></li>
                 <li><a id="menu_user_map" class="menu_item" href="{% url user_map %}">{% trans "Chefs map" %}</a></li>
                 {% if user.is_authenticated %}
-                    <li><a id="menu_logout" class="menu_item" href="{% url logout %}">{% trans "Logout" %}</a> <a href="{% url profile_overview %}">( {{ user }} )</a></li>
+                    <li><a id="menu_account" class="menu_item" href="{% url profile_overview %}">{% trans "Account" %}</a></li>
+                    <li><a id="menu_logout" class="menu_item" href="{% url logout %}">{% blocktrans %}Logout( {{ user }} ){% endblocktrans %}</a></li>
                 {% else %}
                     <li><a id="menu_login" class="menu_item" href="{% url login %}">{% trans "Login" %}</a></li>
                     <li><a id="menu_register" class="menu_register" href="{% url signup %}">{% trans "Sign up" %}</a></li>
