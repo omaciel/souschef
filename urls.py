@@ -5,6 +5,9 @@ from django.conf import settings
 from aboyeur.views import *
 from souschef import aboyeur
 
+# Overriding 500 error handler
+handler500 = 'souschef.views.server_error'
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -33,6 +36,7 @@ urlpatterns = patterns('',
 
 if settings.DEBUG:
     urlpatterns += patterns('',
+        url(r'^500/$', 'souschef.views.server_error'),
         url(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
             {'document_root': settings.MEDIA_ROOT}
         ),

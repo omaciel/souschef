@@ -160,7 +160,7 @@ def add_recipe(request):
                 recipe_file_container.file = recipe_file
                 try:
                     recipe_file_container.clean()
-                except: 
+                except:
                     return render_to_response('userprofile/profile/overview.html', {
                         'form': form, 'recipe':recipe, 'file_error': 'Attachment does not comply with limits', 'file_form':file_form
                     }, context_instance=RequestContext(request))
@@ -170,7 +170,7 @@ def add_recipe(request):
                 recipe_file_container.save()
             else:
                 recipe.save()
-                
+
             return HttpResponseRedirect(reverse('profile_overview'))
     else:
         form = RecipeForm()
