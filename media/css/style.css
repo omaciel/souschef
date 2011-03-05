@@ -235,11 +235,7 @@ li.sous_chef_info img{
 
 #sidebar h2{
 	display:block;
-	background: url(../images/sous_chef_menus_1200x166.png) no-repeat;
-	width:179px;
-	height:20px;
 	background-position:0 -72px;
-	
 }
 
 .clear{
@@ -836,6 +832,16 @@ a.administrative_links_sidebar:hover{
 	top:50px;
 }
 
+div#informational{
+    padding-left:50px;
+    padding-right:50px;
+    width:600px;
+    margin: auto;
+}
+div#informational p»»···»···»···»···»···»···{ line-height:1.5em; margin-bottom:1em;}
+div#informational span#conaryrecipes             { font-weight:bold; color:#000000; letter-spacing:.05em;}
+p#contact-email { text-align:center; margin-top:40px;}
+
 #contact_menu{
 	background: url("../images/mom_sweater_589x493.png") no-repeat;
 	width:555px;
@@ -924,5 +930,4 @@ padding: 10px;
         padding-left: 40px;
         padding-right: 40px;
         padding-top: 60px;
-        padding-bottom: 60px;
 }

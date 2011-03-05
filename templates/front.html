@@ -40,137 +40,137 @@ outline:none;
 <script type="text/javascript" src="{{ MEDIA_URL }}js/rating.js">
 </script>
 <script type="text/javascript">
-	$( function() {
-		$recipe_list = $('.recipe_list');
-		$recipe_list_items = $recipe_list.children();
-		if ($recipe_list_items.length >= 4) {
-			var column_size = Math.ceil($recipe_list_items.length / 4);
-			$recipe_list_items.detach();
+    $( function() {
+        $recipe_list = $('.recipe_list');
+        $recipe_list_items = $recipe_list.children();
+        if ($recipe_list_items.length >= 4) {
+            var column_size = Math.ceil($recipe_list_items.length / 4);
+            $recipe_list_items.detach();
 
-			var columns = [
-			$recipe_list.append($recipe_list_items.slice(0, column_size)),
-			$('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(column_size, 2 * column_size)),
-			$('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(2 * column_size, 3 * column_size)),
-			$('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(3 * column_size))
-			];
+            var columns = [
+            $recipe_list.append($recipe_list_items.slice(0, column_size)),
+            $('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(column_size, 2 * column_size)),
+            $('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(2 * column_size, 3 * column_size)),
+            $('<ul class="recipe_list"></ul>').append($recipe_list_items.slice(3 * column_size))
+            ];
 
-			columns[1].insertAfter(columns[0]);
-			columns[2].insertAfter(columns[1]);
-			columns[3].insertAfter(columns[2]);
-		};
-	});
+            columns[1].insertAfter(columns[0]);
+            columns[2].insertAfter(columns[1]);
+            columns[3].insertAfter(columns[2]);
+        };
+    });
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/rating.js">
 </script>
 <script src="{{ MEDIA_URL }}js/codemirror/js/codemirror.js" type="text/javascript">
 </script>
 <script type="text/javascript">
-	window.onload = function() {
-		var editor = new CodeMirror.fromTextArea('featured_recipe_code_value', {
-			parserfile: "../contrib/python/js/parsepython.js",
-			stylesheet: "{{ MEDIA_URL }}js/codemirror/contrib/python/css/pythoncolors.css",
-			path: "{{ MEDIA_URL }}js/codemirror/js/",
-			lineNumbers: true,
-			textWrapping: true,
-			indentUnit: 4,
-			height: 290,
-			width: "dynamic",
-			content: document.getElementById("featured_recipe_code_value").value,
-			tabMode: "spaces",
-			parserConfig: {'pythonVersion': 2, 'strictErrors': true},
-			readOnly: true
-		});
-	};
+    window.onload = function() {
+        var editor = new CodeMirror.fromTextArea('featured_recipe_code_value', {
+            parserfile: "../contrib/python/js/parsepython.js",
+            stylesheet: "{{ MEDIA_URL }}js/codemirror/contrib/python/css/pythoncolors.css",
+            path: "{{ MEDIA_URL }}js/codemirror/js/",
+            lineNumbers: true,
+            textWrapping: true,
+            indentUnit: 4,
+            height: 290,
+            width: "dynamic",
+            content: document.getElementById("featured_recipe_code_value").value,
+            tabMode: "spaces",
+            parserConfig: {'pythonVersion': 2, 'strictErrors': true},
+            readOnly: true
+        });
+    };
 </script>
 {% endblock %}
 
 {% block content %}
 <div id="featured_recipe">
-	<h2 class="hide">{% trans "Featured Recipe" %}</h2>
-	{% if featured_recipe %}
-	<table width="90%">
-		<tr>
-			<td>
-	<div id="featured_recipe_info">
-		<ul>
-			<li>
-				{% trans "Recipe for" %}:
-				<a href="{% url recipe featured_recipe.id %}">{{ featured_recipe.title }}</a>
-				{% if featured_recipe.url %}
-				<a href="{{ featured_recipe.url }}"></a>
-				{% endif %}
-			</li>
-			{% with featured_recipe.author as feat_author %}
-			<li>
-				{% trans "chef" %}:
-				<a href="/accounts/profile/{{feat_author}}">{% if feat_author.get_profile.firstname  %}{{ feat_author.get_profile.firstname }} {{ feat_author.get_profile.surname }}{% else %}{{ feat_author }}{% endif %}</a>
-			</li>
-			{% endwith %}
-			<li>
-				{% trans "Stars" %}:
-				{% rating_by_request request on featured_recipe.rating as vote %}
-				<ul class="rating rating-{{ featured_recipe.stars }} rating-readonly">
-					<li>
-						<a class="hide" href="#">1</a>
-					</li>
-					<li>
-						<a class="hide" href="#">2</a>
-					</li>
-					<li>
-						<a class="hide" href="#">3</a>
-					</li>
-					<li>
-						<a class="hide" href="#">4</a>
-					</li>
-					<li>
-						<a class="hide" href="#">5</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</div><!-- end featured_recipe_info-->
-<td>	
-	<div id="featured_recipe_code">
-		<textarea id="featured_recipe_code_value">{{featured_recipe.body}}</textarea>
+    <h2 class="hide">{% trans "Featured Recipe" %}</h2>
+    {% if featured_recipe %}
+    <table width="90%">
+        <tr>
+            <td>
+    <div id="featured_recipe_info">
+        <ul>
+            <li>
+                {% trans "Recipe for" %}:
+                <a href="{% url recipe featured_recipe.id %}">{{ featured_recipe.title }}</a>
+                {% if featured_recipe.url %}
+                <a href="{{ featured_recipe.url }}"></a>
+                {% endif %}
+            </li>
+            {% with featured_recipe.author as feat_author %}
+            <li>
+                {% trans "chef" %}:
+                <a href="/accounts/profile/{{feat_author}}">{% if feat_author.get_profile.firstname  %}{{ feat_author.get_profile.firstname }} {{ feat_author.get_profile.surname }}{% else %}{{ feat_author }}{% endif %}</a>
+            </li>
+            {% endwith %}
+            <li>
+                {% trans "Stars" %}:
+                {% rating_by_request request on featured_recipe.rating as vote %}
+                <ul class="rating rating-{{ featured_recipe.stars }} rating-readonly">
+                    <li>
+                        <a class="hide" href="#">1</a>
+                    </li>
+                    <li>
+                        <a class="hide" href="#">2</a>
+                    </li>
+                    <li>
+                        <a class="hide" href="#">3</a>
+                    </li>
+                    <li>
+                        <a class="hide" href="#">4</a>
+                    </li>
+                    <li>
+                        <a class="hide" href="#">5</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div><!-- end featured_recipe_info-->
+<td>    
+    <div id="featured_recipe_code">
+        <textarea id="featured_recipe_code_value">{{featured_recipe.body}}</textarea>
 </div>
-		<div class="tag_list rc">
-					{% if featured_recipe.tags %}
-				{% trans "Tags" %}:
-				{% tags_for_object featured_recipe as recipe_tags %}
-				{% for tag in recipe_tags %}
-				<a href="/tag/{{tag.id}}">{{ tag }}</a>
-				{% endfor %}
+        <div class="tag_list rc">
+                    {% if featured_recipe.tags %}
+                {% trans "Tags" %}:
+                {% tags_for_object featured_recipe as recipe_tags %}
+                {% for tag in recipe_tags %}
+                <a href="/tag/{{tag.id}}">{{ tag }}</a>
+                {% endfor %}
                                 {% else %}
-				{% trans "No tags" %}
-			{% endif %}
+                {% trans "No tags" %}
+            {% endif %}
 <br>
 
-	</div>
-</td>	
-			</tr>
-		</table>
+    </div>
+</td>   
+            </tr>
+        </table>
 
-	{% else %}
-	<div id="featured_recipe_info">
-		·
-		<ul>
-			·
-			<li>
-				{% trans "There ano no featured recipes." %}:
-			</li>·
-			<li>
-				{% trans "tags" %}:
-			</li>·
-			<li>
-				{% trans "Stars" %}:
-			</li>·
-		</ul>·
-	</div><!-- end featured_recipe_info-->·
-	<div id="featured_recipe_code">
-		·
-		{% trans "The kitchen's pantry is empty!" %}
-	</div><!--end featured_recipe_code-->·
-	{% endif %}
+    {% else %}
+    <div id="featured_recipe_info">
+        ·
+        <ul>
+            ·
+            <li>
+                {% trans "There ano no featured recipes." %}:
+            </li>·
+            <li>
+                {% trans "tags" %}:
+            </li>·
+            <li>
+                {% trans "Stars" %}:
+            </li>·
+        </ul>·
+    </div><!-- end featured_recipe_info-->·
+    <div id="featured_recipe_code">
+        ·
+        {% trans "The kitchen's pantry is empty!" %}
+    </div><!--end featured_recipe_code-->·
+    {% endif %}
 </div><!--end featured_recipe-->
 <div class="clear">
 </div>
@@ -190,60 +190,55 @@ outline:none;
 <div class="clear">
 </div>
 <div id="other_info">
-	<div id="latest_recipes" class="box rc">
-		<h3 class="hide">{% trans "Latest Recipes" %}</h3>
-		{% if latest_recipes %}
-		<ul>
-			{% for recipe in latest_recipes %}
-			<li>
-				<img src="{{ MEDIA_URL }}images/conary_li_{{forloop.counter}}.png" alt="{{forloop.counter}} lastest recipe" title="{{forloop.counter}} lastest recipe">
-				<a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
-			</li>
-			{% endfor %}
-		</ul>
-		{% endif %}
-	</div><!--end box-->
-	{% if top_sous_chefs %}
-	<div id="top_sous_chefs" class="box rc no_li">
-		<h3 class="hide">{% trans "Top 3 Sous Chefs" %}</h3>
-		<ul>
-			{% for author in top_sous_chefs %}
-			<li class="sous_chef_info">
-				<a href="/accounts/profile/{{author}}">
-				<img src="{% avatar  96 author %}" alt="{{ author }}" title="{% if user.get_profile.firstname %}{{ user.get_profile.firstname }} {{ user.get_profile.surname }}{% else %}{{ author }}{% endif %}" width="42" height="42" />
-				{% if author.get_profile.firstname  %}{{ author.get_profile.firstname }} {{ author.get_profile.surname }}{% else %}{{ author }}{% endif %}</a>
-				<br>
+    <div id="latest_recipes" class="box rc">
+        <h3 class="hide">{% trans "Latest Recipes" %}</h3>
+        {% if latest_recipes %}
+        <ul>
+            {% for recipe in latest_recipes %}
+            <li>
+                <img src="{{ MEDIA_URL }}images/conary_li_{{forloop.counter}}.png" alt="{{forloop.counter}} lastest recipe" title="{{forloop.counter}} lastest recipe">
+                <a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div><!--end box-->
+    {% if top_sous_chefs %}
+    <div id="top_sous_chefs" class="box rc no_li">
+        <h3 class="hide">{% trans "Top 3 Sous Chefs" %}</h3>
+        <ul>
+            {% for author in top_sous_chefs %}
+            <li class="sous_chef_info">
+                <a href="/accounts/profile/{{author}}">
+                <img src="{% avatar  96 author %}" alt="{{ author }}" title="{% if user.get_profile.firstname %}{{ user.get_profile.firstname }} {{ user.get_profile.surname }}{% else %}{{ author }}{% endif %}" width="42" height="42" />
+                {% if author.get_profile.firstname  %}{{ author.get_profile.firstname }} {{ author.get_profile.surname }}{% else %}{{ author }}{% endif %}</a>
+                <br>
                 Recipes: <strong>{{ author.recipe_count }}</strong>
-			</li>
-			{% endfor %}
-		</ul>
-	</div><!--end box-->
-	{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div><!--end box-->
+    {% endif %}
 
-	<div id="top_recipes" class="box rc">
-		<h3 class="hide">{% trans "Top 5 Recipes" %}</h3>
-		{% if top_recipes %}
-		<ul class="show_list">
-			{% for recipe in top_recipes %}
-			<li>
-				<img src="{{ MEDIA_URL }}images/conary_li_{{forloop.counter}}.png" alt="{{forloop.counter}} lastest recipe" title="{{forloop.counter}} lastest recipe">
-				<a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
-			</li>
-			{% endfor %}
-		</ul>
-		{% endif %}
-	</div><!--end box-->
+    <div id="top_recipes" class="box rc">
+        <h3 class="hide">{% trans "Top 5 Recipes" %}</h3>
+        {% if top_recipes %}
+        <ul class="show_list">
+            {% for recipe in top_recipes %}
+            <li>
+                <img src="{{ MEDIA_URL }}images/conary_li_{{forloop.counter}}.png" alt="{{forloop.counter}} lastest recipe" title="{{forloop.counter}} lastest recipe">
+                <a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div><!--end box-->
 </div><!--end other_info-->
 {% endblock %}
 
 {% block sidebar %}
 <div id="sidebar" class="rc">
-	<h2 class="hide">About Conary Recipe</h2>
-	<img src="{{ MEDIA_URL }}images/pie_224x111.png" alt="Pie" title="Pie" id="pie_image"/>
-	<p>
-		<strong>Sous-Chef</strong> is a
-		<a href="https://secure.wikimedia.org/wikipedia/en/wiki/Conary_(package_manager)" alt="Conary">conary</a> recipe browser for anyone who wants to sharpen their packaging skills or just want to show off how you can turn overly complicated applications into well behaved packages! Become a chef and add your custom recipes or send your compliments to the chefs by voting for their exquisite selections! Bon appetit!
-	</p>
+    <h2>Tags</h2>
         <br>
         <div id="tagcloud">
         {% for tag in tagcloud %}
