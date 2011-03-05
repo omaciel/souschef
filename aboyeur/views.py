@@ -330,7 +330,10 @@ def recipe_sync(request):
         build_label = request.POST['build_label']
         #Info
         repository_path = 'foresight.rpath.org@' + build_label.split('@')[-1]
-        package_name = build_label.split('@')[0]
+        if build_label.index('='):
+            package_name = build_label.split('=')[0]
+        else:
+            package_name = build_label.split('@')[0]
 
         #Get the repository source path
         repository_list = urlopen('https://www.rpath.org/repos/foresight/api').read()
