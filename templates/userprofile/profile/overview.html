@@ -71,7 +71,7 @@
 
 {% if perms.aboyeur.add_recipe %}
 <div id="user_recipes">
-    <h3>My Recipes <a class="administrative_links" href="#add_new_recipe">Add New Recipe</a></h3>
+    <h3>My Recipes <a class="administrative_links" href="#add_new_recipe"><img src="{{ MEDIA_URL }}images/icons/page_add.png" alt="add recipe"></a></h3>
 				{% if file_error %}
     <div class="file_error rc">
 				{{file_error}}
@@ -102,22 +102,40 @@
 
     <ul>
         <li class="user_recipe">
+	    <table class="recipe_list">
+		<thead>
+		    <tr>
+			<th scope="col">Recipe title</th>
+			<th scope="col">Edit</th>
+			<th scope="col">Delete</th>
+			<th scope="col">Url</th>
+			<th scope="col">Last updated</th>
+			<th scope="col">Published</th>
+		    </tr>
+		</thead>
             {% for recipe in user.recipe_set.all %}
-            <h4> <a class="administrative_links" href="{% url edit_recipe recipe.id%}">{% trans "Edit" %}</a> <a class="administrative_links" href="{% url delete_recipe recipe.id %}">{% trans "Delete" %}</a> <a href="{% url recipe recipe.id %}">{{ recipe.title }}</a>
+            <h4>
+		<tr>
+		<td><a href="{% url recipe recipe.id %}">{{ recipe.title }}</a></td>
+		<td><a class="administrative_links" href="{% url edit_recipe recipe.id%}"><img src="{{ MEDIA_URL }}images/icons/page_edit.png" alt="edit recipe"></a></td>
+		<td><a class="administrative_links" href="{% url delete_recipe recipe.id %}"><img src="{{ MEDIA_URL }}images/icons/page_delete.png" alt="delete recipe"></a></td>
+                <td>{{recipe.url}}</td>
+		{% if recipe.url %}
+                <td><a href="{{ recipe.url }}"><img src="{{ MEDIA_URL }}images/frying_pan.png" alt="{{recipe.title}} website" title="{{recipe.title}} website" width="32" height="18" /></a></td>
+                {% endif %}
+                <td>{{recipe.date_updated}}</td>
                 {% if recipe.published %}
-                <img src="{{ MEDIA_URL }}images/published.png" alt="published" title="published" width="18" height="18" /></a>
+                <td><img src="{{ MEDIA_URL }}images/icons/accept.png" alt="published" title="published" /></a></td>
                 {% else %}
-                <img src="{{ MEDIA_URL }}images/not-published.png" alt="not published" title="not published" width="18" height="18" /></a>
-                {% endif %}
-                {% if recipe.url %}
-                <a href="{{ recipe.url }}"><img src="{{ MEDIA_URL }}images/frying_pan.png" alt="{{recipe.title}} website" title="{{recipe.title}} website" width="32" height="18" /></a>
-                {% endif %}
-                <span style="font-size: 75%">(last updated on : {{recipe.date_updated}})</span>
+                <td><img src="{{ MEDIA_URL }}images/icons/cancel.png" alt="not published" title="not published" /></a></td>
+		{% endif %}
             </h4>
+		</tr>
 
             {% empty %}
             {% trans "No recipes have been added yet. No Soup For You!" %}
-            {% endfor %}
+	{% endfor %}
+	    </table>
         </li><!--end user_recipe-->
 
     </ul>
