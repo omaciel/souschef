@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Weblog | {{ entry.title|escape }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ entry.title }}</h1>
+{{ entry.body|safe }}
+<p>Posted on {{ entry.pub_date|date:"F j, Y" }}</p>
+
+{% endblock %}

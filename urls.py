@@ -4,12 +4,24 @@ from django.views.generic.simple import direct_to_template
 from django.conf import settings
 from aboyeur.views import *
 from souschef import aboyeur
+from diario.feeds.entries import RssEntriesFeed, AtomEntriesFeed
+from diario.feeds.tagged import RssEntriesByTagFeed, AtomEntriesByTagFeed
 
 # Overriding 500 error handler
 handler500 = 'souschef.views.server_500_error'
 handler404 = 'souschef.views.server_404_error'
 
 admin.autodiscover()
+
+entries_feeds = {
+    'rss': RssEntriesFeed,
+    'atom': AtomEntriesFeed,
+}
+
+entries_by_tag_feeds = {
+    'rss': RssEntriesByTagFeed,
+    'atom': AtomEntriesByTagFeed,
+}
 
 urlpatterns = patterns('',
 
@@ -30,6 +42,10 @@ urlpatterns = patterns('',
 
     (r'^friend/invite/$', friend_invite),
     (r'^friend/accept/(\w+)/$', friend_accept),
+
+    # weblog
+    (r'^blog/', include('diario.urls.entries')),
+    (r'^blog/(?P<slug>(rss|atom))/$', 'diario.views.syndication.feed', {'feed_dict': entries_feeds}),
 
     # Administration
     url(r'^admin/', include(admin.site.urls)),

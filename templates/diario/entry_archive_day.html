@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Weblog | {{ day|date:"F j" }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ day|date:"F j" }} archive</h1>
+
+{% for entry in entry_list %}
+  <h2><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h2>
+  <p>{{ entry.pub_date|date:"F j, Y" }}</p>
+  {{ entry.body|safe }}
+{% endfor %}
+
+{% endblock %}

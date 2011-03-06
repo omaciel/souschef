@@ -105,6 +105,7 @@ INSTALLED_APPS = (
     # Application modules
     'aboyeur',
     'demoprofile',
+    'diario',
 )
 
 # START of django-profile specific options
@@ -117,6 +118,18 @@ AVATAR_WEBSEARCH = False
 GOOGLE_MAPS_API_KEY = ""
 REQUIRE_EMAIL_CONFIRMATION = False
 AVATAR_QUOTA = 8
+
+# Diario settings
+#
+
+# Number of latest items on archive_index view. Default: 10.
+DIARIO_NUM_LATEST = 8
+
+# Markup language for blog entries. Options: 'rest', 'textile',
+# 'markdown' or 'raw' for raw text.
+# Default: 'raw'.
+DIARIO_DEFAULT_MARKUP_LANG = 'markdown'
+
 
 # Import production settings if it exists
 try:
