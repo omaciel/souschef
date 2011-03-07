@@ -2,6 +2,12 @@
 
 {% block title %}Weblog{% endblock %}
 
+{% block robots %}noindex,nofollow{% endblock %}
+
+{% block extrajs %}
+<link rel="alternate" type="application/rss+xml" title="Conary Recipes | What's Cooking?" href="/blog/atom" }}" />
+{% endblock %}
+
 {% block content %}
 
 {% for entry in entry_list %}

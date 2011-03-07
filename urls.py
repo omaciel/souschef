@@ -44,8 +44,8 @@ urlpatterns = patterns('',
     (r'^friend/accept/(\w+)/$', friend_accept),
 
     # weblog
-    (r'^blog/', include('diario.urls.entries')),
-    (r'^blog/(?P<slug>(rss|atom))/$', 'diario.views.syndication.feed', {'feed_dict': entries_feeds}),
+    url(r'^blog/', include('diario.urls.entries')),
+    url(r'^blog/(?P<slug>(rss|atom))/$', 'diario.views.syndication.feed', {'feed_dict': entries_feeds}),
 
     # Administration
     url(r'^admin/', include(admin.site.urls)),

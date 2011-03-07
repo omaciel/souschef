@@ -128,7 +128,7 @@ DIARIO_NUM_LATEST = 8
 # Markup language for blog entries. Options: 'rest', 'textile',
 # 'markdown' or 'raw' for raw text.
 # Default: 'raw'.
-DIARIO_DEFAULT_MARKUP_LANG = 'markdown'
+DIARIO_DEFAULT_MARKUP_LANG = 'raw'
 
 
 # Import production settings if it exists
