@@ -27,6 +27,7 @@ import base64
 import Image
 import urllib
 import os
+from django.contrib import messages
 
 if not settings.AUTH_PROFILE_MODULE:
     raise SiteProfileNotAvailable
@@ -135,7 +136,10 @@ def personal(request):
         form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.SUCCESS, 'Personal data set')
             return redirect('/accounts/profile')
+        else:
+            messages.add_message(request, messages.ERROR, 'Personal data not set. Form is not valid.')
     else:
         form = ProfileForm(instance=profile)
 
@@ -155,7 +159,10 @@ def location(request):
         form = LocationForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.SUCCESS, 'Location set')
             return HttpResponseRedirect(reverse("profile_edit_location_done"))
+        else:
+            messages.add_message(request, messages.ERROR, 'Avatar not set. Form is not valid.')
     else:
         form = LocationForm(instance=profile)
 
@@ -245,7 +252,10 @@ def avatarcrop(request):
             image.save(avatar.image.path)
             avatar.valid = True
             avatar.save()
+            messages.add_message(request, messages.SUCCESS, 'Avatar set')
             return HttpResponseRedirect(reverse("profile_avatar_crop_done"))
+        else:
+            messages.add_message(request, messages.ERROR, 'Avatar not set. Form is invalid.')
 
     template = "userprofile/avatar/crop.html"
     data = { 'section': 'avatar', 'avatar': avatar, 'form': form, }
@@ -256,6 +266,7 @@ def avatardelete(request, avatar_id=False):
     if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         try:
             Avatar.objects.get(user=request.user, valid=True).delete()
+            messages.add_message(request, messages.SUCCESS, 'Avatar deleted')
             return HttpResponse(simplejson.dumps({'success': True}))
         except:
             return HttpResponse(simplejson.dumps({'success': False}))
@@ -317,7 +328,10 @@ def register(request):
             newuser.save()
             invitation.active = False
             invitation.save()
+            messages.add_message(request, messages.SUCCESS, 'Registration complete')
             return HttpResponseRedirect('%scomplete/' % request.path_info)
+        else:
+            messages.add_message(request, messages.Error, 'Registration not complete. Form is not valid.')
     else:
         suggested_login = invitation.name.encode('ascii','replace').lower().strip().replace(' ','')
         form = RegistrationForm(initial={'username': suggested_login, 'email': invitation.email})

@@ -7,9 +7,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{% block title %}Sous Chef - Conary Code Recipes{% endblock %}</title>
     <link rel="stylesheet" href="{{ MEDIA_URL }}css/style.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/gritter/css/jquery.gritter.css" type="text/css" media="screen" />
     {% block extracss %}{% endblock %}
 
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.gritter.min.js"></script>
     {% block extrajs %}{% endblock %}
 
     <meta name="robots" content="{% block robots %}index,follow{% endblock %}" />
@@ -21,6 +23,27 @@
 
 <body>
     <h1 class="hide"><a href="{% url frontpage %}">Sous Chef - Conary Code Recipes</a></h1>
+
+<!--Gritter messages-->
+            {% if messages %}
+                {% for message in messages %}
+                    <script type="text/javascript">
+                        $.gritter.add({
+                            text: '{{message|safe}}',
+                    {% if message.tags == 'error' %}
+                            title: 'Error',
+                            image: '/site_media/images/error.png',
+                            sticky: false
+                    {% endif %}
+                    {% if message.tags == 'success' %}
+                            title: 'Success',
+                            image: '/site_media/images/ok.png',
+                            sticky: false
+                    {% endif %}
+                        });
+                    </script>
+                {% endfor %}
+            {% endif %}
 
     <div id="menu_container">
         <div id="top_menu">

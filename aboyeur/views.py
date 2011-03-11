@@ -27,6 +27,7 @@ from urllib2 import urlopen
 from xml.etree import ElementTree
 import StringIO
 import gzip
+from django.contrib import messages
 
 def front(request):
     recipes = Recipe.objects.filter(published=True).order_by('-date_updated')[:5]
@@ -71,6 +72,7 @@ def recipes_page(request):
         query = request.GET['query'].strip()
         if query:
             recipes = Recipe.objects.filter(Q(title__icontains = query) | Q(body__icontains = query) | Q(tags__icontains = query), Q(published__exact=True))[:10]
+            messages.add_message(request, messages.SUCCESS, 'Search complete')
     else:
         query = ""
 
@@ -169,8 +171,11 @@ def add_recipe(request):
                 recipe_file_container.save()
             else:
                 recipe.save()
+            messages.add_message(request, messages.SUCCESS, 'Recipe created')
 
             return HttpResponseRedirect(reverse('profile_overview'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Recipe form is not valid')
     else:
         form = RecipeForm()
 
@@ -191,6 +196,7 @@ def delete_recipe(request, recipe_id):
             favorite.delete()
 
         recipe.delete()
+        messages.add_message(request, messages.SUCCESS, 'Recipe deleted')
         return HttpResponseRedirect(reverse('profile_overview'))
     else:
         return render_to_response('aboyeur/recipe_confirm_delete.html', {
@@ -216,6 +222,7 @@ def update_recipe(request, recipe_id):
             return render_to_response('aboyeur/recipe_form.html', {
                 'form': form, 'file_form':file_form, 'recipe':recipe, 'file_error': 'Attachment does not comply with limits'
             }, context_instance=RequestContext(request))
+            
         recipe.recipe_file_set.all().delete()
         recipe_file_container.save()
 
@@ -235,6 +242,7 @@ def toggle_favorite(request, recipe_id):
         favorite.delete()
     except Favorite.DoesNotExist:
         Favorite.objects.create_favorite(recipe, request.user)
+    messages.add_message(request, messages.SUCCESS, 'Recipe set as favourite')
     return HttpResponseRedirect(reverse('recipe', args=[recipe.id]))
 
 def add_rating(request, recipe_id, score):
@@ -250,6 +258,7 @@ def add_rating(request, recipe_id, score):
 
     if response.status_code == 200:
         return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
+    messages.add_message(request, messages.SUCCESS, 'Recipe rated')
     return HttpResponseRedirect(reverse('recipe', args=[recipe_id]))
 
 def show_contact(request):
@@ -298,8 +307,10 @@ def friend_invite(request):
                 request.user.message_set.create(
                         message=u'An error happened when '
                         u'sending the invitation.')
+            messages.add_message(request, messages.SUCCESS, 'Invitation sent')
             return HttpResponseRedirect('/friend/invite/')
         else:
+            messages.add_message(request, messages.ERROR, 'Invitation not sent')
             return HttpResponseRedirect('/friend/invite/')
     else:
         form = FriendInviteForm()
