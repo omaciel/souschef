@@ -67,7 +67,7 @@ class Recipe_file(models.Model):
         return os.path.basename(self.file.name)
 
     def clean(self):
-        if not self.file.name.split('.')[-1] in ['zip', 'tar', 'gz', 'bz2']:
+        if not self.file.name.split('.')[-1] in ['zip', 'tar', 'gz', 'bz2', 'patch']:
             raise ValidationError("Unsupported extension")
         if self.file.size > 500*1024:
             raise ValidationError("File size over limit")
