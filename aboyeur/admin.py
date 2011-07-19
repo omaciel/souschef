@@ -7,7 +7,9 @@ class FavoriteAdmin(admin.ModelAdmin):
 admin.site.register(Favorite, FavoriteAdmin)
 
 class RecipeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'author', 'date_updated', 'published',)
+    search_fields = ['title', 'body', 'author',]
+    list_filter = ['date_posted', 'date_updated', 'author',]
 admin.site.register(Recipe, RecipeAdmin)
 
 class InvitationAdmin(admin.ModelAdmin):
