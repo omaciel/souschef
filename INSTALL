@@ -1,19 +1,8 @@
 Django modules that Sous-Chef depends on
 ========================================
 
-Name						Version		Project Site
+Name                        Version     Project Site
 -----------------------------------------------------------------------------------------
-#django-ajax-selects			1.0			http://code.google.com/p/django-ajax-selects/
-#django-authority			0.4			http://bitbucket.org/jezdez/django-authority/
-#django-filter				0.5.2		http://github.com/alex/django-filter/
-#django-sorting				0.1			http://github.com/directeur/django-sorting/
-#django-notification			0.1.4		http://github.com/jtauber/django-notification/
-#django-pagination			1.0.5		http://code.google.com/p/django-pagination/
-#django-piston				0.2.2		http://bitbucket.org/jespern/django-piston/
-django-tagging				0.3.1		http://code.google.com/p/django-tagging/
-#django-threadedcomments	0.5.2		http://code.google.com/p/django-threadedcomments/
-django-profile				0.6			http://code.google.com/p/django-profile/
-#pygments					1.3			http://pygments.org/
-django-favorites			b145949		http://github.com/apgwoz/django-favorites
-django-ratings				9e32d33		http://github.com/dcramer/django-ratings
-#django-tinymce              1.5         http://code.google.com/p/django-tinymce/
+django-tagging              0.3.1       http://code.google.com/p/django-tagging/
+django-favorites            b145949     http://github.com/apgwoz/django-favorites
+django-ratings              9e32d33     http://github.com/dcramer/django-ratings
