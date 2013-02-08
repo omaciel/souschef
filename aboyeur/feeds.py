@@ -1,7 +1,7 @@
 from django.contrib.syndication.views import Feed
 from aboyeur.models import Recipe
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 
 class RecentRecipes(Feed):
     title = "Conary Recipes: What's cooking today?"
@@ -15,10 +15,8 @@ class RecentRecipes(Feed):
         return '/aboyeur/recipes/%d/' % item.id
 
 class UserRecipes(Feed):
-    def get_object(self, bits):
-        if len(bits) != 1:
-            raise ObjectDoesNotExist
-        return User.objects.get(username=bits[0])
+    def get_object(self, request, username):
+        return get_object_or_404(User, username=username)
     def title(self, user):
         return (
                 u'Conary Recipes | Recipes by Chef %s' % user.username

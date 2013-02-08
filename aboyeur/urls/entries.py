@@ -17,5 +17,6 @@ urlpatterns = patterns('',
     url(r'^recipes/delete/(?P<recipe_id>\d+)/$', delete_recipe, name='delete_recipe'),
     url(r'^recipes/toggle_favorite/(?P<recipe_id>\d+)/$', toggle_favorite, name='toggle_favorite'),
     url(r'^recipes/rate/(?P<recipe_id>\d+)/(?P<score>\d+)/', add_rating, name='add_rating'),
-    url(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+    url(r'^feeds/recent/$', RecentRecipes()),
+    url(r'^feeds/user/(?P<username>[\w.@+-]+)/$', UserRecipes()),
 )

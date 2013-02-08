@@ -13,23 +13,13 @@ handler404 = 'souschef.views.server_404_error'
 
 admin.autodiscover()
 
-entries_feeds = {
-    'rss': RssEntriesFeed,
-    'atom': AtomEntriesFeed,
-}
-
-entries_by_tag_feeds = {
-    'rss': RssEntriesByTagFeed,
-    'atom': AtomEntriesByTagFeed,
-}
-
 urlpatterns = patterns('',
 
     # Browsing
     url(r'^$', front, name="frontpage"),
     url(r'^contact', 'aboyeur.views.show_contact', name="contact"),
     url(r'^user_map', 'aboyeur.views.show_user_map', name="user_map"),
-    (r'^tag/(?P<tag_id>\d+)', 'aboyeur.views.tagged_recipes'),
+    url(r'^tag/(?P<tag_id>\d+)', 'aboyeur.views.tagged_recipes'),
     url(r'^tags_service/', 'aboyeur.views.tags_service', name="tags_service"),
     url(r'^accounts/profile/edit/personal/$', 'aboyeur.django_profile_overrides.personal', name='profile_edit_personal'),
     url(r'^accounts/profile/$', 'aboyeur.django_profile_overrides.overview', name='profile_overview'),
@@ -40,12 +30,12 @@ urlpatterns = patterns('',
     url(r'^comments/', include('django.contrib.comments.urls')),
     url(r'^recipe_sync/', 'aboyeur.views.recipe_sync', name="recipe_sync"),
 
-    (r'^friend/invite/$', friend_invite),
-    (r'^friend/accept/(\w+)/$', friend_accept),
+    url(r'^friend/invite/$', friend_invite),
+    url(r'^friend/accept/(\w+)/$', friend_accept),
 
     # weblog
+    url(r'^blog/tag/', include('diario.urls.tagged')),
     url(r'^blog/', include('diario.urls.entries')),
-    url(r'^blog/(?P<slug>(rss|atom))/$', 'diario.views.syndication.feed', {'feed_dict': entries_feeds}),
 
     # Administration
     url(r'^admin/', include(admin.site.urls)),

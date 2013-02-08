@@ -1,0 +1,6 @@
+Django==1.4.3
+PIL==1.1.7
+django-diario==0.4
+django-ratings==0.3.7
+django-tagging==0.3.1
+-e git+https://github.com/apgwoz/django-favorites@b1459497453cfcecd06b56e42a152194feb5d472#egg=favorites-dev
